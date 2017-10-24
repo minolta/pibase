@@ -1,0 +1,26 @@
+package me.pixka.pibase.d
+
+import me.pixka.kt.base.d.En
+import org.hibernate.annotations.Cache
+import javax.persistence.Cacheable
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.ManyToOne
+
+@Entity
+@Cacheable
+@Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+class Pifw : En() {
+
+    @ManyToOne
+    var pifwgroup: Pifwgroup? = null
+    @Column(insertable = false, updatable = false)
+    var pifwgroup_id: Long? = null
+
+    var verno: String? = null
+    var checksum: String? = null
+    var pathtofile: String? = null
+    var filename: String? = null
+    var fwsize: Long? = null
+
+}

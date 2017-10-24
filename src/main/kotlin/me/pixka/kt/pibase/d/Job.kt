@@ -1,0 +1,24 @@
+package me.pixka.pibase.d
+
+import me.pixka.kt.base.d.En
+import org.hibernate.annotations.Cache
+import javax.persistence.Cacheable
+import javax.persistence.Column
+import javax.persistence.Entity
+
+/**
+ * งานต่างๆที่มีในระบบ
+ *
+ * @author kykub
+ */
+@Entity
+@Cacheable
+@Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+class Job(var refid: Long? = null, var name: String? = null,
+          @Column(columnDefinition = "text") var description: String? = null) : En() {
+
+    override fun toString(): String {
+        return "Job [id " + this.id + " refid=" + refid + ", name=" + name + ", description=" + description + "]"
+    }
+
+}

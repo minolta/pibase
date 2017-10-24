@@ -1,0 +1,30 @@
+package me.pixka.pibase.d
+
+import me.pixka.kt.base.d.En
+import org.hibernate.annotations.Cache
+import javax.persistence.Cacheable
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.ManyToOne
+
+/**
+ * สำหรับเก็บ job ไว้ run ใน pi device
+ *
+ * @author kykub
+ */
+@Entity
+@Cacheable
+@Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+class Jobatpi : En() {
+
+    @ManyToOne
+    var pidevice: PiDevice? = null
+    @Column(insertable = false, updatable = false)
+    var pidevice_id: Long? = null
+
+    @ManyToOne
+    var job: Job? = null
+    @Column(insertable = false, updatable = false)
+    var job_id: Long? = null
+
+}

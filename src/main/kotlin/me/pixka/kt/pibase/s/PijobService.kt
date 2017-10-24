@@ -1,0 +1,135 @@
+package me.pixka.pibase.s
+
+import me.pixka.kt.base.s.Ds
+import me.pixka.pibase.d.Pijob
+import me.pixka.pibase.r.PijobRepo
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
+import java.math.BigDecimal
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+
+
+@Service
+class PijobService(override var repo:PijobRepo) : Ds<Pijob>() {
+    override fun search(search: String, page: Long, limit: Long): List<Pijob>? {
+        return repo.search(search,topage(page,limit))
+    }
+
+
+    fun searchMatch(n: String): Pijob? {
+        return null
+    }
+
+    fun findByRefid(id: Long?): Pijob {
+        return repo.findByRefid(id)
+    }
+
+    fun findByPidevice_id(id: Long?): List<*> {
+        return repo.findByPidevice_id(id)
+    }
+
+    fun findByHT(h: BigDecimal, t: BigDecimal, jobid: Long?): List<*> {
+        return repo.findByHT(h, t, jobid)
+    }
+
+    fun findByDS(t: BigDecimal, jobid: Long?): List<*> {
+        return repo.findByDS(t, jobid, true) // ต้องเอาแต่ enable เท่านั้น
+    }
+
+    fun findByH(h: BigDecimal, jobid: Long?): List<*> {
+        return repo.findByH(h, jobid, true)
+    }
+
+    fun findByT(t: BigDecimal, jobid: Long?): List<*> {
+        return repo.findByT(t, jobid, true)
+    }
+
+    fun findAllByT(page: Long?, limit: Long?): List<*> {
+        return repo.fintAllOrderByT(this.topage(page!!, limit!!)!!)
+    }
+
+    /**
+     * ใช้ค้นหาจาช่วงเวลา เช่นค้นหา งานที่ต้องทำในช่วง 2.00am - 4.00am
+     * อุณหภูมิในช่วง 40
+     *
+     * @param t
+     * @param time
+     * @param jobid
+     * @return
+     */
+    fun findByDSBytime(t: BigDecimal, time: Date, jobid: Long?): List<*>? {
+        var time = time
+
+        val df = SimpleDateFormat("HH:mm:ss")
+        val s = df.format(time)
+
+        try {
+            time = df.parse(s)
+            logger.debug("[ds18b20 finbydstime] Time to search " + time)
+            val list = repo.findByDS(t, time, jobid)
+            logger.debug("[ds18b20 finbydstime] Job founds " + list.size)
+            return list
+        } catch (e: ParseException) {
+            logger.error("[ds18b20 finbydstime] " + e.message)
+            e.printStackTrace()
+        }
+
+        return null
+    }
+
+    fun newpijob(item: Pijob): Pijob {
+
+        val p = Pijob()
+
+        p.refid = item.id
+        p.etime = item.etime
+        p.stime = item.stime
+        p.sdate = item.sdate
+        p.edate = item.edate
+
+        p.thigh = item.thigh
+        p.tlow = item.tlow
+
+        p.hhigh = item.hhigh
+        p.hlow = item.hlow
+        p.runtime = item.runtime
+        p.waittime = item.waittime
+        p.ds18sensor = item.ds18sensor
+        // p.setPidevice(item.getPidevice());
+        p.job = item.job
+        // p.setJob_id(item.getJob_id());
+        logger.debug("[loadpijob] Item to save " + item)
+        return p
+    }
+
+    fun findByDSDP(id: Long?): List<*>? {
+        try {
+
+            // ใช้หา pi job ที่เป็น DSDP
+            val list = repo.findByJob_id(id)
+            logger.debug("Findbydsdp Founds " + list.size)
+            return list
+        } catch (e: Exception) {
+            logger.error("Findbydsdp ERROR: " + e.message)
+        }
+
+        return null
+    }
+
+    fun searchByDeviceid(id: Long?, page: Long?, limit: Long?): List<*> {
+
+        return repo.searchByDeviceid(id, this.topage(page!!, limit!!)!!)
+    }
+
+    fun findOnecommand(): List<*> {
+        return repo.findByOne(true)
+    }
+
+    companion object {
+        internal var logger = LoggerFactory.getLogger(PijobService::class.java!!)
+    }
+
+}
