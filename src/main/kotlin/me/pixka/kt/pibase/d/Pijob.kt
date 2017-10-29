@@ -16,7 +16,13 @@ import javax.persistence.*
 class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? = null, var runtime: Long? = null,
             var waittime: Long? = null, var enable: Boolean? = true, @ManyToOne var ds18sensor: DS18sensor? = null,
             @Column(insertable = false, updatable = false) var ds18sensor_id: Long? = null,
-            @OneToMany(mappedBy = "pijob", cascade = arrayOf(CascadeType.ALL)) @JsonManagedReference var ports: List<Portstatusinjob>? = null,// สำหรับ เก็บว่า job นี้ทำงานกับ อะไรงานไหนเช่น H
+
+            @OneToMany(mappedBy = "pijob",
+            fetch = FetchType.EAGER, cascade = arrayOf(CascadeType.ALL))
+            @JsonManagedReference
+            var ports: List<Portstatusinjob>? = null,// สำหรับ เก็บว่า job นี้ทำงานกับ อะไรงานไหนเช่น H
+
+
             @Column(insertable = false, updatable = false) var job_id: Long? = null,// ก็ทำงานกับค่า h อย่างเดียว HT ทำงานกับ H และ T
             @ManyToOne var job: Job? = null, @ManyToOne var pidevice: PiDevice? = null,
             @Column(insertable = false, updatable = false) var pidevice_id: Long? = null, var name: String? = null,// ช่วงความร้อนที่ทำงาน

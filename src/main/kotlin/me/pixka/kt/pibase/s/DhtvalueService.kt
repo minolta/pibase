@@ -14,9 +14,10 @@ class DhtvalueService(override val repo: DhtvalueRepo) : Ds<Dhtvalue>() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    fun create(device: PiDevice, t: BigDecimal, h: BigDecimal, ip: String, adddate: Date): Dhtvalue {
+    fun create(device: PiDevice, t: BigDecimal, h: BigDecimal, ip: String?, adddate: Date): Dhtvalue {
         var dv = Dhtvalue()
         dv.pidevice = device
+        dv.pidevice_id = device.id
         dv.h = h
         dv.t = t
         dv.valuedate = adddate

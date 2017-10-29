@@ -25,7 +25,7 @@ class Ds18valueService(override val repo: Ds18valueRepo) : Ds<DS18value>() {
         return repo.findTop1ByOrderByValuedateDesc()
     }
 
-    fun create(pidevice: PiDevice, t: BigDecimal, valuedate: Date, ip: String): DS18value {
+    fun create(pidevice: PiDevice?=null, t: BigDecimal?, valuedate: Date?=Date(), ip: String?=null): DS18value {
         val d = DS18value()
         d.ip = ip
         d.pidevice = pidevice

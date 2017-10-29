@@ -1,5 +1,6 @@
 package me.pixka.pibase.d
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import me.pixka.kt.base.d.En
 import org.hibernate.annotations.Cache
 import javax.persistence.Cacheable
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne
  *
  * @author kykub
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Cacheable
 @Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)

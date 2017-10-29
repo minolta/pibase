@@ -2,6 +2,7 @@ package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
 import me.pixka.pibase.d.Pijob
+import me.pixka.pibase.r.Ds18sensorRepo
 import me.pixka.pibase.r.PijobRepo
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,10 +11,11 @@ import java.math.BigDecimal
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 @Service
-class PijobService(override var repo:PijobRepo) : Ds<Pijob>() {
+class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijob>() {
     override fun search(search: String, page: Long, limit: Long): List<Pijob>? {
         return repo.search(search,topage(page,limit))
     }
@@ -128,6 +130,18 @@ class PijobService(override var repo:PijobRepo) : Ds<Pijob>() {
         return repo.findByOne(true)
     }
 
+
+    /**
+     * ใช้สำหรับหา งานที่ต้องทำสำหรับ pi
+     * โดยระบุ อุณหภูมิ t
+     * Sensor จาก sensorid
+     * job จาก dsjobid
+     */
+
+    fun findDSJOBBySensor(t:BigDecimal,sensorid:Long,dsjobid:Long): ArrayList<Pijob>? {
+
+        return repo.DSBysensor(dsjobid,sensorid,t)
+    }
     companion object {
         internal var logger = LoggerFactory.getLogger(PijobService::class.java!!)
     }

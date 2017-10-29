@@ -1,6 +1,7 @@
 package me.pixka.c
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import me.pixka.kt.base.s.ErrorlogService
 import org.apache.http.HttpResponse
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.client.methods.HttpPost
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Controller
 import java.io.IOException
 
 @Controller
-class HttpControl {
+class HttpControl(val err: ErrorlogService) {
 
     @Throws(IOException::class)
     operator fun get(s: String): String {
@@ -30,6 +31,7 @@ class HttpControl {
             return re
         } catch (e: Exception) {
             logger.error("HTTP Control error :" + e.message)
+            err.n("GET HTTPCONTROL", "27-31", "${e.message}")
             throw e
         } finally {
             response1.close()
@@ -56,6 +58,7 @@ class HttpControl {
 
         } catch (ex: Exception) {
             logger.error("HTTP POST " + ex.message)
+            err.n("HttpControl", "49-55", "${ex.message}")
             throw ex
 
             // handle exception here
@@ -73,7 +76,7 @@ class HttpControl {
             return true
         } catch (e: IOException) {
             logger.error("[checkconnection] Can not connect to server " + e.message)
-            e.printStackTrace()
+            err.n("checkcanconnect", "73", "${e.message}")
         }
 
         return false

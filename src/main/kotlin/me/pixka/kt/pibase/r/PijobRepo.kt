@@ -61,5 +61,7 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
     fun findByOne(b: Boolean): List<*>
     @Query("from Pijob p where p.pidevice.name like %?1% or p.name like %?1% ")
     fun search(search: String, topage: Pageable): List<Pijob>?
+    @Query("from Pijob p where p.job_id = ?1 and p.ds18sensor_id =?2 and ( p.tlow <= ?3 and p.thigh >= ?3)")
+    fun DSBysensor(dsjobid: Long, sensorid: Long, t: BigDecimal):ArrayList<Pijob>?
 
 }

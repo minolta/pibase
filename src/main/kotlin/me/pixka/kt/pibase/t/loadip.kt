@@ -1,10 +1,12 @@
 package me.pixka.kt.pibase.t
 
 import me.pixka.kt.base.d.Iptableskt
+import me.pixka.kt.base.s.DbconfigService
 import me.pixka.kt.base.s.ErrorlogService
 import me.pixka.kt.base.s.IptableServicekt
 import me.pixka.ktbase.io.Configfilekt
 import org.slf4j.LoggerFactory
+import org.springframework.context.annotation.Profile
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.io.BufferedReader
@@ -15,9 +17,9 @@ import java.net.NetworkInterface
 import java.net.SocketException
 import java.util.*
 
-
+@Profile("ip")
 @Component
-class Iptask(val service: IptableServicekt, val cfg: Configfilekt, val es: ErrorlogService) {
+class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: ErrorlogService) {
     companion object {
         internal var logger = LoggerFactory.getLogger(Iptask::class.java)
     }
@@ -55,19 +57,9 @@ class Iptask(val service: IptableServicekt, val cfg: Configfilekt, val es: Error
 
     fun setup() {
         // logger.debug("Set ups")
-        command = "C:\\nmap.exe -n -sP "
 
-        try {
-            val fp = cfg!!.getPropertie("scancommand")
+        command = cfg.findorcreate("scancommand","C:\\nmap.exe -n -sP ").value!!
 
-            if (fp != null)
-                command = fp
-
-            //  logger.debug("loadiptable scancommand : " + command!!)
-        } catch (e: Exception) {
-            logger.error("[loadiptable setup() error : " + e.message)
-            //   e.printStackTrace()
-        }
 
     }
 
