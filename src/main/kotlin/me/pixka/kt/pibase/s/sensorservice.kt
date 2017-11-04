@@ -13,7 +13,7 @@ import java.io.IOException
 import java.util.*
 
 @Service
-class SensorService(val dbconfigService: DbconfigService,val ps:PideviceService,val dss:DS18sensorService,val iptableServicekt: IptableServicekt,val http:HttpControl) {
+class SensorService(val dbconfigService: DbconfigService, val ps: PideviceService, val dss: DS18sensorService, val iptableServicekt: IptableServicekt, val http: HttpControl) {
     private val om = ObjectMapper()
 
     var readbuffer = ArrayList<DS18ReadBuffer>()
@@ -24,14 +24,25 @@ class SensorService(val dbconfigService: DbconfigService,val ps:PideviceService,
         var ip = iptableServicekt.findByMac(desdevice.mac!!)
         val url = "http://${ip?.ip}/ds18valuebysensor/${sensor.name}"
         logger.debug("Read URL: ${url}")
-        var value = http.get(url)
+        var value = ""
 
+        try {
+            value = http.get(url)
+        } catch (e: Exception) {
+            var old = readBuffer(desid, sensorid)
+            logger.debug("Try to read Old value in device : ${old}")
+            if (old != null) {
+                if (checkage(old)) {
+                    return old.value
+                }
+            }
+        }
         logger.debug("After read : ${value}")
         if (value != null) {
             try {
                 val value = om.readValue<DS18value>(value, DS18value::class.java)
                 logger.debug("[readservice readdsvalue] read  other complete ds18b20 value :" + value)
-                update(desid,sensorid,value)
+                update(desid, sensorid, value)
                 return value
             } catch (e: IOException) {
                 logger.error("Error   ${e.message}")
@@ -39,12 +50,10 @@ class SensorService(val dbconfigService: DbconfigService,val ps:PideviceService,
 
                 //ถ้า error จะอ่านจาก Buffer ก่อน แล้ว ถ้าไม่เจอก็ null
 
-                var old = readBuffer(desid,sensorid)
+                var old = readBuffer(desid, sensorid)
                 logger.debug("Try to read Old value in device : ${old}")
-                if(old!=null)
-                {
-                    if(checkage(old))
-                    {
+                if (old != null) {
+                    if (checkage(old)) {
                         return old.value
                     }
                 }
@@ -54,17 +63,16 @@ class SensorService(val dbconfigService: DbconfigService,val ps:PideviceService,
         return null
     }
 
-    fun checkage(old:DS18ReadBuffer): Boolean {
-    logger.debug("Check age ")
+    fun checkage(old: DS18ReadBuffer): Boolean {
+        logger.debug("Check age ")
         //21600000  = 6 ชม
-        var readtimeout = dbconfigService.findorcreate("readcache","21600000").value?.toLong()
+        var readtimeout = dbconfigService.findorcreate("readcache", "21600000").value?.toLong()
         var now = Date().time
         var readtime = old.readdate.time
-        var t = now-readtime
+        var t = now - readtime
 
         logger.debug("Test Age ${t} $readtimeout")
-        if(t>readtimeout!!)
-        {
+        if (t > readtimeout!!) {
             logger.debug("Data can not use")
             return false
         }
@@ -73,32 +81,28 @@ class SensorService(val dbconfigService: DbconfigService,val ps:PideviceService,
         return true
 
 
-
     }
-    fun readBuffer(dis:Long ,sid:Long): DS18ReadBuffer? {
-        if(readbuffer.size <1)
+
+    fun readBuffer(dis: Long, sid: Long): DS18ReadBuffer? {
+        if (readbuffer.size < 1)
             return null
 
-        for(b in readbuffer)
-        {
-            if(b.disid.equals(dis) && b.sensorid.equals(sid))
+        for (b in readbuffer) {
+            if (b.disid.equals(dis) && b.sensorid.equals(sid))
                 return b
         }
 
         return null
     }
+
     /**
      * ใช้สำหรับ update ว่าอ่านเมื่อไหร่
      */
-    fun update(did:Long,sid:Long,value:DS18value)
-    {
+    fun update(did: Long, sid: Long, value: DS18value) {
         logger.debug("Update Read buffer")
-        if(readbuffer.size>0)
-        {
-            for(i in readbuffer)
-            {
-                if(i.disid.equals(did) && i.sensorid.equals(sid))
-                {
+        if (readbuffer.size > 0) {
+            for (i in readbuffer) {
+                if (i.disid.equals(did) && i.sensorid.equals(sid)) {
                     i.value = value
                     i.readdate = Date()
                     return
@@ -107,8 +111,9 @@ class SensorService(val dbconfigService: DbconfigService,val ps:PideviceService,
             }
         }
 
-        var n = DS18ReadBuffer(did,sid,value,Date())
+        var n = DS18ReadBuffer(did, sid, value, Date())
         readbuffer.add(n)
+        logger.debug("Buffer size ${readbuffer.size}")
 
     }
 
@@ -117,4 +122,4 @@ class SensorService(val dbconfigService: DbconfigService,val ps:PideviceService,
     }
 }
 
-class DS18ReadBuffer(var disid:Long,var sensorid:Long,var value:DS18value,var readdate:Date)
+class DS18ReadBuffer(var disid: Long, var sensorid: Long, var value: DS18value, var readdate: Date)
