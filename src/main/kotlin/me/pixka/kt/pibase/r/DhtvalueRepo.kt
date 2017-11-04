@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 import me.pixka.pibase.d.Dhtvalue
+import org.springframework.data.jpa.repository.Modifying
 
 @Repository
 interface DhtvalueRepo : JpaRepository<Dhtvalue, Long> {
@@ -20,5 +21,8 @@ interface DhtvalueRepo : JpaRepository<Dhtvalue, Long> {
     fun findgraph(device_id: Long?, s: Date, e: Date): List<*>
 
     fun findTop1ByOrderByValuedateDesc(): Dhtvalue?
+    @Modifying
+    @Query("delete from Dhtvalue d where d.toserver = true")
+    fun deleteBySend()
 
 }

@@ -10,7 +10,15 @@
   <properties>
     <kotlin.version>1.1.51</kotlin.version>
     <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+    <pi4j.version>1.2-SNAPSHOT</pi4j.version>
   </properties>
+  <repositories>
+    <repository>
+      <id>pi4j</id>
+      <name>pi4j</name>
+      <url>https://oss.sonatype.org/content/groups/public</url>
+    </repository>
+  </repositories>
   <dependencies>
 
     <dependency>
@@ -65,19 +73,19 @@
     <dependency>
       <groupId>com.pi4j</groupId>
       <artifactId>pi4j-core</artifactId>
-      <version>1.1</version>
+      <version>${pi4j.version}</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.pi4j/pi4j-device -->
     <dependency>
       <groupId>com.pi4j</groupId>
       <artifactId>pi4j-device</artifactId>
-      <version>1.1</version>
+      <version>${pi4j.version}</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.pi4j/pi4j-gpio-extension -->
     <dependency>
       <groupId>com.pi4j</groupId>
       <artifactId>pi4j-gpio-extension</artifactId>
-      <version>1.1</version>
+      <version>${pi4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>

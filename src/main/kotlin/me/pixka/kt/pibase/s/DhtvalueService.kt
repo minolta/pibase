@@ -43,4 +43,9 @@ class DhtvalueService(override val repo: DhtvalueRepo) : Ds<Dhtvalue>() {
     fun findValueforgraph(pideviceid: Long?, s: Date, e: Date): List<*> {
         return repo.findgraph(pideviceid, s, e)
     }
+
+    fun cleanToserver()
+    {
+        repo.deleteBySend()
+    }
 }

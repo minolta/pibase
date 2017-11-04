@@ -21,27 +21,18 @@ import java.util.*
  * @author kykub
  */
 @Service
-class ReadSensorService {
-    @Autowired
-    private val rs: RoutedataService? = null
-    @Autowired
-    private val its: IptableServicekt? = null
-    @Autowired
-    private val js: JobService? = null
-    @Autowired
-    private val dhts: DhtvalueService? = null
-    @Autowired
-    private val ds18s: Ds18valueService? = null
-    @Autowired
-    private val http: HttpControl? = null
-    @Autowired
-    private val cf: Configfilekt? = null
+class ReadSensorService(val rs: RoutedataService,
+                        val its: IptableServicekt,
+                        val js: JobService,
+                        val dhts: DhtvalueService,
+                        val ds18s: Ds18valueService,
+                        val http: HttpControl,
+                        val cf: Configfilekt,var ps:PideviceService
+                        ) {
 
     private val om = ObjectMapper()
     // now support 4 sensor
-    private val T: Job? = null
     private var HT: Job? = null
-    private val H: Job? = null
     private var DS: Job? = null
     private val port = "80"
     private var readbuffertimeout: String? = null // ใช้สำหรับบอกว่า
@@ -51,7 +42,6 @@ class ReadSensorService {
 
     init {
         logger.info("readsensor constrnctor ")
-
     }
 
     @Throws(Exception::class)
@@ -115,7 +105,7 @@ class ReadSensorService {
         logger.debug("[readservice read] Read from Other URL:" + url)
         try {
             logger.debug("readservice read from url: " + url)
-            val re = http!!.get(url)
+            val re = http.get(url)
             logger.debug("[readservice read] Read value : " + re)
             return re
         } catch (e: Exception) {
@@ -130,7 +120,7 @@ class ReadSensorService {
 
         try {
             val des = route.desmac
-            val ip = its!!.findByMac(des!!)
+            val ip = its.findByMac(des!!)
             logger.debug("[readservice MAC to ip] find iptables object:" + ip!!)
             if (ip != null)
                 return ip.ip
@@ -144,7 +134,7 @@ class ReadSensorService {
 
     fun findRoute(job: Job): Routedata? {
         try {
-            val r = rs!!.findbyJobId(job.id)
+            val r = rs.findbyJobId(job.id)
             logger.debug("[readservice findroute] find route found : " + r)
             return r
         } catch (e: Exception) {
@@ -158,7 +148,7 @@ class ReadSensorService {
     fun findJob(h: String): Job? {
         try {
 
-            val job = js!!.findTop1ByName(h)
+            val job = js.findTop1ByName(h)
             logger.debug("[readservice] JOB type for find pijob :" + job)
             return job
         } catch (e: Exception) {
@@ -217,7 +207,7 @@ class ReadSensorService {
                     logger.debug("[readservice readdsvalue] getvalue  " + re!!)
                     if (re != null) {
                         try {
-                            val value = om.readValue<DS18value>(re, DS18value::class.java!!)
+                            val value = om.readValue<DS18value>(re, DS18value::class.java)
                             logger.debug("[readservice readdsvalue] read  other complete ds18b20 value :" + value)
                             updateDSTimeout(value, this.timeout.toLong())
                             return value
@@ -332,6 +322,8 @@ class ReadSensorService {
     companion object {
         internal var logger = LoggerFactory.getLogger(ReadSensorService::class.java!!)
     }
+
+
 
 }
 

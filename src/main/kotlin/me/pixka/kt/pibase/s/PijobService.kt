@@ -82,29 +82,46 @@ class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijo
         return null
     }
 
+    /**
+     * ใช้สำหรับค้นหา PI job ที่อ่านค่าจาก device ตัวอื่น
+     */
+    fun findDSOTHERJob(jobid:Long): ArrayList<Pijob>? {
+        return repo.findDSOther(jobid)
+    }
+    /**
+     * Save own job in local device
+     */
     fun newpijob(item: Pijob): Pijob {
 
-        val p = Pijob()
+        try {
+            val p = Pijob()
 
-        p.refid = item.id
-        p.etime = item.etime
-        p.stime = item.stime
-        p.sdate = item.sdate
-        p.edate = item.edate
+            p.refid = item.id
+            p.etime = item.etime
+            p.stime = item.stime
+            p.sdate = item.sdate
+            p.edate = item.edate
 
-        p.thigh = item.thigh
-        p.tlow = item.tlow
+            p.thigh = item.thigh
+            p.tlow = item.tlow
 
-        p.hhigh = item.hhigh
-        p.hlow = item.hlow
-        p.runtime = item.runtime
-        p.waittime = item.waittime
-        p.ds18sensor = item.ds18sensor
-        // p.setPidevice(item.getPidevice());
-        p.job = item.job
-        // p.setJob_id(item.getJob_id());
-        logger.debug("[loadpijob] Item to save " + item)
-        return p
+            p.hhigh = item.hhigh
+            p.hlow = item.hlow
+            p.runtime = item.runtime
+            p.waittime = item.waittime
+            p.ds18sensor = item.ds18sensor
+
+            p.desdevice = item.desdevice
+            p.job = item.job
+            logger.debug("[loadpijob] Item to save " + item)
+            return p
+        }catch (e:Exception)
+        {
+            logger.error("Canon add pijob")
+            e.printStackTrace()
+            throw e
+        }
+
     }
 
     fun findByDSDP(id: Long?): List<*>? {

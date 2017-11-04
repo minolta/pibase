@@ -16,13 +16,10 @@ import javax.persistence.*
 class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? = null, var runtime: Long? = null,
             var waittime: Long? = null, var enable: Boolean? = true, @ManyToOne var ds18sensor: DS18sensor? = null,
             @Column(insertable = false, updatable = false) var ds18sensor_id: Long? = null,
-
             @OneToMany(mappedBy = "pijob",
             fetch = FetchType.EAGER, cascade = arrayOf(CascadeType.ALL))
             @JsonManagedReference
             var ports: List<Portstatusinjob>? = null,// สำหรับ เก็บว่า job นี้ทำงานกับ อะไรงานไหนเช่น H
-
-
             @Column(insertable = false, updatable = false) var job_id: Long? = null,// ก็ทำงานกับค่า h อย่างเดียว HT ทำงานกับ H และ T
             @ManyToOne var job: Job? = null, @ManyToOne var pidevice: PiDevice? = null,
             @Column(insertable = false, updatable = false) var pidevice_id: Long? = null, var name: String? = null,// ช่วงความร้อนที่ทำงาน
@@ -36,13 +33,10 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             @ManyToOne var desdevice:PiDevice?=null,@Column(insertable = false,updatable = false) var desdevice_id:Long?=null,
             var user_id:Long?=null) : En() {
 
-    // ค่า ds ที่ทำงาน
 
     override fun toString(): String {
-        return ("Pijob [refid=" + refid + ", sdate=" + sdate + ", edate=" + edate + ", runtime=" + runtime
-                + ", waittime=" + waittime + ", pidevice=" + pidevice + ", pidevice_id=" + pidevice_id + ", name="
-                + name + ", tlow=" + tlow + ", thigh=" + thigh + ", hlow=" + hlow + ", hhigh=" + hhigh + ", stime="
-                + stime + ", etime=" + etime + "]")
+
+        return " id:${id} ref:${refid} name:${name}  runtime:${runtime} waittime${waittime} tlow:${tlow} thigh${thigh} hlow:${hlow} hhigh:${hhigh} job:${job} dssensor:${ds18sensor} read from ${desdevice}"
     }
 
     override fun equals(obj: Any?): Boolean {

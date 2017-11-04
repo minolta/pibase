@@ -64,4 +64,7 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
     @Query("from Pijob p where p.job_id = ?1 and p.ds18sensor_id =?2 and ( p.tlow <= ?3 and p.thigh >= ?3)")
     fun DSBysensor(dsjobid: Long, sensorid: Long, t: BigDecimal):ArrayList<Pijob>?
 
+    @Query("from Pijob p where p.job_id =?1 ")
+    fun findDSOther(jobid: Long):ArrayList<Pijob>?
+
 }
