@@ -57,4 +57,8 @@ class Ds18valueService(override val repo: Ds18valueRepo) : Ds<DS18value>() {
         return repo.findgraphvalueBySensor(sid, s, e)
     }
 
+    fun cleanToserver()
+    {
+        repo.cleanToserver()
+    }
 }

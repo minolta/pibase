@@ -129,7 +129,7 @@ class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijo
 
             // ใช้หา pi job ที่เป็น DSDP
             val list = repo.findByJob_id(id)
-            logger.debug("Findbydsdp Founds " + list.size)
+            logger.debug("Findbydsdp Founds " + list?.size)
             return list
         } catch (e: Exception) {
             logger.error("Findbydsdp ERROR: " + e.message)
@@ -138,7 +138,7 @@ class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijo
         return null
     }
 
-    fun searchByDeviceid(id: Long?, page: Long?, limit: Long?): List<*> {
+    fun searchByDeviceid(id: Long?, page: Long?, limit: Long?): List<Pijob>? {
 
         return repo.searchByDeviceid(id, this.topage(page!!, limit!!)!!)
     }

@@ -20,7 +20,7 @@ class DS18sensor(var name: String? = null,// สำหรับ บอกว่�
                  var refid: Long? = null,
                  var call: String? = null, @ManyToOne var devicegroup: Devicegroup? = null,
                  @Column(insertable = false, updatable = false) var devicegroup_id: Long? = null,
-                 var user_id:Long?=null) : En() {
+                 var user_id: Long? = null) : En() {
 
     fun copy(item: DS18sensor) {
 
@@ -29,4 +29,7 @@ class DS18sensor(var name: String? = null,// สำหรับ บอกว่�
         this.forread = item.forread
     }
 
+    override fun toString(): String {
+        return "DS18B20 Name:${name}  Call:${call}"
+    }
 }

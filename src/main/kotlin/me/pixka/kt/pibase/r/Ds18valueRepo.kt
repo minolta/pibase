@@ -3,6 +3,7 @@ package me.pixka.pibase.r
 import me.pixka.pibase.d.DS18value
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.util.*
@@ -31,4 +32,8 @@ interface Ds18valueRepo : JpaRepository<DS18value, Long> {
 
     @Query("from DS18value d ")
     fun search(search: String, topage: Pageable?): List<DS18value>?
+
+    @Modifying
+    @Query("delete from DS18value d where d.toserver = true")
+    fun cleanToserver()
 }

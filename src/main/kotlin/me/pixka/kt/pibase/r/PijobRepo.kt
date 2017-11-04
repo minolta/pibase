@@ -46,10 +46,11 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
     @Query("from Pijob pj where (pj.tlow <= ?1 and pj.thigh >=?1)  and pj.job_id = ?3 and (pj.stime >= ?2 and pj.etime <= ?2)")
     fun findByDS(t: BigDecimal, time: Date, jobid: Long?): List<*>
 
-    fun findByJob_id(id: Long?): List<*>
+    @Query("from Pijob pj where pj.job_id =?1 and pj.enable = true")
+    fun findByJob_id(id: Long?): List<Pijob>?
 
     @Query("from Pijob pj where pj.pidevice_id = ?1")
-    fun searchByDeviceid(id: Long?, page: Pageable): List<*>
+    fun searchByDeviceid(id: Long?, page: Pageable): List<Pijob>?
 
     /**
      * สำหรับค้นหา one command
@@ -64,7 +65,7 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
     @Query("from Pijob p where p.job_id = ?1 and p.ds18sensor_id =?2 and ( p.tlow <= ?3 and p.thigh >= ?3)")
     fun DSBysensor(dsjobid: Long, sensorid: Long, t: BigDecimal):ArrayList<Pijob>?
 
-    @Query("from Pijob p where p.job_id =?1 ")
+    @Query("from Pijob p where p.job_id =?1  and p.enable = true")
     fun findDSOther(jobid: Long):ArrayList<Pijob>?
 
 }
