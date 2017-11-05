@@ -29,7 +29,7 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
      * @return
      */
     @Query("from Pijob pj where (pj.hlow <= ?1 and pj.hhigh >=?1) and pj.job_id = ?2 and (pj.stime is null and pj.etime is null)  and pj.enable = ?3")
-    fun findByH(h: BigDecimal, id: Long?, b: Boolean): List<*>
+    fun findByH(h: BigDecimal, id: Long?, b: Boolean): List<Pijob>?
 
     @Query("from Pijob pj where (pj.tlow <= ?1 and pj.thigh >=?1)  and pj.job_id = ?2 and (pj.stime is null and pj.etime is null) and pj.enable = ?3")
     fun findByT(t: BigDecimal, jobtypeid: Long?, b: Boolean): List<*>
