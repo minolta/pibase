@@ -37,7 +37,7 @@ class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijo
         return repo.findByHT(h, t, jobid)
     }
 
-    fun findByDS(t: BigDecimal, jobid: Long?): List<*> {
+    fun findByDS(t: BigDecimal, jobid: Long?): List<Pijob>? {
         return repo.findByDS(t, jobid, true) // ต้องเอาแต่ enable เท่านั้น
     }
 
@@ -45,7 +45,7 @@ class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijo
         return repo.findByH(h, jobid, true)
     }
 
-    fun findByT(t: BigDecimal, jobid: Long?): List<*> {
+    fun findByT(t: BigDecimal, jobid: Long?): List<Pijob>? {
         return repo.findByT(t, jobid, true)
     }
 
@@ -143,7 +143,7 @@ class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijo
         return repo.searchByDeviceid(id, this.topage(page!!, limit!!))
     }
 
-    fun findOnecommand(): List<*> {
+    fun findOnecommand(): List<Pijob>? {
         return repo.findByOne(true)
     }
 
