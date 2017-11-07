@@ -19,37 +19,17 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
     var readbuffer = ArrayList<DS18ReadBuffer>()
 
     fun readDsOther(desid: Long, sensorid: Long): DS18value? {
-        var desdevice = ps.find(desid)
-        var sensor = dss.find(sensorid)
-        var ip = iptableServicekt.findByMac(desdevice.mac!!)
-        val url = "http://${ip?.ip}/ds18valuebysensor/${sensor.name}"
-        logger.debug("Read URL: ${url}")
-        var value = ""
-
         try {
-            value = http.get(url)
-        } catch (e: Exception) {
-            var old = readBuffer(desid, sensorid)
-            logger.debug("Try to read Old value in device : ${old}")
-            if (old != null) {
-                if (checkage(old)) {
-                    return old.value
-                }
-            }
-        }
-        logger.debug("After read : ${value}")
-        if (value != null) {
+            var desdevice = ps.find(desid)
+            var sensor = dss.find(sensorid)
+            var ip = iptableServicekt.findByMac(desdevice.mac!!)
+            val url = "http://${ip?.ip}/ds18valuebysensor/${sensor.name}"
+            logger.debug("Read URL: ${url}")
+            var value = ""
+
             try {
-                val value = om.readValue<DS18value>(value, DS18value::class.java)
-                logger.debug("[readservice readdsvalue] read  other complete ds18b20 value :" + value)
-                update(desid, sensorid, value)
-                return value
-            } catch (e: IOException) {
-                logger.error("Error   ${e.message}")
-                e.printStackTrace()
-
-                //ถ้า error จะอ่านจาก Buffer ก่อน แล้ว ถ้าไม่เจอก็ null
-
+                value = http.get(url)
+            } catch (e: Exception) {
                 var old = readBuffer(desid, sensorid)
                 logger.debug("Try to read Old value in device : ${old}")
                 if (old != null) {
@@ -58,6 +38,31 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
                     }
                 }
             }
+            logger.debug("After read : ${value}")
+            if (value != null) {
+                try {
+                    val value = om.readValue<DS18value>(value, DS18value::class.java)
+                    logger.debug("[readservice readdsvalue] read  other complete ds18b20 value :" + value)
+                    update(desid, sensorid, value)
+                    return value
+                } catch (e: IOException) {
+                    logger.error("Error   ${e.message}")
+                    e.printStackTrace()
+
+                    //ถ้า error จะอ่านจาก Buffer ก่อน แล้ว ถ้าไม่เจอก็ null
+
+                    var old = readBuffer(desid, sensorid)
+                    logger.debug("Try to read Old value in device : ${old}")
+                    if (old != null) {
+                        if (checkage(old)) {
+                            return old.value
+                        }
+                    }
+                }
+
+            }
+        } catch (e: Exception) {
+            logger.error("Read DS OTher ${e.message}")
 
         }
         return null
