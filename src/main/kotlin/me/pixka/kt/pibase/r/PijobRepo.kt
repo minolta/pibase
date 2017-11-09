@@ -28,8 +28,15 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
      * @param b
      * @return
      */
-    @Query("from Pijob pj where (pj.hlow <= ?1 and pj.hhigh >=?1) and pj.job_id = ?2 and (pj.stime is null and pj.etime is null)  and pj.enable = ?3")
+    @Query("from Pijob pj where (pj.hlow <= ?1 and pj.hhigh >=?1) and pj.job_id = ?2 and (pj.stime is null and pj.etime is null) and (pj.sdate is null and pj.edate is null)  and pj.enable = ?3")
     fun findByH(h: BigDecimal, id: Long?, b: Boolean): List<Pijob>?
+
+
+    /**
+     * ใช้สำหรับค้นหา H job ในช่วงเวลา  เช่น 10:00 - 11:00
+     */
+    @Query("from Pijob pj where (pj.hlow <= ?1 and pj.hhigh >=?1) and pj.job_id = ?2 and (pj.stime <= ?4 and pj.etime >= ?4) and (pj.sdate is null and pj.edate is null)  and pj.enable = ?3")
+    fun findByHByTime(h:BigDecimal,jobid:Long,enable:Boolean,time:Date)
 
     @Query("from Pijob pj where (pj.tlow <= ?1 and pj.thigh >=?1)  and pj.job_id = ?2 and (pj.stime is null and pj.etime is null) and pj.enable = ?3")
     fun findByT(t: BigDecimal, jobtypeid: Long?, b: Boolean): List<Pijob>?

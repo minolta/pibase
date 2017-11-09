@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.util.*
+import javax.transaction.Transactional
 
 @Repository
 interface Ds18valueRepo : JpaRepository<DS18value, Long> {
@@ -34,6 +35,7 @@ interface Ds18valueRepo : JpaRepository<DS18value, Long> {
     fun search(search: String, topage: Pageable?): List<DS18value>?
 
     @Modifying
+    @Transactional
     @Query("delete from DS18value d where d.toserver = true")
     fun cleanToserver()
 }

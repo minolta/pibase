@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository
 
 import me.pixka.pibase.d.Dhtvalue
 import org.springframework.data.jpa.repository.Modifying
+import javax.transaction.Transactional
 
 @Repository
 interface DhtvalueRepo : JpaRepository<Dhtvalue, Long> {
@@ -22,6 +23,7 @@ interface DhtvalueRepo : JpaRepository<Dhtvalue, Long> {
 
     fun findTop1ByOrderByValuedateDesc(): Dhtvalue?
     @Modifying
+    @Transactional
     @Query("delete from Dhtvalue d where d.toserver = true")
     fun deleteBySend()
 
