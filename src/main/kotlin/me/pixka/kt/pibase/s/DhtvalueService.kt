@@ -36,7 +36,7 @@ class DhtvalueService(override val repo: DhtvalueRepo) : Ds<Dhtvalue>() {
      * @return
      */
     fun notInserver(): List<*> {
-        return repo.findByToserver(false, topage(0, 200)!!)
+        return repo.findByToserver(false, topage(0, 500))
     }
 
 

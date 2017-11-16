@@ -38,7 +38,7 @@ class Ds18valueService(override val repo: Ds18valueRepo) : Ds<DS18value>() {
 
     fun notInserver(): List<DS18value> {
 
-        return repo.findTop100ByToserver(false)
+        return repo.findTop500ByToserver(false)
     }
 
     fun findGraphvalue(piid: Long?, s: Date, e: Date): List<DS18value> {

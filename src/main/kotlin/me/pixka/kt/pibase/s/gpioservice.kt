@@ -39,7 +39,7 @@ class GpioService(var gpio: GpioController?) {
     }
 
     fun addToports(pin: GpioPinDigitalOutput, name: String) {
-        var pi = pin as Pin
+        var pi = pin as GpioPinDigital
         var p = Portstatus(pi, false, name)
     }
 
@@ -112,9 +112,15 @@ class GpioService(var gpio: GpioController?) {
 
     fun findstatus(name: String): Portstatus? {
         for (port in ports) {
-            if (name.equals(port.portname))
+            logger.debug("find Port name ${name} in port ${port.portname}")
+            if (name.equals(port.portname)) {
+
+                logger.debug("Found port ${port}")
                 return port
+            }
         }
+
+        logger.error("")
         return null
 
     }
@@ -123,20 +129,21 @@ class GpioService(var gpio: GpioController?) {
      * ใช้สำหรับ lock port สำหรับ thread
      */
     fun setPort(pin: GpioPinDigitalOutput, state: Boolean): Boolean {
+       /*
         var portstatus = checkPort(pin)
         if (portstatus == null) {
             throw Exception("Port in use")
         }
 
         portstatus.inuse = true
-
+    */
 
         logger.debug("Set ${pin} to ${state}")
         pin.setState(state)
 
         if (state) {
             if (!pin.isHigh) {
-                portstatus.inuse = false
+    //            portstatus.inuse = false
                 throw Exception("Can not set status ${pin} to ${state}")
 
             }
@@ -144,7 +151,7 @@ class GpioService(var gpio: GpioController?) {
         }
 
         if (!pin.isLow) {
-            portstatus.inuse = false
+      //      portstatus.inuse = false
             throw Exception("Can not set status ${pin} to ${state}")
         }
         return true
@@ -178,4 +185,4 @@ class GpioService(var gpio: GpioController?) {
     }
 }
 
-class Portstatus(var pin: Pin? = null, var inuse: Boolean = false, var portname: String = "")
+class Portstatus(var pin: GpioPinDigital? = null, var inuse: Boolean = false, var portname: String = "")
