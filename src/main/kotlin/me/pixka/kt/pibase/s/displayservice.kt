@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
-import java.lang.reflect.Executable
 import java.util.*
 
 @Service
@@ -39,20 +38,20 @@ class DisplayService(val dot: Dotmatrix, val dbs: DbconfigService) {
 
     fun unlock(any: Any) {
         try {
-            logger.info("Unlock display ${obj}")
-            if(any.equals(obj)) {
-                obj = null
-                lock = false
+            synchronized(this) {
+
+                logger.info("Unlock display ${obj}")
+                if (any.equals(obj)) {
+                    obj = null
+                    lock = false
+                } else {
+                    logger.error("Unlock dif obj not unlock")
+                }
             }
-            else{
-                logger.error("Unlock dif obj not unlock")
-            }
-        }
-        catch (e:Exception)
-        {
+
+        } catch (e: Exception) {
             logger.error("ERROR: ${e.message}")
-        }
-        finally {
+        } finally {
             logger.debug("Unlock finally")
         }
     }
