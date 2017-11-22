@@ -23,8 +23,9 @@ class DisplayService(val dot: Dotmatrix, val dbs: DbconfigService) {
 
     /*สำหรับจอง Display*/
 
-    fun lockdisplay(any: Any): Dotmatrix {
+   @Synchronized fun lockdisplay(any: Any): Dotmatrix {
 
+        logger.info("Lock Display By ${any}")
         if (lock) {
             logger.error("Display in use ${obj}")
             throw Exception("Display in use ${obj}")
@@ -36,18 +37,18 @@ class DisplayService(val dot: Dotmatrix, val dbs: DbconfigService) {
 
     }
 
-    fun unlock(any: Any) {
+    @Synchronized fun unlock(any: Any) {
         try {
-            synchronized(this) {
+          //  synchronized(this) {
 
                 logger.info("Unlock display ${obj}")
                 if (any.equals(obj)) {
                     obj = null
                     lock = false
                 } else {
-                    logger.error("Unlock dif obj not unlock")
+                    logger.error("Unlock dif obj not unlock to unlock : ${any}   this object lock ${obj} ")
                 }
-            }
+          //  }
 
         } catch (e: Exception) {
             logger.error("ERROR: ${e.message}")
