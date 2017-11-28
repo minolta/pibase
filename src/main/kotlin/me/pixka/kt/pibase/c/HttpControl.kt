@@ -3,6 +3,7 @@ package me.pixka.c
 import com.fasterxml.jackson.databind.ObjectMapper
 import me.pixka.kt.base.s.ErrorlogService
 import org.apache.http.HttpResponse
+import org.apache.http.client.methods.CloseableHttpResponse
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.StringEntity
@@ -40,7 +41,7 @@ class HttpControl(val err: ErrorlogService) {
     }
 
     @Throws(Exception::class)
-    fun postJson(url: String, obj: Any): HttpResponse {
+    fun postJson(url: String, obj: Any): CloseableHttpResponse {
         val httpClient = HttpClientBuilder.create().build() // Use this
         // instead
         val mapper = ObjectMapper()
