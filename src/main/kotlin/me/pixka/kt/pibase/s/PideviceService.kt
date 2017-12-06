@@ -3,13 +3,12 @@ package me.pixka.pibase.s
 import me.pixka.kt.base.s.Ds
 import me.pixka.pibase.d.PiDevice
 import me.pixka.pibase.r.PideviceRepo
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class PideviceService(override  val repo: PideviceRepo) : Ds<PiDevice>() {
+class PideviceService(override val repo: PideviceRepo) : Ds<PiDevice>() {
     override fun search(search: String, page: Long, limit: Long): List<PiDevice>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return repo.search(search, this.topage(page, limit))
     }
 
     fun findByMac(s: String): PiDevice {
@@ -17,8 +16,8 @@ class PideviceService(override  val repo: PideviceRepo) : Ds<PiDevice>() {
     }
 
 
-    fun search(s: String?, page: Long?, limit: Long?): List<*> {
-        return repo.search(s!!, this.topage(page!!, limit!!)!!)
+    fun search(s: String,uid:Long, page: Long?, limit: Long?): List<PiDevice>? {
+        return repo.search(s,uid, this.topage(page!!, limit!!))
     }
 
     fun create(mac: String): PiDevice? {
