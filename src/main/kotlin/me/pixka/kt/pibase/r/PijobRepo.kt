@@ -1,14 +1,12 @@
 package me.pixka.pibase.r
 
-import java.math.BigDecimal
-import java.util.Date
-
+import me.pixka.pibase.d.Pijob
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
-
-import me.pixka.pibase.d.Pijob
+import java.math.BigDecimal
+import java.util.*
 
 @Repository
 interface PijobRepo : JpaRepository<Pijob, Long> {
@@ -36,7 +34,7 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
      * ใช้สำหรับค้นหา H job ในช่วงเวลา  เช่น 10:00 - 11:00
      */
     @Query("from Pijob pj where (pj.hlow <= ?1 and pj.hhigh >=?1) and pj.job_id = ?2 and (pj.stime <= ?4 and pj.etime >= ?4) and (pj.sdate is null and pj.edate is null)  and pj.enable = ?3")
-    fun findByHByTime(h:BigDecimal,jobid:Long,enable:Boolean,time:Date)
+    fun findByHByTime(h: BigDecimal, jobid: Long, enable: Boolean, time: Date)
 
     @Query("from Pijob pj where (pj.tlow <= ?1 and pj.thigh >=?1)  and pj.job_id = ?2 and (pj.stime is null and pj.etime is null) and pj.enable = ?3")
     fun findByT(t: BigDecimal, jobtypeid: Long?, b: Boolean): List<Pijob>?
@@ -67,12 +65,17 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
      */
     @Query("from Pijob pj where pj.job_id = null and pj.enable = true")
     fun findByOne(b: Boolean): List<Pijob>?
+
     @Query("from Pijob p where p.pidevice.name like %?1% or p.name like %?1% ")
     fun search(search: String, topage: Pageable): List<Pijob>?
+
+    @Query("from Pijob p where (p.pidevice.name like %?1% or p.name like %?1%) and p.addby = ?2 ")
+    fun search(search: String, uid: Long, topage: Pageable): List<Pijob>?
+
     @Query("from Pijob p where p.job_id = ?1 and p.ds18sensor_id =?2 and ( p.tlow <= ?3 and p.thigh >= ?3) and p.enable = true")
-    fun DSBysensor(dsjobid: Long, sensorid: Long, t: BigDecimal):ArrayList<Pijob>?
+    fun DSBysensor(dsjobid: Long, sensorid: Long, t: BigDecimal): ArrayList<Pijob>?
 
     @Query("from Pijob p where p.job_id =?1  and p.enable = true")
-    fun findDSOther(jobid: Long):ArrayList<Pijob>?
+    fun findDSOther(jobid: Long): ArrayList<Pijob>?
 
 }

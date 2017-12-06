@@ -20,6 +20,9 @@ class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijo
         return repo.search(search,topage(page,limit))
     }
 
+    fun search(search: String,uid:Long, page: Long, limit: Long): List<Pijob>? {
+        return repo.search(search,uid,topage(page,limit))
+    }
 
     fun searchMatch(n: String): Pijob? {
         return null
