@@ -2,7 +2,6 @@ package me.pixka.c
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import me.pixka.kt.base.s.ErrorlogService
-import org.apache.http.HttpResponse
 import org.apache.http.client.methods.CloseableHttpResponse
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.client.methods.HttpPost
@@ -35,17 +34,17 @@ class HttpControl(val err: ErrorlogService) {
             err.n("GET HTTPCONTROL", "27-31", "${e.message}")
             throw e
         } finally {
+            logger.debug("Close connection get()")
             response1.close()
         }
 
     }
-
+    val mapper = ObjectMapper()
     @Throws(Exception::class)
     fun postJson(url: String, obj: Any): CloseableHttpResponse {
-        val httpClient = HttpClientBuilder.create().build() // Use this
+        val httpClient = HttpClients.createDefault() // Use this
         // instead
-        val mapper = ObjectMapper()
-
+        var re: CloseableHttpResponse? = null
         try {
 
             val request = HttpPost(url)
@@ -54,9 +53,10 @@ class HttpControl(val err: ErrorlogService) {
             val params = StringEntity(jvalue)
             request.entity = params
             request.setHeader("Content-type", "application/json")
-            return httpClient.execute(request)
+            re = httpClient.execute(request)
             // handle response here...
 
+            return re
         } catch (ex: Exception) {
             logger.error("HTTP POST " + ex.message)
             err.n("HttpControl", "49-55", "${ex.message}")
@@ -65,6 +65,7 @@ class HttpControl(val err: ErrorlogService) {
             // handle exception here
 
         } finally {
+
             // Deprecated
             // httpClient.getConnectionManager().shutdown();
         }
