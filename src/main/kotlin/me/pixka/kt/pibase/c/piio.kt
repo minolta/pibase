@@ -25,7 +25,7 @@ import java.util.*
  * @author kykub
  */
 @Service
-class Piio(val dbcfg:DbconfigService,val cfg: Configfilekt, val ds18s: DS18sensorService, val err: ErrorlogService) {
+class Piio(val dbcfg:DbconfigService, val ds18s: DS18sensorService, val err: ErrorlogService) {
     /**
      * ใช้สำหรับดึง MAC address ของ WIFI
      *

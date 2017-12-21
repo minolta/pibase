@@ -16,7 +16,8 @@ import javax.persistence.Entity
 @Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 class Mixdata(var name: String? = null,
               var mixdate: Date? = null, var mixcount: Long? = null,
-              var checksum: BigDecimal? = null) : En() {
+              var checksum: BigDecimal? = null,var totalsawdust:BigDecimal?=null,
+              var totalwater:BigDecimal?=null,var totalpot:Long?=0/*สำหรับบอกว่ายอดก้อนเท่าไหร่*/) : En() {
     constructor() : this(name = "")
 
 }
