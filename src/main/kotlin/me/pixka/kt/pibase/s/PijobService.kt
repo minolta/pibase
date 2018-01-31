@@ -32,6 +32,9 @@ class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijo
         return repo.findByRefid(id)
     }
 
+    fun findByCounter(id:Long): List<Pijob>? {
+        return repo.findByJob_id(id)
+    }
     fun findByPidevice_id(id: Long?): List<*> {
         return repo.findByPidevice_id(id)
     }
