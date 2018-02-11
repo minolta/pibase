@@ -64,12 +64,12 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
     }
 
     fun editIptable(indevice: Iptableskt, it: Iptableskt) {
-        var indevice = indevice
+        var i = indevice
         try {
-            indevice.ip = it.ip
-            indevice.lastcheckin = it.lastcheckin
-            indevice = service!!.save(indevice)!!
-            logger.debug("Update iptable : ${indevice}")
+            i.ip = it.ip
+            i.lastcheckin = it.lastcheckin
+            i = service.save(i)!!
+            logger.debug("Update iptable : ${i}")
         } catch (e: Exception) {
             e.printStackTrace()
             logger.error("loadiptable editiptable() " + e.message)
@@ -92,8 +92,8 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
         try {
             var nw = network()
             for (n in nw) {
-                var ipdata = n?.split(",")
-                val n = n!!.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                //var ipdata = n?.split(",")
+                val n = n.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 val nn = n[0] + "." + n[1] + "." + n[2] + ".0/24"
                 buffer.add(nn)
             }
@@ -153,7 +153,7 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
 
 
             for (n in network) {
-                var b = findIP(n!!, command!!)
+                var b = findIP(n, command!!)
                 buf.addAll(b)
             }
 

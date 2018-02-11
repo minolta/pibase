@@ -4,6 +4,7 @@ package me.pixka.kt.pibase.c
 import me.pixka.kt.base.s.DbconfigService
 import me.pixka.kt.base.s.ErrorlogService
 import me.pixka.ktbase.io.Configfilekt
+import me.pixka.pibase.d.DS18sensor
 import me.pixka.pibase.d.DS18value
 import me.pixka.pibase.d.Dhtvalue
 import me.pixka.pibase.s.DS18sensorService
@@ -25,7 +26,7 @@ import java.util.*
  * @author kykub
  */
 @Service
-class Piio(val dbcfg:DbconfigService,val cfg: Configfilekt, val ds18s: DS18sensorService, val err: ErrorlogService) {
+class Piio(val dbcfg:DbconfigService, val ds18s: DS18sensorService, val err: ErrorlogService) {
     /**
      * ใช้สำหรับดึง MAC address ของ WIFI
      *
@@ -198,40 +199,7 @@ class Piio(val dbcfg:DbconfigService,val cfg: Configfilekt, val ds18s: DS18senso
                             }
                         }
                     }
-                    /*
-                    BufferedReader(FileReader(f)).use { br ->
-                        var output: String
-                        while ((output = br.readLine()) != null) {
-                            val idx = output.indexOf("t=")
-                            if (idx > -1) {
-                                // Temp data (multiplied by 1000) in 5 chars
-                                // after t=
-                                var tempC = java.lang.Float.parseFloat(output.substring(output.indexOf("t=") + 2))
-                                // Divide by 1000 to get degrees Celsius
-                                val t = BigDecimal((tempC /= 1000f).toDouble())
 
-                                // System.out.print(String.format("%.1f ", tempC));
-                                val tempF = tempC * 9 / 5 + 32
-                                // logger.debug(String.format("%.1f", tempF));
-                                val ds = DS18value()
-                                ds.t = t.setScale(1, RoundingMode.HALF_UP)
-
-                                /*
-                     * o.setTmp(t.setScale(1, RoundingMode.HALF_UP));
-                     * o.setSn(file.getName()); buf.add(o);
-                     */
-                                /**
-                                 * บันทึก Sensor ที่อ่านด้วย
-                                 */
-                                val ss = DS18sensor()
-                                ss.name = file.name
-                                ds.ds18sensor = ss
-                                buf.add(ds)
-
-                            }
-                        }
-                    }
-                    */
 
 
                 } catch (ex: Exception) {
@@ -248,6 +216,23 @@ class Piio(val dbcfg:DbconfigService,val cfg: Configfilekt, val ds18s: DS18senso
         throw Exception("Canot read ds18b20")
     }
 
+    fun readDs18(sensorname:String): BigDecimal?
+    {
+        var values = reads()
+
+        if(values!=null)
+        {
+            for(v in values)
+            {
+                if(v.ds18sensor?.name.equals(sensorname))
+                {
+                    return v.t
+                }
+            }
+        }
+
+        return null
+    }
     internal inner class DirectoryFileFilter : FileFilter {
         override fun accept(file: File): Boolean {
             val dirName = file.name

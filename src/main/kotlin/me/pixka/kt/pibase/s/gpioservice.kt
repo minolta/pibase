@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 
 @Service
 @Profile("pi")
-class GpioService(var gpio: GpioController?) {
+class GpioService(val gpio: GpioController) {
 
     var ports = ArrayList<Portstatus>()
 
@@ -19,23 +19,23 @@ class GpioService(var gpio: GpioController?) {
          * สำหรับเปิด DELAY ต้อง HIGH ก่อน
          */
 
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_00, "p0", PinState.HIGH), "p0")
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_01, "p1", PinState.HIGH), "p1")
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_02, "p2", PinState.HIGH), "p2")
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_03, "p3", PinState.HIGH), "p3")
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_04, "p4", PinState.HIGH), "p4")
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_05, "p5", PinState.HIGH), "p5")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "p0", PinState.LOW), "p0")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "p1", PinState.LOW), "p1")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "p2", PinState.LOW), "p2")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "p3", PinState.LOW), "p3")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "p4", PinState.LOW), "p4")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05, "p5", PinState.LOW), "p5")
 
 
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_21, "p21", PinState.LOW), "p21")
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_22, "p22", PinState.LOW), "p22")
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_23, "p23", PinState.LOW), "p23")
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_24, "p24", PinState.LOW), "p24")
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_25, "p25", PinState.LOW), "p25")
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_26, "p26", PinState.LOW), "p26")
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_27, "p27", PinState.LOW), "p27")
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_28, "p28", PinState.LOW), "p28")
-        addToports(gpio!!.provisionDigitalOutputPin(RaspiPin.GPIO_29, "p29", PinState.LOW), "p29")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21, "p21", PinState.HIGH), "p21")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22, "p22", PinState.HIGH), "p22")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, "p23", PinState.LOW), "p23")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, "p24", PinState.LOW), "p24")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "p25", PinState.LOW), "p25")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_26, "p26", PinState.LOW), "p26")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_27, "p27", PinState.LOW), "p27")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_28, "p28", PinState.LOW), "p28")
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_29, "p29", PinState.LOW), "p29")
     }
 
     fun addToports(pin: GpioPinDigitalOutput, name: String) {
@@ -47,9 +47,7 @@ class GpioService(var gpio: GpioController?) {
         try {
             logger.debug("Get Digital pin ${pinname}")
             if (gpio != null) {
-
-
-                var pin = gpio?.getProvisionedPin(pinname) as GpioPinDigitalOutput
+                var pin = gpio.getProvisionedPin(pinname) as GpioPinDigitalOutput
                 logger.debug("Get pin ${pin}")
                 return pin
             }
@@ -59,30 +57,40 @@ class GpioService(var gpio: GpioController?) {
         return null
     }
 
-    fun unlockport(name:String)
-    {
-        var port=findstatus(name)
-        if(port!=null)
-        {
-            port.inuse=false //unlock port
+    fun unlockport(name: String) {
+        var port = findstatus(name)
+        if (port != null) {
+            port.inuse = false //unlock port
         }
     }
+
     fun resettoDefault(pin: GpioPinDigitalOutput) {
         try {
+
+
+            logger.debug(" toresetport " + pin.name)
             if (pin.name.equals("p0")) {
-                setPort(pin, true)
-            } else if (pin.name.equals("p1")) {
-                setPort(pin, true)
-            } else if (pin.name.equals("p2")) {
-                setPort(pin, true)
-            } else if (pin.name.equals("p3")) {
-                setPort(pin, true)
-            } else if (pin.name.equals("p4")) {
-                setPort(pin, true)
-            } else if (pin.name.equals("p5")) {
-                setPort(pin, true)
-            } else
                 setPort(pin, false)
+            } else if (pin.name.equals("p1")) {
+                setPort(pin, false)
+            } else if (pin.name.equals("p2")) {
+                setPort(pin, false)
+            } else if (pin.name.equals("p3")) {
+                setPort(pin, false)
+            } else if (pin.name.equals("p4")) {
+                setPort(pin, false)
+            } else if (pin.name.equals("p5")) {
+                setPort(pin, false)
+            } else if (pin.name.equals("p21")) {
+                logger.debug(" toresetportto  p21 to true")
+                setPort(pin, true)
+            } else if (pin.name.equals("p22")) {
+                setPort(pin, true)
+                logger.debug(" toresetportto  p22 to true")
+            } else {
+                logger.debug("${pin} toresetportto false")
+                setPort(pin, false)
+            }
             unlockport(pin.name)
 
 
@@ -129,29 +137,27 @@ class GpioService(var gpio: GpioController?) {
      * ใช้สำหรับ lock port สำหรับ thread
      */
     fun setPort(pin: GpioPinDigitalOutput, state: Boolean): Boolean {
-       /*
-        var portstatus = checkPort(pin)
-        if (portstatus == null) {
-            throw Exception("Port in use")
-        }
+        /*
+         var portstatus = checkPort(pin)
+         if (portstatus == null) {
+             throw Exception("Port in use")
+         }
 
-        portstatus.inuse = true
-    */
+         portstatus.inuse = true
+     */
 
-        logger.debug("Set ${pin} to ${state}")
+        logger.debug("setpin ${pin} to ${state}")
         pin.setState(state)
-
         if (state) {
             if (!pin.isHigh) {
-    //            portstatus.inuse = false
+                //            portstatus.inuse = false
                 throw Exception("Can not set status ${pin} to ${state}")
-
             }
             return true
         }
 
         if (!pin.isLow) {
-      //      portstatus.inuse = false
+            //      portstatus.inuse = false
             throw Exception("Can not set status ${pin} to ${state}")
         }
         return true
