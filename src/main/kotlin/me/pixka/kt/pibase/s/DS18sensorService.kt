@@ -34,6 +34,8 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
     fun search(s:String,uid:Long,page:Long=0,limit:Long=50):List<DS18sensor>?{
         return repo.search(s,uid,this.topage(page,limit))
     }
+
+    fun test(){}
     fun search(s: String?, page: Long?, limit: Long?): List<DS18sensor>? {
         return repo.search(s!!, this.topage(page!!, limit!!))
     }
