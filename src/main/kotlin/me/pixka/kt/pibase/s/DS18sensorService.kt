@@ -28,6 +28,8 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
     fun newobject(n: String): DS18sensor {
         val s = DS18sensor()
         s.name = n
+        s.call = n
+
         return s
     }
 

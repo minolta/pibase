@@ -5,9 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import me.pixka.pibase.d.Pijob
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class Pijobobj {
+class Pijobobj(var id: Long? = null,
+               var enable: Boolean? = true,
+               var pijob: Pijob? = null,
+               var ports: List<Portstatusobj>? = null) {
 
-    var pijob: Pijob? = null
-    var ports: List<Portstatusobj>? = null
 
 }

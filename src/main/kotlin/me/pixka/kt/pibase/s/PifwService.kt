@@ -7,33 +7,31 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class PifwService : Ds<Pifw>() {
+class PifwService(override val repo:PifwRepo) : Ds<Pifw>() {
     override fun search(search: String, page: Long, limit: Long): List<Pifw>? {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    @Autowired
-    private val dao: PifwRepo? = null
 
     fun searchMatch(n: String): Pifw? {
         return null
     }
 
     fun findByVersion(ver: String): Pifw {
-        return dao!!.findByVerno(ver)
+        return repo.findByVerno(ver)
     }
 
     fun last(): Pifw {
-        return dao!!.findTop1ByOrderByIdDesc()
+        return repo.findTop1ByOrderByIdDesc()
     }
 
 
     fun findlast(): Pifw {
-        return dao!!.findTop1ByOrderByIdDesc()
+        return repo.findTop1ByOrderByIdDesc()
     }
 
     fun last(groupid: Long?): Pifw {
-        return dao!!.findTop1ByPifwgroup_idOrderByIdDesc(groupid)
+        return repo.findTop1ByPifwgroup_idOrderByIdDesc(groupid)
     }
 
 }

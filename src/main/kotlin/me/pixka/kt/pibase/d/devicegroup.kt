@@ -9,7 +9,8 @@ import javax.persistence.Column
 import javax.persistence.Entity
 
 @Entity
-class Devicegroup(var name: String? = null,@Column(columnDefinition = "text") var description:String?=null) : En() {
+class Devicegroup(var name: String? = null,
+                  @Column(columnDefinition = "text") var description: String? = null) : En() {
 
 }
 
@@ -18,5 +19,5 @@ interface DevicegroupRepo : JpaRepository<Devicegroup, Long> {
     @Query("from Devicegroup d where d.name like %?1%")
     fun search(search: String, topage: Pageable): List<Devicegroup>?
 
-    fun findByName(n: String) :Devicegroup?
+    fun findByName(n: String): Devicegroup?
 }
