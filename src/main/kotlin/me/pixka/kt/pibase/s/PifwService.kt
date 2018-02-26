@@ -9,12 +9,13 @@ import org.springframework.stereotype.Service
 @Service
 class PifwService(override val repo:PifwRepo) : Ds<Pifw>() {
     override fun search(search: String, page: Long, limit: Long): List<Pifw>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        return repo.search(search,topage(page,limit))
     }
 
 
     fun searchMatch(n: String): Pifw? {
-        return null
+        return repo.findByVerno(n)
     }
 
     fun findByVersion(ver: String): Pifw {
