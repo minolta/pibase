@@ -23,7 +23,7 @@ class DS18value(@ManyToOne var pidevice: PiDevice? = null,
                 @Column(insertable = false, updatable = false) var ds18sensor_id: Long? = null) : En() {
 
     override fun toString(): String {
-        return ("DS18value [pidevice=" + pidevice + ", pidevice_id=" + pidevice_id + ", t=" + t + ", valuedate="
+        return ("DS18value [pidevice=" + pidevice?.name + ", pidevice_id=" + pidevice_id + ", t=" + t + ", valuedate="
                 + valuedate + ", ip=" + ip + ", toserver=" + toserver + "]")
     }
 

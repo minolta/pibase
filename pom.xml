@@ -4,11 +4,11 @@
     <groupId>me.pixka.kt</groupId>
     <artifactId>pibasekt</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.2-stable</version>
+    <version>1.0.3-stable</version>
     <name>pibasekt</name>
     <url>http://maven.apache.org</url>
     <properties>
-        <kotlin.version>1.2.21</kotlin.version>
+        <kotlin.version>1.2.30</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <pi4j.version>1.2-SNAPSHOT</pi4j.version>
     </properties>
@@ -21,6 +21,26 @@
       </repository>
     </repositories>
     -->
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-kotlin-kotlin-dev</id>
+            <name>bintray</name>
+            <url>https://dl.bintray.com/kotlin/kotlin-dev</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-kotlin-kotlin-dev</id>
+            <name>bintray-plugins</name>
+            <url>https://dl.bintray.com/kotlin/kotlin-dev</url>
+        </pluginRepository>
+    </pluginRepositories>
     <dependencies>
 
         <dependency>
@@ -106,6 +126,7 @@
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
+       
 
     </dependencies>
     <build>

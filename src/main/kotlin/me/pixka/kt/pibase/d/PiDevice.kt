@@ -26,4 +26,9 @@ class PiDevice(
         var user_id: Long? = null) : En() {
 
     constructor() : this(ip = null)
+
+
+    override fun toString(): String {
+        return "Device : ${name} ${mac}"
+    }
 }
