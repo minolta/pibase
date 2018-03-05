@@ -18,6 +18,7 @@ class DS18sensor(var name: String? = null,// สำหรับ บอกว่�
                  var forread: Boolean? = false,// จะใช้ตัวนี้สำหรับอ่านค่าแต่ถ้ามีตัวเดียวก็ใช้ตัวนี้อ่าน
                  var last: BigDecimal? = null,
                  var refid: Long? = null,
+                 @Column(columnDefinition = "text") var description: String? = null,
                  var call: String? = null, @ManyToOne var devicegroup: Devicegroup? = null,
                  @Column(insertable = false, updatable = false) var devicegroup_id: Long? = null,
                  var user_id: Long? = null) : En() {

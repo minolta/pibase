@@ -1,6 +1,5 @@
 package me.pixka.pibase.d
 
-import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import me.pixka.kt.base.d.En
@@ -31,7 +30,9 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             var etime: Date? = null,
             @Column(columnDefinition = "text") var description:String?=null,
             @ManyToOne var desdevice:PiDevice?=null,@Column(insertable = false,updatable = false) var desdevice_id:Long?=null,
-            var user_id:Long?=null) : En() {
+            var user_id:Long?=null,
+            var lowtime:Long?=null ,var hightime:Long?=null,
+            var stimes:String?=null,var etimes:String?=null) : En() {
 
 
     override fun toString(): String {
@@ -58,5 +59,9 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
         this.runtime = from.runtime
         this.waittime = from.waittime
         this.enable = from.enable
+        this.etimes = from.etimes
+        this.stimes = from.stimes
+        this.hightime = from.hightime
+        this.lowtime = from.lowtime
     }
 }

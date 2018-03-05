@@ -8,30 +8,31 @@ import javax.persistence.Cacheable
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.ManyToOne
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Cacheable
 @Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
-class Portstatusinjob : En() {
-    @ManyToOne
-    var portname: Portname? = null
-    @Column(insertable = false, updatable = false)
-    var portname_id: Long? = null
+class Portstatusinjob(@ManyToOne
+                      var portname: Portname? = null,
+                      @Column(insertable = false, updatable = false)
+                      var portname_id: Long? = null,
 
-    // private String status;
-    var refid: Long? = null
+                      var refid: Long? = null,
 
-    @ManyToOne
-    var status: Logistate? = null
+                      @ManyToOne
+                      var status: Logistate? = null,
 
-    @Column(insertable = false, updatable = false)
-    var status_id: Long? = null
+                      @Column(insertable = false, updatable = false)
+                      var status_id: Long? = null,
 
-    @ManyToOne
-    @JsonBackReference
-    var pijob: Pijob? = null
-    @Column(insertable = false, updatable = false)
-    var pijob_id: Long? = null
+                      @ManyToOne
+                      @JsonBackReference
+                      var pijob: Pijob? = null,
+                      @Column(insertable = false, updatable = false)
+                      var pijob_id: Long? = null,
+                      var enable: Boolean? = true
+) : En() {
 
     fun copy(from: Portstatusinjob) {
         this.portname = from.portname

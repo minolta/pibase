@@ -29,6 +29,10 @@ class DhtvalueService(override val repo: DhtvalueRepo) : Ds<Dhtvalue>() {
         // return dao.findTop1ByOrderByIdDesc();
         return repo.findTop1ByOrderByValuedateDesc()
     }
+    fun last(id:Long):Dhtvalue?{
+        return repo.findTop1ByPidevice_idOrderByValuedateDesc(id)
+    }
+
 
     /**
      * ใช้สำหรับดึงข้อมูลจาก local ที่ยังไม่ส่งไปยัง Server toserver = false;

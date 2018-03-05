@@ -5,23 +5,21 @@ import me.pixka.pibase.d.Pijob
 import me.pixka.pibase.r.Ds18sensorRepo
 import me.pixka.pibase.r.PijobRepo
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 @Service
-class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijob>() {
+class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<Pijob>() {
     override fun search(search: String, page: Long, limit: Long): List<Pijob>? {
-        return repo.search(search,topage(page,limit))
+        return repo.search(search, topage(page, limit))
     }
 
-    fun search(search: String,uid:Long, page: Long, limit: Long): List<Pijob>? {
-        return repo.search(search,uid,topage(page,limit))
+    fun search(search: String, uid: Long, page: Long, limit: Long): List<Pijob>? {
+        return repo.search(search, uid, topage(page, limit))
     }
 
     fun searchMatch(n: String): Pijob? {
@@ -32,9 +30,10 @@ class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijo
         return repo.findByRefid(id)
     }
 
-    fun findByCounter(id:Long): List<Pijob>? {
+    fun findByCounter(id: Long): List<Pijob>? {
         return repo.findByJob_id(id)
     }
+
     fun findByPidevice_id(id: Long?): List<*> {
         return repo.findByPidevice_id(id)
     }
@@ -88,12 +87,32 @@ class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijo
         return null
     }
 
+
+    fun findByHBytime(h: BigDecimal, time: Long, jobid: Long?): List<Pijob>? {
+
+
+        try {
+
+            logger.debug("[ds18b20 finbyHbytimetime Hbytime] Time to search " + time)
+            val list = repo.findByHByTime(h, jobid!!, true, time)
+            logger.debug("[ds18b20 finbydstime Hbytime] Job founds " + list!!.size)
+            return list
+        } catch (e: Exception) {
+            logger.error("[ds18b20 finbydstime Hbytime] " + e.message)
+            e.printStackTrace()
+        }
+
+        return null
+    }
+
+
     /**
      * ใช้สำหรับค้นหา PI job ที่อ่านค่าจาก device ตัวอื่น
      */
-    fun findDSOTHERJob(jobid:Long): ArrayList<Pijob>? {
+    fun findDSOTHERJob(jobid: Long): ArrayList<Pijob>? {
         return repo.findDSOther(jobid)
     }
+
     /**
      * Save own job in local device
      */
@@ -116,13 +135,16 @@ class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijo
             p.runtime = item.runtime
             p.waittime = item.waittime
             p.ds18sensor = item.ds18sensor
+            p.stimes = item.stimes
+            p.etimes = item.etimes
+            p.lowtime = item.lowtime
+            p.hightime = item.hightime
 
             p.desdevice = item.desdevice
             p.job = item.job
             logger.debug("[loadpijob] Item to save " + item)
             return p
-        }catch (e:Exception)
-        {
+        } catch (e: Exception) {
             logger.error("Canon add pijob")
             e.printStackTrace()
             throw e
@@ -161,12 +183,27 @@ class PijobService(override var repo:PijobRepo,val dss:Ds18sensorRepo) : Ds<Pijo
      * job จาก dsjobid
      */
 
-    fun findDSJOBBySensor(t:BigDecimal,sensorid:Long,dsjobid:Long): ArrayList<Pijob>? {
+    fun findDSJOBBySensor(t: BigDecimal, sensorid: Long, dsjobid: Long): ArrayList<Pijob>? {
 
-        return repo.DSBysensor(dsjobid,sensorid,t)
+        return repo.DSBysensor(dsjobid, sensorid, t)
     }
+
     companion object {
         internal var logger = LoggerFactory.getLogger(PijobService::class.java)
     }
 
+    val d = SimpleDateFormat("yyyy/mm/dd HH:mm")
+    val df = SimpleDateFormat("HH:mm")
+    fun timeTolong(t: String): Long {
+        var n = "1970/1/1 " + t
+
+        var d = d.parse(n)
+        return d.time
+
+    }
+
+    fun datetoLong(d: Date): Long {
+        var s = df.format(d)
+        return timeTolong(s)
+    }
 }

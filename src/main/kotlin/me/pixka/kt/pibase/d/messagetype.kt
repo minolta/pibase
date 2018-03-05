@@ -9,15 +9,17 @@ import javax.persistence.Column
 import javax.persistence.Entity
 
 @Entity
-class Devicegroup(var name: String? = null,
+class MessageType(var name: String,
                   @Column(columnDefinition = "text") var description: String? = null) : En() {
 
+    constructor():this(name="")
 }
 
-@Repository
-interface DevicegroupRepo : JpaRepository<Devicegroup, Long> {
-    @Query("from Devicegroup d where d.name like %?1%")
-    fun search(search: String, topage: Pageable): List<Devicegroup>?
 
-    fun findByName(n: String): Devicegroup?
+@Repository
+interface MessageTypeRepo : JpaRepository<MessageType, Long> {
+    @Query("from MessageType mt where mt.name like %?1%")
+    abstract fun search(search: String, topage: Pageable): List<MessageType>?
+
+    abstract fun findByName(n: String): MessageType?
 }

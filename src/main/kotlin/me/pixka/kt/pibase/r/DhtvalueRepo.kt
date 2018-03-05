@@ -27,4 +27,6 @@ interface DhtvalueRepo : JpaRepository<Dhtvalue, Long> {
     @Query("delete from Dhtvalue d where d.toserver = true")
     fun deleteBySend()
 
+    fun findTop1ByPidevice_idOrderByValuedateDesc(id: Long): Dhtvalue?
+
 }
