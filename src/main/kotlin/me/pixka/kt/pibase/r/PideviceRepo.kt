@@ -12,10 +12,10 @@ interface PideviceRepo : JpaRepository<PiDevice, Long> {
 
     fun findByMac(s: String): PiDevice
 
-    @Query("from PiDevice p where p.name like %?1% or p.mac like %?1%")
+    @Query("from PiDevice p where p.name like %?1% or p.mac like %?1% order by p.id")
     fun search(s: String, page: Pageable): List<PiDevice>?
 
-    @Query("from PiDevice p where (p.name like %?1% or p.mac like %?1%) and p.user_id = ?2")
+    @Query("from PiDevice p where (p.name like %?1% or p.mac like %?1%) and p.user_id = ?2 order by p.id")
     fun search(s: String,uid:Long, page: Pageable): List<PiDevice>?
 
     fun findByName(n: String): PiDevice

@@ -66,10 +66,10 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
     @Query("from Pijob pj where pj.job_id = null and pj.enable = true")
     fun findByOne(b: Boolean): List<Pijob>?
 
-    @Query("from Pijob p where p.pidevice.name like %?1% or p.name like %?1% ")
+    @Query("from Pijob p where p.pidevice.name like %?1% or p.name like %?1%  order by p.pidevice_id,p.id")
     fun search(search: String, topage: Pageable): List<Pijob>?
 
-    @Query("from Pijob p where (p.pidevice.name like %?1% or p.name like %?1%) and p.addby = ?2 ")
+    @Query("from Pijob p where (p.pidevice.name like %?1% or p.name like %?1%) and p.addby = ?2  order by p.pidevice_id,p.id")
     fun search(search: String, uid: Long, topage: Pageable): List<Pijob>?
 
     @Query("from Pijob p where p.job_id = ?1 and p.ds18sensor_id =?2 and ( p.tlow <= ?3 and p.thigh >= ?3) and p.enable = true")

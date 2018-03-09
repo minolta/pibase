@@ -3,12 +3,11 @@ package me.pixka.kt.pibase.c
 
 import me.pixka.kt.base.s.DbconfigService
 import me.pixka.kt.base.s.ErrorlogService
-import me.pixka.ktbase.io.Configfilekt
-import me.pixka.pibase.d.DS18sensor
 import me.pixka.pibase.d.DS18value
 import me.pixka.pibase.d.Dhtvalue
 import me.pixka.pibase.s.DS18sensorService
 import org.slf4j.LoggerFactory
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import java.io.File
 import java.io.FileFilter
@@ -26,7 +25,8 @@ import java.util.*
  * @author kykub
  */
 @Service
-class Piio(val dbcfg:DbconfigService, val ds18s: DS18sensorService, val err: ErrorlogService) {
+@Profile("pi", "lite","server")
+class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: ErrorlogService) {
     /**
      * ใช้สำหรับดึง MAC address ของ WIFI
      *
@@ -46,8 +46,8 @@ class Piio(val dbcfg:DbconfigService, val ds18s: DS18sensorService, val err: Err
     @Throws(IOException::class)
     fun wifiMacAddress(): String {
         try {
-            var path = dbcfg.findorcreate("wlpath","/sys/class/net/wlan0/address")
-            var contents = String(Files.readAllBytes(Paths.get(path?.value)))
+            var path = "/sys/class/net/wlan0/address"
+            var contents = String(Files.readAllBytes(Paths.get(path)))
             contents = contents.replace(" ".toRegex(), "")
             contents = contents.replace("\n".toRegex(), "")
             contents = contents.replace("\r".toRegex(), "")
@@ -97,7 +97,7 @@ class Piio(val dbcfg:DbconfigService, val ds18s: DS18sensorService, val err: Err
      * ใช้ load config ถ้ามีการกำหนดก็จะเปลียน ตำแหน่งอ่านค่าของ dht22
      */
     private fun loadpath() {
-        dhtDirPath = dbcfg.findorcreate("dhtpath","/sensor/dht22")?.value!!
+        dhtDirPath = dbcfg.findorcreate("dhtpath", "/sensor/dht22")?.value!!
     }
 
     /**
@@ -107,9 +107,10 @@ class Piio(val dbcfg:DbconfigService, val ds18s: DS18sensorService, val err: Err
      */
     fun wifiIpAddress(): String? {
 
-        var path = dbcfg.findorcreate("wlpath","/sys/class/net/wlan0/address")?.value
-        var contents: String? = String(Files.readAllBytes(Paths.get(path)))
-        return contents
+        var path = "/sensor/wlan"
+        var content: String? = String(Files.readAllBytes(Paths.get(path)))
+        content = content?.replace(" ".toRegex(), "")?.replace("(\\r|\\n)".toRegex(), "")
+        return content
     }
 
     /**
@@ -201,7 +202,6 @@ class Piio(val dbcfg:DbconfigService, val ds18s: DS18sensorService, val err: Err
                     }
 
 
-
                 } catch (ex: Exception) {
                     logger.error(ex.message)
                     err.n("Piio", "198-214", "${ex.message}")
@@ -216,16 +216,12 @@ class Piio(val dbcfg:DbconfigService, val ds18s: DS18sensorService, val err: Err
         throw Exception("Canot read ds18b20")
     }
 
-    fun readDs18(sensorname:String): BigDecimal?
-    {
+    fun readDs18(sensorname: String): BigDecimal? {
         var values = reads()
 
-        if(values!=null)
-        {
-            for(v in values)
-            {
-                if(v.ds18sensor?.name.equals(sensorname))
-                {
+        if (values != null) {
+            for (v in values) {
+                if (v.ds18sensor?.name.equals(sensorname)) {
                     return v.t
                 }
             }
@@ -233,6 +229,7 @@ class Piio(val dbcfg:DbconfigService, val ds18s: DS18sensorService, val err: Err
 
         return null
     }
+
     internal inner class DirectoryFileFilter : FileFilter {
         override fun accept(file: File): Boolean {
             val dirName = file.name

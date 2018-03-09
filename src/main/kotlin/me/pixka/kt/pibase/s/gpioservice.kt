@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 
 @Service
-@Profile("pi")
+@Profile("pi", "lite")
 class GpioService(val gpio: GpioController) {
 
     var ports = ArrayList<Portstatus>()
@@ -67,7 +67,7 @@ class GpioService(val gpio: GpioController) {
     fun resettoDefault(pin: GpioPinDigitalOutput) {
         try {
 
-
+            logger.info(" toresetport " + pin.name)
             logger.debug(" toresetport " + pin.name)
             if (pin.name.equals("p0")) {
                 setPort(pin, false)
@@ -147,6 +147,7 @@ class GpioService(val gpio: GpioController) {
      */
 
         logger.debug("setpin ${pin} to ${state}")
+        logger.info("Set pin ${pin} to ${state}")
         pin.setState(state)
         if (state) {
             if (!pin.isHigh) {
