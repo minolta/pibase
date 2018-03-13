@@ -24,8 +24,9 @@ class GpioService(val gpio: GpioController) {
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "p2", PinState.LOW), "p2")
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "p3", PinState.LOW), "p3")
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "p4", PinState.LOW), "p4")
-        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05, "p5", PinState.LOW), "p5")
 
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05, "p5", PinState.LOW), "p5")
+        //addToports(gpio.provisionDigitalInputPin(RaspiBcmPin.GPIO_05, "p5"), "p5")
 
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21, "p21", PinState.HIGH), "p21")
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22, "p22", PinState.HIGH), "p22")
@@ -38,7 +39,7 @@ class GpioService(val gpio: GpioController) {
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_29, "p29", PinState.LOW), "p29")
     }
 
-    fun addToports(pin: GpioPinDigitalOutput, name: String) {
+    fun addToports(pin: GpioPinDigital, name: String) {
         var pi = pin as GpioPinDigital
         var p = Portstatus(pi, false, name)
     }
@@ -162,6 +163,10 @@ class GpioService(val gpio: GpioController) {
             throw Exception("Can not set status ${pin} to ${state}")
         }
         return true
+    }
+
+    fun readPort(pin: GpioPinDigitalInput): Int {
+        return pin.state.value
     }
 
     fun revertDigitalpin(pin: GpioPinDigitalOutput): Boolean {

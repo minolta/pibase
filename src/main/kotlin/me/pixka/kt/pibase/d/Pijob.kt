@@ -16,7 +16,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             var waittime: Long? = null, var enable: Boolean? = true, @ManyToOne var ds18sensor: DS18sensor? = null,
             @Column(insertable = false, updatable = false) var ds18sensor_id: Long? = null,
             @OneToMany(mappedBy = "pijob",
-            fetch = FetchType.EAGER, cascade = arrayOf(CascadeType.ALL))
+                    fetch = FetchType.EAGER, cascade = arrayOf(CascadeType.ALL))
             @JsonManagedReference
             var ports: List<Portstatusinjob>? = null,// สำหรับ เก็บว่า job นี้ทำงานกับ อะไรงานไหนเช่น H
             @Column(insertable = false, updatable = false) var job_id: Long? = null,// ก็ทำงานกับค่า h อย่างเดียว HT ทำงานกับ H และ T
@@ -24,15 +24,21 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             @Column(insertable = false, updatable = false) var pidevice_id: Long? = null, var name: String? = null,// ช่วงความร้อนที่ทำงาน
             @Column(precision = 10, scale = 3) var tlow: BigDecimal? = null, @Column(precision = 10, scale = 3) var thigh: BigDecimal? = null,// ช่วงความชื้นที่ทำงาน
             @Column(precision = 10, scale = 3) var hlow: BigDecimal? = null, @Column(precision = 10, scale = 3) var hhigh: BigDecimal? = null,
-           /* @Temporal(TemporalType.TIME) @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss") */
+        /* @Temporal(TemporalType.TIME) @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss") */
             var stime: Date? = null,
-            /*@Temporal(TemporalType.TIME) @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss") */
+        /*@Temporal(TemporalType.TIME) @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss") */
             var etime: Date? = null,
-            @Column(columnDefinition = "text") var description:String?=null,
-            @ManyToOne var desdevice:PiDevice?=null,@Column(insertable = false,updatable = false) var desdevice_id:Long?=null,
-            var user_id:Long?=null,
-            var lowtime:Long?=null ,var hightime:Long?=null,
-            var stimes:String?=null,var etimes:String?=null) : En() {
+            @Column(columnDefinition = "text") var description: String? = null,
+            @ManyToOne var desdevice: PiDevice? = null, @Column(insertable = false, updatable = false) var desdevice_id: Long? = null,
+            var user_id: Long? = null,
+            var lowtime: Long? = null, var hightime: Long? = null,
+            var stimes: String? = null, var etimes: String? = null
+
+            /*Run first สำหรับให้ Run ตัวนี้ก่อนก่อนจะ Run Job หลัก*/
+            , var runfirstid: Long? = null,
+            /*Run ด้วยกันเลย*/
+            var runwithid: Long?=null
+) : En() {
 
 
     override fun toString(): String {
@@ -63,5 +69,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
         this.stimes = from.stimes
         this.hightime = from.hightime
         this.lowtime = from.lowtime
+        this.runwithid = from.runwithid
+
     }
 }

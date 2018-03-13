@@ -78,4 +78,7 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
     @Query("from Pijob p where p.job_id =?1  and p.enable = true")
     fun findDSOther(jobid: Long): ArrayList<Pijob>?
 
+    fun findByName(n: String): Pijob?
+    fun findByNameAndAddby(n:String,uid:Long):Pijob?
+
 }
