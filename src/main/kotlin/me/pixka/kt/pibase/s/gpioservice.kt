@@ -30,7 +30,9 @@ class GpioService(val gpio: GpioController) {
 
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21, "p21", PinState.HIGH), "p21")
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22, "p22", PinState.HIGH), "p22")
-        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, "p23", PinState.LOW), "p23")
+
+        //addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, "p23", PinState.LOW), "p23")
+        addToports(gpio.provisionDigitalInputPin(RaspiPin.GPIO_23, "p23"), "p23")
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, "p24", PinState.LOW), "p24")
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "p25", PinState.LOW), "p25")
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_26, "p26", PinState.LOW), "p26")

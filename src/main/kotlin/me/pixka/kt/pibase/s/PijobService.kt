@@ -18,6 +18,10 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
         return repo.search(search, topage(page, limit))
     }
 
+    fun findByTime(currenttime:Date,jobid:Long): List<Pijob>? {
+        var c = datetoLong(currenttime)
+        return repo.fineByTime(c,jobid)
+    }
     fun search(search: String, uid: Long, page: Long, limit: Long): List<Pijob>? {
         return repo.search(search, uid, topage(page, limit))
     }

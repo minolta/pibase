@@ -80,5 +80,7 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
 
     fun findByName(n: String): Pijob?
     fun findByNameAndAddby(n:String,uid:Long):Pijob?
+    @Query("from Pijob p where p.enable = true and p.job_id = ?2 and (p.lowtime <= ?1 and p.hightime >=?1 )")
+    fun fineByTime(currenttime: Long, jobid: Long):List<Pijob>?
 
 }
