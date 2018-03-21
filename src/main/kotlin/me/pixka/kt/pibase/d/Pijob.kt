@@ -1,4 +1,4 @@
-package me.pixka.pibase.d
+package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonManagedReference
@@ -34,10 +34,10 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             var lowtime: Long? = null, var hightime: Long? = null,
             var stimes: String? = null, var etimes: String? = null
 
-            /*Run first สำหรับให้ Run ตัวนี้ก่อนก่อนจะ Run Job หลัก*/
+        /*Run first สำหรับให้ Run ตัวนี้ก่อนก่อนจะ Run Job หลัก*/
             , var runfirstid: Long? = null,
-            /*Run ด้วยกันเลย*/
-            var runwithid: Long?=null
+        /*Run ด้วยกันเลย*/
+            var runwithid: Long? = null, var timetorun: Long? = 0//สำหรับบอกว่าทำงานกี่รอบ
 ) : En() {
 
 
@@ -70,6 +70,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
         this.hightime = from.hightime
         this.lowtime = from.lowtime
         this.runwithid = from.runwithid
+        this.timetorun = from.timetorun
 
     }
 }

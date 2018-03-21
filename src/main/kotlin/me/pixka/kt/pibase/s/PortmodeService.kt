@@ -1,9 +1,8 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.Portmode
+import me.pixka.kt.pibase.d.Portmode
 import me.pixka.pibase.r.PortmodeRepo
-import me.pixka.pibase.r.PortnameRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 

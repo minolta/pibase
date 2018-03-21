@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import me.pixka.c.HttpControl
 import me.pixka.kt.base.s.DbconfigService
 import me.pixka.kt.base.s.IptableServicekt
-import me.pixka.pibase.d.DS18value
+import me.pixka.kt.pibase.d.DS18value
 import me.pixka.pibase.s.DS18sensorService
 import me.pixka.pibase.s.PideviceService
 import org.slf4j.LoggerFactory

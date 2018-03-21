@@ -1,10 +1,9 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.DS18value
-import me.pixka.pibase.d.PiDevice
+import me.pixka.kt.pibase.d.DS18value
+import me.pixka.kt.pibase.d.PiDevice
 import me.pixka.pibase.r.Ds18valueRepo
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.util.*

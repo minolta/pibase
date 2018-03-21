@@ -1,8 +1,7 @@
-package me.pixka.pibase.d
+package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import me.pixka.kt.base.d.En
-import me.pixka.kt.pibase.d.Devicegroup
 import org.hibernate.annotations.Cache
 import java.math.BigDecimal
 import javax.persistence.Cacheable

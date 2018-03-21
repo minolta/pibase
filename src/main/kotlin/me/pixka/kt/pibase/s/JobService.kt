@@ -1,10 +1,9 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.Job
+import me.pixka.kt.pibase.d.Job
 import me.pixka.pibase.r.JobRepo
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
@@ -67,6 +66,8 @@ class JobService (override val repo:JobRepo): Ds<Job>() {
 
         return null
     }
+
+
 
     companion object {
         internal var logger = LoggerFactory.getLogger(JobService::class.java!!)

@@ -1,7 +1,7 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.Pijob
+import me.pixka.kt.pibase.d.Pijob
 import me.pixka.pibase.r.Ds18sensorRepo
 import me.pixka.pibase.r.PijobRepo
 import org.slf4j.LoggerFactory
@@ -26,11 +26,11 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
         return repo.search(search, uid, topage(page, limit))
     }
 
-    fun findByName(n: String):Pijob? {
+    fun findByName(n: String): Pijob? {
         return repo.findByName(n)
     }
 
-    fun findByName(n: String,uid:Long):Pijob? {
+    fun findByName(n: String,uid:Long): Pijob? {
         return repo.findByNameAndAddby(n,uid)
     }
 

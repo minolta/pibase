@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
-import me.pixka.pibase.d.DS18sensor
+import me.pixka.kt.pibase.d.DS18sensor
 
 @Repository
 interface Ds18sensorRepo : JpaRepository<DS18sensor, Long> {

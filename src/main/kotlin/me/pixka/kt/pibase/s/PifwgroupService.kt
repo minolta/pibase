@@ -1,7 +1,7 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.Pifwgroup
+import me.pixka.kt.pibase.d.Pifwgroup
 import me.pixka.pibase.r.PifwgroupRepo
 import org.springframework.stereotype.Service
 

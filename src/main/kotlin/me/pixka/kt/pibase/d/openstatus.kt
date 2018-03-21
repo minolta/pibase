@@ -2,7 +2,6 @@ package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import me.pixka.kt.base.d.En
-import me.pixka.pibase.d.PiDevice
 import org.hibernate.annotations.Cache
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -26,9 +25,9 @@ import javax.persistence.ManyToOne
 @Entity
 @Cacheable
 @Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
-class OpenStatus(var opendate: Date? = null, var closedate: Date? = null, @ManyToOne var pidevice:PiDevice?=null,
+class OpenStatus(var opendate: Date? = null, var closedate: Date? = null, @ManyToOne var pidevice: PiDevice?=null,
                  @Column(insertable = false,updatable = false) var pidevice_id:Long?=null,
-                 var open: Boolean,var gid:Long?=null) : En() {
+                 var open: Boolean, var gid:Long?=null) : En() {
     constructor() : this(open = true)
 }
 

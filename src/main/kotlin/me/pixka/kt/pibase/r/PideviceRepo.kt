@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
-import me.pixka.pibase.d.PiDevice
+import me.pixka.kt.pibase.d.PiDevice
 
 @Repository
 interface PideviceRepo : JpaRepository<PiDevice, Long> {

@@ -3,15 +3,13 @@ package me.pixka.pibase.o
 import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit
 
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import com.pi4j.io.gpio.GpioController
 import com.pi4j.io.gpio.GpioPinDigitalOutput
 
-import me.pixka.pibase.d.Logistate
-import me.pixka.pibase.d.Pijob
-import me.pixka.pibase.d.Portstatusinjob
+import me.pixka.kt.pibase.d.Pijob
+import me.pixka.kt.pibase.d.Portstatusinjob
 import me.pixka.pibase.s.LogistateService
 import me.pixka.pibase.s.PortnameService
 

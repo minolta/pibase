@@ -1,9 +1,8 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.Pifw
+import me.pixka.kt.pibase.d.Pifw
 import me.pixka.pibase.r.PifwRepo
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service

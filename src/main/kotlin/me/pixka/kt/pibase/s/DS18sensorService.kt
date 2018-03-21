@@ -1,7 +1,7 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.DS18sensor
+import me.pixka.kt.pibase.d.DS18sensor
 import me.pixka.pibase.r.Ds18sensorRepo
 import org.springframework.stereotype.Service
 

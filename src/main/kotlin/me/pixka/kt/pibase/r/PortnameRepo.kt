@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
-import me.pixka.pibase.d.Portname
+import me.pixka.kt.pibase.d.Portname
 
 @Repository
 interface PortnameRepo: JpaRepository<Portname, Long> {

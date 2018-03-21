@@ -1,7 +1,7 @@
 package me.pixka.pibase.o
 
-import me.pixka.pibase.d.DS18value
-import me.pixka.pibase.d.Dhtvalue
+import me.pixka.kt.pibase.d.DS18value
+import me.pixka.kt.pibase.d.Dhtvalue
 
 class Infoobj {
 

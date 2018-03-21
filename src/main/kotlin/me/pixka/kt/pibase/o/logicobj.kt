@@ -1,6 +1,6 @@
 package me.pixka.kt.pibase.o
 
-import me.pixka.pibase.d.Logistate
+import me.pixka.kt.pibase.d.Logistate
 
 class Logicobj(val obj: Logistate?=null) {
 

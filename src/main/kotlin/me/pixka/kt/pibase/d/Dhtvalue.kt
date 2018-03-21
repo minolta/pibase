@@ -1,4 +1,4 @@
-package me.pixka.pibase.d
+package me.pixka.kt.pibase.d
 
 import java.math.BigDecimal
 import java.util.Date
@@ -13,6 +13,7 @@ import org.hibernate.annotations.Cache
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 import me.pixka.kt.base.d.En
+import me.pixka.kt.pibase.d.PiDevice
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity

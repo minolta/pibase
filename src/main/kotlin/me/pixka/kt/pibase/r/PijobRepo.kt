@@ -1,6 +1,6 @@
 package me.pixka.pibase.r
 
-import me.pixka.pibase.d.Pijob
+import me.pixka.kt.pibase.d.Pijob
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
@@ -54,7 +54,7 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
     @Query("from Pijob pj where pj.job_id =?1 and pj.enable = true")
     fun findByJob_id(id: Long?): List<Pijob>?
 
-    @Query("from Pijob pj where pj.pidevice_id = ?1")
+    @Query("from Pijob pj where pj.pidevice_id = ?1 order by pj.id ")
     fun searchByDeviceid(id: Long?, page: Pageable): List<Pijob>?
 
     /**
@@ -79,7 +79,7 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
     fun findDSOther(jobid: Long): ArrayList<Pijob>?
 
     fun findByName(n: String): Pijob?
-    fun findByNameAndAddby(n:String,uid:Long):Pijob?
+    fun findByNameAndAddby(n:String,uid:Long): Pijob?
     @Query("from Pijob p where p.enable = true and p.job_id = ?2 and (p.lowtime <= ?1 and p.hightime >=?1 )")
     fun fineByTime(currenttime: Long, jobid: Long):List<Pijob>?
 

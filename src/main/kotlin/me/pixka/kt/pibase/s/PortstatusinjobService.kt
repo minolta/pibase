@@ -1,10 +1,9 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.Portstatusinjob
+import me.pixka.kt.pibase.d.Portstatusinjob
 import me.pixka.pibase.r.PortstatusinjobRepo
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
