@@ -38,6 +38,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             , var runfirstid: Long? = null,
         /*Run ด้วยกันเลย*/
             var runwithid: Long? = null, var timetorun: Long? = 0//สำหรับบอกว่าทำงานกี่รอบ
+            , var checkversion: Long? = 0,var usewater:Boolean?=false
 ) : En() {
 
 

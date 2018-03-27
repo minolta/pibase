@@ -17,21 +17,18 @@ class Portstatusinjob(@ManyToOne
                       var portname: Portname? = null,
                       @Column(insertable = false, updatable = false)
                       var portname_id: Long? = null,
-
                       var refid: Long? = null,
-
                       @ManyToOne
                       var status: Logistate? = null,
-
                       @Column(insertable = false, updatable = false)
                       var status_id: Long? = null,
-
                       @ManyToOne
                       @JsonBackReference
                       var pijob: Pijob? = null,
                       @Column(insertable = false, updatable = false)
                       var pijob_id: Long? = null,
-                      var enable: Boolean? = true
+                      var enable: Boolean? = true,
+                      var checkversion:Long?=0
 ) : En() {
 
     fun copy(from: Portstatusinjob) {
