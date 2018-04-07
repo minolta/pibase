@@ -15,5 +15,10 @@ class OnecommandService(override val repo: OnecommandRepo): Ds<Onecommand>()
     fun findNotrunByeviceId(did:Long): List<Onecommand>? {
         return repo.findByPidevice_idAndRun(did,false)
     }
+    fun deletebypijob(id:Long):Boolean
+    {
+        repo.deleteBypijob(id)
+        return true
+    }
 
 }

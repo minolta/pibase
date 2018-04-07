@@ -18,10 +18,11 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
         return repo.search(search, topage(page, limit))
     }
 
-    fun findByTime(currenttime:Date,jobid:Long): List<Pijob>? {
+    fun findByTime(currenttime: Date, jobid: Long): List<Pijob>? {
         var c = datetoLong(currenttime)
-        return repo.fineByTime(c,jobid)
+        return repo.fineByTime(c, jobid)
     }
+
     fun search(search: String, uid: Long, page: Long, limit: Long): List<Pijob>? {
         return repo.search(search, uid, topage(page, limit))
     }
@@ -30,8 +31,8 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
         return repo.findByName(n)
     }
 
-    fun findByName(n: String,uid:Long): Pijob? {
-        return repo.findByNameAndAddby(n,uid)
+    fun findByName(n: String, uid: Long): Pijob? {
+        return repo.findByNameAndAddby(n, uid)
     }
 
     fun searchMatch(n: String): Pijob? {
@@ -117,6 +118,10 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
         return null
     }
 
+
+    fun clear() {
+        repo.deleteAll()
+    }
 
     /**
      * ใช้สำหรับค้นหา PI job ที่อ่านค่าจาก device ตัวอื่น
@@ -212,6 +217,11 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
         var d = d.parse(n)
         return d.time
 
+    }
+
+    fun deleteById(id: Long): Boolean {
+        repo.deletePijobById(id)
+        return true
     }
 
     fun datetoLong(d: Date): Long {

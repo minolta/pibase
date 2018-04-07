@@ -13,13 +13,16 @@ class PortstatusinjobService(override val repo: PortstatusinjobRepo) : Ds<Portst
     }
 
 
-
     fun searchMatch(n: String): Portstatusinjob? {
         return null
     }
 
     fun findByPijobid(pijobid: Long?): List<*> {
         return repo.findByPijob_id(pijobid)
+    }
+
+    fun clear() {
+        repo.deleteAll()
     }
 
     fun finByRefId(refid: Long?): Portstatusinjob? {
@@ -35,6 +38,11 @@ class PortstatusinjobService(override val repo: PortstatusinjobRepo) : Ds<Portst
         }
 
         return null
+    }
+
+    fun deleteBypideviceId(id: Long): Boolean {
+        repo.deleteByPijobId(id)
+        return true
     }
 
     companion object {

@@ -3,10 +3,12 @@ package me.pixka.pibase.r
 import me.pixka.kt.pibase.d.Pijob
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.math.BigDecimal
 import java.util.*
+import javax.transaction.Transactional
 
 @Repository
 interface PijobRepo : JpaRepository<Pijob, Long> {
@@ -34,7 +36,7 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
      * ใช้สำหรับค้นหา H job ในช่วงเวลา  เช่น 10:00 - 11:00
      */
     @Query("from Pijob pj where (pj.hlow <= ?1 and pj.hhigh >=?1) and pj.job_id = ?2 and (pj.lowtime <= ?4 and pj.hightime >= ?4) and (pj.sdate is null and pj.edate is null)  and pj.enable = ?3")
-    fun findByHByTime(h: BigDecimal, jobid: Long, enable: Boolean, time: Long) :List<Pijob>?
+    fun findByHByTime(h: BigDecimal, jobid: Long, enable: Boolean, time: Long): List<Pijob>?
 
     @Query("from Pijob pj where (pj.tlow <= ?1 and pj.thigh >=?1)  and pj.job_id = ?2 and (pj.stime is null and pj.etime is null) and pj.enable = ?3")
     fun findByT(t: BigDecimal, jobtypeid: Long?, b: Boolean): List<Pijob>?
@@ -79,8 +81,13 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
     fun findDSOther(jobid: Long): ArrayList<Pijob>?
 
     fun findByName(n: String): Pijob?
-    fun findByNameAndAddby(n:String,uid:Long): Pijob?
+    fun findByNameAndAddby(n: String, uid: Long): Pijob?
     @Query("from Pijob p where p.enable = true and p.job_id = ?2 and (p.lowtime <= ?1 and p.hightime >=?1 )")
-    fun fineByTime(currenttime: Long, jobid: Long):List<Pijob>?
+    fun fineByTime(currenttime: Long, jobid: Long): List<Pijob>?
+
+    @Modifying
+    @Transactional
+    @Query("delete from Pijob p where p.id = ?1")
+    fun deletePijobById(id: Long)
 
 }
