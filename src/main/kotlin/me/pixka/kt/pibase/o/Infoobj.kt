@@ -12,4 +12,8 @@ class Infoobj {
 
     var password: String? = null
 
+    override fun toString(): String
+    {
+        return "${mac} ${ip} ${dhtvalue} ${ds18value}"
+    }
 }

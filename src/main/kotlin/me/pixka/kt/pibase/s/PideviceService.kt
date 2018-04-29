@@ -41,4 +41,8 @@ class PideviceService(override val repo: PideviceRepo) : Ds<PiDevice>() {
     {
         repo.clear()
     }
+    fun showTables(): List<*>? {
+        var tables = repo.showtables()
+        return tables
+    }
 }

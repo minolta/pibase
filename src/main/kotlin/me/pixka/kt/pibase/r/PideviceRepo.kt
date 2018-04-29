@@ -27,4 +27,7 @@ interface PideviceRepo : JpaRepository<PiDevice, Long> {
     @Query("delete from PiDevice ")
     fun clear()
 
+    @Query(value = "show tables", nativeQuery = true)
+    fun showtables(): List<*>?
+
 }

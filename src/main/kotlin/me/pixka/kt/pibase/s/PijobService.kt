@@ -139,6 +139,7 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
             val p = Pijob()
 
             p.refid = item.id
+            p.enable = item.enable  //Issue #34
             p.etime = item.etime
             p.stime = item.stime
             p.sdate = item.sdate

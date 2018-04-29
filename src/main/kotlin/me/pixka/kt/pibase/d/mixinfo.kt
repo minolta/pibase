@@ -31,4 +31,5 @@ interface MixedinfoRepo : JpaRepository<Mixedinfo, Long> {
     @Query("from Mixedinfo m where m.name like %?1%")
     fun search(search: String, topage: Pageable): List<Mixedinfo>?
     fun findByName(n: String): Mixedinfo?
+
 }
