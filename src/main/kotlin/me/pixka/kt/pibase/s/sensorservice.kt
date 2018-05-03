@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import me.pixka.c.HttpControl
 import me.pixka.kt.base.s.DbconfigService
 import me.pixka.kt.base.s.IptableServicekt
-import me.pixka.pibase.d.DS18value
+import me.pixka.kt.pibase.d.DS18value
 import me.pixka.pibase.s.DS18sensorService
 import me.pixka.pibase.s.PideviceService
 import org.slf4j.LoggerFactory
@@ -20,9 +20,17 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
 
     fun readDsOther(desid: Long, sensorid: Long): DS18value? {
         try {
-            var desdevice = ps.find(desid)
+
+            var desdevice = ps.find(desid) //เปลียน ip แล้ว
+            //var desdevice = ps.findByRefid(desid) //refid จะ save ตอน load pijob
+            logger.debug("Find pidevice ${desid} found ===> ${desdevice}")
             var sensor = dss.find(sensorid)
-            var ip = iptableServicekt.findByMac(desdevice.mac!!)
+            logger.debug("Find sensor ${sensorid} found ===> ${sensor}")
+            var ip = iptableServicekt.findByMac(desdevice?.mac!!)
+            logger.debug("Find ip of pidevice ${desdevice} found ===> ${ip}")
+            if (ip == null || ip.ip == null) {
+                logger.error("Can not find ip ${ip}")
+            }
             val url = "http://${ip?.ip}/ds18valuebysensor/${sensor.name}"
             logger.debug("Read URL: ${url}")
             var value = ""
@@ -30,6 +38,7 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
             try {
                 value = http.get(url)
             } catch (e: Exception) {
+                logger.error("Find ip ${e.message}")
                 var old = readBuffer(desid, sensorid)
                 logger.debug("Try to read Old value in device : ${old}")
                 if (old != null) {
@@ -47,15 +56,14 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
                     return value
                 } catch (e: IOException) {
                     logger.error("Error   ${e.message}")
-                    e.printStackTrace()
-
                     //ถ้า error จะอ่านจาก Buffer ก่อน แล้ว ถ้าไม่เจอก็ null
-
                     var old = readBuffer(desid, sensorid)
                     logger.debug("Try to read Old value in device : ${old}")
                     if (old != null) {
                         if (checkage(old)) {
                             return old.value
+                        } else {
+                            logger.debug("")
                         }
                     }
                 }
@@ -78,7 +86,7 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
 
         logger.debug("Test Age ${t} $readtimeout")
         if (t > readtimeout!!) {
-            logger.debug("Data can not use")
+            logger.error("Data can not use")
             return false
         }
 
@@ -104,7 +112,7 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
      * ใช้สำหรับ update ว่าอ่านเมื่อไหร่
      */
     fun update(did: Long, sid: Long, value: DS18value) {
-        logger.debug("Update Read buffer")
+        logger.debug("Update Read buffer ")
         if (readbuffer.size > 0) {
             for (i in readbuffer) {
                 if (i.disid.equals(did) && i.sensorid.equals(sid)) {

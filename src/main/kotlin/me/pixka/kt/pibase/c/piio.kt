@@ -3,8 +3,8 @@ package me.pixka.kt.pibase.c
 
 import me.pixka.kt.base.s.DbconfigService
 import me.pixka.kt.base.s.ErrorlogService
-import me.pixka.pibase.d.DS18value
-import me.pixka.pibase.d.Dhtvalue
+import me.pixka.kt.pibase.d.DS18value
+import me.pixka.kt.pibase.d.Dhtvalue
 import me.pixka.pibase.s.DS18sensorService
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile

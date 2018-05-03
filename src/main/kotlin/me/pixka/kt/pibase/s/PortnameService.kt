@@ -3,7 +3,7 @@ package me.pixka.pibase.s
 import com.pi4j.io.gpio.GpioController
 import com.pi4j.io.gpio.GpioPinDigitalOutput
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.Portname
+import me.pixka.kt.pibase.d.Portname
 import me.pixka.pibase.r.PortnameRepo
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

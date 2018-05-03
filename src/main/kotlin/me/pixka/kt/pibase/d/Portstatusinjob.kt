@@ -1,4 +1,4 @@
-package me.pixka.pibase.d
+package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -13,25 +13,21 @@ import javax.persistence.ManyToOne
 @Entity
 @Cacheable
 @Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
-class Portstatusinjob(@ManyToOne
-                      var portname: Portname? = null,
-                      @Column(insertable = false, updatable = false)
-                      var portname_id: Long? = null,
-
+class Portstatusinjob(@ManyToOne var portname: Portname? = null,
+                      @Column(insertable = false, updatable = false) var portname_id: Long? = null,
                       var refid: Long? = null,
+                      @ManyToOne var status: Logistate? = null,
+                      @Column(insertable = false, updatable = false) var status_id: Long? = null,
 
+
+                     // @JsonBackReference
                       @ManyToOne
-                      var status: Logistate? = null,
-
-                      @Column(insertable = false, updatable = false)
-                      var status_id: Long? = null,
-
-                      @ManyToOne
-                      @JsonBackReference
                       var pijob: Pijob? = null,
                       @Column(insertable = false, updatable = false)
                       var pijob_id: Long? = null,
-                      var enable: Boolean? = true
+
+                      var enable: Boolean? = true,
+                      var checkversion: Long? = 0
 ) : En() {
 
     fun copy(from: Portstatusinjob) {

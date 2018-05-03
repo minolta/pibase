@@ -1,10 +1,9 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.Job
+import me.pixka.kt.pibase.d.Job
 import me.pixka.pibase.r.JobRepo
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
@@ -34,7 +33,14 @@ class JobService (override val repo:JobRepo): Ds<Job>() {
     fun findByRefid(id: Long?): Job {
         return repo.findByRefid(id)
     }
-
+    fun findorcreate(n:String): Job {
+        var f = findByName(n)
+        if(f==null)
+        {
+            return create(n,"auto",null)
+        }
+        return f
+    }
     fun findandcreateLocal(from: Job): Job? {
 
         logger.debug("[jobservice] find job from " + from)
@@ -66,6 +72,12 @@ class JobService (override val repo:JobRepo): Ds<Job>() {
         }
 
         return null
+    }
+
+
+    fun clear()
+    {
+        repo.clear()
     }
 
     companion object {

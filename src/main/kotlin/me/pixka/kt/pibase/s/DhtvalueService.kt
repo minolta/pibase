@@ -1,8 +1,8 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.Dhtvalue
-import me.pixka.pibase.d.PiDevice
+import me.pixka.kt.pibase.d.Dhtvalue
+import me.pixka.kt.pibase.d.PiDevice
 import me.pixka.pibase.r.DhtvalueRepo
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
@@ -29,7 +29,7 @@ class DhtvalueService(override val repo: DhtvalueRepo) : Ds<Dhtvalue>() {
         // return dao.findTop1ByOrderByIdDesc();
         return repo.findTop1ByOrderByValuedateDesc()
     }
-    fun last(id:Long):Dhtvalue?{
+    fun last(id:Long): Dhtvalue?{
         return repo.findTop1ByPidevice_idOrderByValuedateDesc(id)
     }
 

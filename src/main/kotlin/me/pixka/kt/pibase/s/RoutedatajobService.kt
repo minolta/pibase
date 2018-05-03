@@ -1,7 +1,7 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.Routedatajob
+import me.pixka.kt.pibase.d.Routedatajob
 import me.pixka.pibase.r.RoutedatajobRepo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

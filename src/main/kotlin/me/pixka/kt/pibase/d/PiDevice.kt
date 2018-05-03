@@ -1,4 +1,4 @@
-package me.pixka.pibase.d
+package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import me.pixka.kt.base.d.En
@@ -21,6 +21,7 @@ class PiDevice(
         var ip: String? = null, var password: String? = null,
         @Column(columnDefinition = "text") var description: String? = null,
         var lastupdate: Date? = null,
+        var refid:Long?=null,
         @ManyToOne var devicegroup: Devicegroup? = null,
         @Column(insertable = false, updatable = false) var devicegroup_id: Long? = null,
         var user_id: Long? = null) : En() {

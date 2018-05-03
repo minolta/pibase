@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
-import me.pixka.pibase.d.Job
+import me.pixka.kt.pibase.d.Job
+import org.springframework.data.jpa.repository.Modifying
+import javax.transaction.Transactional
 
 @Repository
 interface JobRepo : JpaRepository<Job, Long> {
@@ -18,5 +20,8 @@ interface JobRepo : JpaRepository<Job, Long> {
 
     @Query("from Job j where j.name like %?1%")
     fun search(s: String, page: Pageable): List<Job>?
-
+    @Modifying
+    @Transactional
+    @Query("delete from Job ")
+    fun clear()
 }

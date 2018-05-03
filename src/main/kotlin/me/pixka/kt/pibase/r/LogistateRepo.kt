@@ -3,7 +3,7 @@ package me.pixka.pibase.r
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
-import me.pixka.pibase.d.Logistate
+import me.pixka.kt.pibase.d.Logistate
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Query
 

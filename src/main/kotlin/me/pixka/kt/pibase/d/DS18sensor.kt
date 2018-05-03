@@ -1,8 +1,7 @@
-package me.pixka.pibase.d
+package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import me.pixka.kt.base.d.En
-import me.pixka.kt.pibase.d.Devicegroup
 import org.hibernate.annotations.Cache
 import java.math.BigDecimal
 import javax.persistence.Cacheable
@@ -20,7 +19,8 @@ class DS18sensor(var name: String? = null,// สำหรับ บอกว่�
                  var refid: Long? = null,
                  @Column(columnDefinition = "text") var description: String? = null,
                  var call: String? = null, @ManyToOne var devicegroup: Devicegroup? = null,
-                 @Column(insertable = false, updatable = false) var devicegroup_id: Long? = null,
+                 @Column(insertable = false, updatable = false) var devicegroup_id: Long? = null, @ManyToOne var pidevice: PiDevice? = null,
+                 @Column(insertable = false, updatable = false) var pidevice_id: Long? = null,
                  var user_id: Long? = null) : En() {
 
     fun copy(item: DS18sensor) {

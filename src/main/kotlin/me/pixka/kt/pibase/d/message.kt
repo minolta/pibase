@@ -1,7 +1,6 @@
 package me.pixka.kt.pibase.d
 
 import me.pixka.kt.base.d.En
-import me.pixka.pibase.d.PiDevice
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying

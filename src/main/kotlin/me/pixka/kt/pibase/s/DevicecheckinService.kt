@@ -1,7 +1,7 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.Devicecheckin
+import me.pixka.kt.pibase.d.Devicecheckin
 import me.pixka.pibase.r.DevicecheckinRepo
 import org.springframework.stereotype.Service
 

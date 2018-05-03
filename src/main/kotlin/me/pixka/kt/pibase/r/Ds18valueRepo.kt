@@ -1,6 +1,6 @@
 package me.pixka.pibase.r
 
-import me.pixka.pibase.d.DS18value
+import me.pixka.kt.pibase.d.DS18value
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying

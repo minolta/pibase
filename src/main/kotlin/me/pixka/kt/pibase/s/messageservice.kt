@@ -6,7 +6,6 @@ import me.pixka.kt.pibase.d.Message
 import me.pixka.kt.pibase.d.MessageRepo
 import me.pixka.kt.pibase.d.MessageType
 import me.pixka.kt.pibase.d.MessageTypeRepo
-import me.pixka.pibase.d.PiDevice
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import java.util.*

@@ -1,7 +1,7 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.PiDevice
+import me.pixka.kt.pibase.d.PiDevice
 import me.pixka.pibase.r.PideviceRepo
 import org.springframework.stereotype.Service
 
@@ -15,14 +15,20 @@ class PideviceService(override val repo: PideviceRepo) : Ds<PiDevice>() {
         return repo.findByMac(s)
     }
 
-    fun search(s: String,uid:Long, page: Long?, limit: Long?): List<PiDevice>? {
-        return repo.search(s,uid, this.topage(page!!, limit!!))
+    fun search(s: String, uid: Long, page: Long?, limit: Long?): List<PiDevice>? {
+        return repo.search(s, uid, this.topage(page!!, limit!!))
     }
 
-    fun create(mac: String): PiDevice? {
+    fun findByRefid(id: Long): PiDevice? {
+        return repo.findByRefid(id)
+    }
+
+    fun create(mac: String, refid: Long): PiDevice? {
         val pd = PiDevice()
         pd.name = "name-" + mac
         pd.mac = mac
+        pd.refid = refid
+
 
         return save(pd)
     }
@@ -30,5 +36,13 @@ class PideviceService(override val repo: PideviceRepo) : Ds<PiDevice>() {
 
     fun searchMatch(n: String): PiDevice {
         return repo.findByName(n)
+    }
+    fun clear()
+    {
+        repo.clear()
+    }
+    fun showTables(): List<*>? {
+        var tables = repo.showtables()
+        return tables
     }
 }

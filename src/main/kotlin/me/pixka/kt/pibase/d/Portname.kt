@@ -1,4 +1,4 @@
-package me.pixka.pibase.d
+package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import me.pixka.kt.base.d.En
@@ -17,6 +17,9 @@ import javax.persistence.ManyToOne
 @Entity
 @Cacheable
 @Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
-class Portname(var name: String? = null, var piport: String? = null, var refid: Long? = null, @ManyToOne var portmode: Portmode? = null, @Column(insertable = false, updatable = false) var portmode_id: Long? = null) : En() {
+class Portname(var name: String? = null, var piport: String? = null, var refid: Long? = null,
+               @ManyToOne var portmode: Portmode? = null,
+               @Column(insertable = false, updatable = false) var portmode_id: Long? = null,
+               var checkversion:Long?=0) : En() {
 
 }

@@ -1,10 +1,9 @@
 package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
-import me.pixka.pibase.d.Portstatusinjob
+import me.pixka.kt.pibase.d.Portstatusinjob
 import me.pixka.pibase.r.PortstatusinjobRepo
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
@@ -14,13 +13,16 @@ class PortstatusinjobService(override val repo: PortstatusinjobRepo) : Ds<Portst
     }
 
 
-
     fun searchMatch(n: String): Portstatusinjob? {
         return null
     }
 
     fun findByPijobid(pijobid: Long?): List<*> {
         return repo.findByPijob_id(pijobid)
+    }
+
+    fun clear() {
+        repo.deleteAll()
     }
 
     fun finByRefId(refid: Long?): Portstatusinjob? {
@@ -36,6 +38,11 @@ class PortstatusinjobService(override val repo: PortstatusinjobRepo) : Ds<Portst
         }
 
         return null
+    }
+
+    fun deleteBypideviceId(id: Long): Boolean {
+        repo.deleteByPijobId(id)
+        return true
     }
 
     companion object {

@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
-import me.pixka.pibase.d.DS18sensor
+import me.pixka.kt.pibase.d.DS18sensor
+import org.springframework.data.jpa.repository.Modifying
+import javax.transaction.Transactional
 
 @Repository
 interface Ds18sensorRepo : JpaRepository<DS18sensor, Long> {
@@ -20,5 +22,8 @@ interface Ds18sensorRepo : JpaRepository<DS18sensor, Long> {
     fun search(s: String,uid:Long, page: Pageable?): List<DS18sensor>?
 
     fun findTop1ByForreadOrderByLasteditDesc(b: Boolean): DS18sensor
-
+    @Modifying
+    @Transactional
+    @Query("delete from DS18sensor ")
+    fun clear()
 }

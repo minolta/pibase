@@ -3,8 +3,8 @@ package me.pixka.pibase.o
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.pi4j.io.gpio.GpioController
 
-import me.pixka.pibase.d.Pijob
-import me.pixka.pibase.d.Portstatusinjob
+import me.pixka.kt.pibase.d.Pijob
+import me.pixka.kt.pibase.d.Portstatusinjob
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class RunPijob : Runnable {

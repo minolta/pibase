@@ -3,7 +3,7 @@ package me.pixka.pibase.r
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
-import me.pixka.pibase.d.Routedata
+import me.pixka.kt.pibase.d.Routedata
 
 @Repository
 interface RoutedataRepo : JpaRepository<Routedata, Long> {
