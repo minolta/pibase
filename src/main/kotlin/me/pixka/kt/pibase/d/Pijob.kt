@@ -15,9 +15,10 @@ import javax.persistence.*
 class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? = null, var runtime: Long? = null,
             var waittime: Long? = null, var enable: Boolean? = true, @ManyToOne var ds18sensor: DS18sensor? = null,
             @Column(insertable = false, updatable = false) var ds18sensor_id: Long? = null,
+           /* @JsonManagedReference
             @OneToMany(mappedBy = "pijob",
-                    fetch = FetchType.EAGER, cascade = arrayOf(CascadeType.ALL))
-            @JsonManagedReference
+                    fetch = FetchType.EAGER, cascade = arrayOf(CascadeType.ALL))*/
+            @Transient //มีไว้เฉยๆสำหรับ import แค่นั้นไม่ได้เอาไปทำอะไร
             var ports: List<Portstatusinjob>? = null,// สำหรับ เก็บว่า job นี้ทำงานกับ อะไรงานไหนเช่น H
             @Column(insertable = false, updatable = false) var job_id: Long? = null,// ก็ทำงานกับค่า h อย่างเดียว HT ทำงานกับ H และ T
             @ManyToOne var job: Job? = null, @ManyToOne var pidevice: PiDevice? = null,
@@ -33,7 +34,6 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             var user_id: Long? = null,
             var lowtime: Long? = null, var hightime: Long? = null,
             var stimes: String? = null, var etimes: String? = null
-
         /*Run first สำหรับให้ Run ตัวนี้ก่อนก่อนจะ Run Job หลัก*/
             , var runfirstid: Long? = null,
         /*Run ด้วยกันเลย*/
@@ -42,7 +42,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             var refverion: Long? = null
 ) : En() {
 
-
+constructor():this(user_id=0)
     override fun toString(): String {
 
         return "*** ${enable} *** id:${id} ref:${refid} name:${name}  runtime:${runtime} waittime${waittime} tlow:${tlow} thigh${thigh} hlow:${hlow} hhigh:${hhigh} job:${job} dssensor:${ds18sensor} read from ${desdevice}"

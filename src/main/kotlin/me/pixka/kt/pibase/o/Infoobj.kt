@@ -9,7 +9,7 @@ class Infoobj {
     var ip: String? = null
     var dhtvalue: Dhtvalue? = null
     var ds18value: DS18value? = null
-
+    var token:String?=null
     var password: String? = null
 
     override fun toString(): String
