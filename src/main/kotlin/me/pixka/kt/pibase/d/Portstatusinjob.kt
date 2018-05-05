@@ -20,7 +20,7 @@ class Portstatusinjob(@ManyToOne var portname: Portname? = null,
                       @Column(insertable = false, updatable = false) var status_id: Long? = null,
 
 
-                     // @JsonBackReference
+                      @JsonBackReference
                       @ManyToOne
                       var pijob: Pijob? = null,
                       @Column(insertable = false, updatable = false)
@@ -33,5 +33,9 @@ class Portstatusinjob(@ManyToOne var portname: Portname? = null,
     fun copy(from: Portstatusinjob) {
         this.portname = from.portname
         this.status = from.status
+    }
+
+    override fun toString(): String {
+        return "${portname?.name} = ${status} ${enable}"
     }
 }
