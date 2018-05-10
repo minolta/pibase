@@ -14,11 +14,15 @@ import javax.persistence.ManyToOne
 class Usewaterinformation(@ManyToOne var pidevice: PiDevice? = null,
                           @Column(insertable = false, updatable = false) var pidevice_id: Long?=null,
                           var enduse: Date? = null, var devicegroup_id: Long? = null,
-                          var pijob_id: Long? = null, var end: Boolean? = false) : En() {
+                          var pijob_id: Long? = null, var end: Boolean? = false,var status:Int?=0,var message:String?=null) : En() {
+
+    override fun toString(): String {
+        return "${pidevice} ${enduse} ${end} ${status}"
+    }
 }
 
 //สำหรับใช้ส่งการใช้น้ำไปยังศูนย์ข้อมูลน้ำ
-class Waterinfo(var mac: String? = null, var enduse: Date? = null)
+class Waterinfo(var mac: String? = null, var enduse: Date? = null,var pijob:Pijob?=null)
 {
     override fun toString(): String {
         return "MAC:${mac} ${enduse}"
