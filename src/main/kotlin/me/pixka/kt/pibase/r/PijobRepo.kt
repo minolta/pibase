@@ -90,4 +90,6 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
     @Query("delete from Pijob p where p.id = ?1")
     fun deletePijobById(id: Long)
 
+    fun findByJob_idAndEnable(jobid: Long, b: Boolean): List<Pijob>?
+
 }
