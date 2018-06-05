@@ -32,7 +32,9 @@ class GpioService(val gpio: GpioController) {
         //addToports(gpio.provisionDigitalInputPin(RaspiBcmPin.GPIO_05, "p5"), "p5")
 
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21, "p21", PinState.HIGH), "p21")
-
+        addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_22, "p22", PinState.LOW), "p22")
+        /*
+        //เอาไปใช้ เป็น output
         var in22 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_22, "p22")
         addToports(in22, "p22")
         in22value = in22.state.value
@@ -41,6 +43,8 @@ class GpioService(val gpio: GpioController) {
             println(" --> GPIO PIN STATE CHANGE: " + event.pin + " = " + event.state)
             this.in22value = event.state.value
         })
+        */
+
         //addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, "p23", PinState.LOW), "p23")
         var in23 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_23, "p23")
         in23value = in23.state.value
@@ -106,7 +110,7 @@ class GpioService(val gpio: GpioController) {
                 logger.debug(" toresetportto  p21 to true")
                 setPort(pin, true)
             } else if (pin.name.equals("p22")) {
-                setPort(pin, true)
+                setPort(pin, false)
                 logger.debug(" toresetportto  p22 to true")
             } else {
                 logger.debug("${pin} toresetportto false")
