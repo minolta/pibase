@@ -11,7 +11,7 @@ import javax.transaction.Transactional
 @Repository
 interface PideviceRepo : JpaRepository<PiDevice, Long> {
 
-    fun findByMac(s: String): PiDevice
+    fun findByMac(s: String): PiDevice?
 
     @Query("from PiDevice p where p.name like %?1% or p.mac like %?1% order by p.id")
     fun search(s: String, page: Pageable): List<PiDevice>?

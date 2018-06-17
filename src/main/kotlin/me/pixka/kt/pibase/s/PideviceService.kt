@@ -11,7 +11,7 @@ class PideviceService(override val repo: PideviceRepo) : Ds<PiDevice>() {
         return repo.search(search, this.topage(page, limit))
     }
 
-    fun findByMac(s: String): PiDevice {
+    fun findByMac(s: String): PiDevice ?{
         return repo.findByMac(s)
     }
 
