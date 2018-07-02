@@ -13,9 +13,11 @@ class PortnameService(override val repo: PortnameRepo) : Ds<Portname>() {
     override fun search(search: String, page: Long, limit: Long): List<Portname>? {
         return repo.search(search, topage(page, limit))
     }
+
     fun searchMatch(n: String): Portname {
         return repo.findByName(n)
     }
+
     fun findorcreate(n: String): Portname? {
         try {
             var pn: Portname? = this.searchMatch(n)
@@ -41,7 +43,6 @@ class PortnameService(override val repo: PortnameRepo) : Ds<Portname>() {
 
     fun findByRefid(id: Long?): Portname? {
         try {
-
             return repo.findByRefid(id)
         } catch (e: Exception) {
             logger.error("findByrefid PortnameService  : error " + e.message)

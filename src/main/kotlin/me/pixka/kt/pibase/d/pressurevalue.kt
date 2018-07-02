@@ -18,7 +18,7 @@ import javax.persistence.ManyToOne
 import javax.transaction.Transactional
 
 @Entity
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 class PressureValue(var rawvalue: BigDecimal? = null, var pressurevalue: BigDecimal? = null,
                     @ManyToOne var device: PiDevice? = null,
                     @Column(insertable = false, updatable = false) var device_id: Long? = null,

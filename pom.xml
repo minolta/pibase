@@ -13,7 +13,7 @@
         <pi4j.version>1.2-SNAPSHOT</pi4j.version>
         <jackson.version>2.9.5</jackson.version>
     </properties>
-    <!--
+
     <repositories>
       <repository>
         <id>pi4j</id>
@@ -21,17 +21,8 @@
         <url>https://oss.sonatype.org/content/groups/public</url>
       </repository>
     </repositories>
-    -->
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>bintray-kotlin-kotlin-dev</id>
-            <name>bintray</name>
-            <url>https://dl.bintray.com/kotlin/kotlin-dev</url>
-        </repository>
-    </repositories>
+
+
     <pluginRepositories>
         <pluginRepository>
             <snapshots>
@@ -118,7 +109,7 @@
         <dependency>
             <groupId>me.pixka</groupId>
             <artifactId>io</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -126,7 +117,23 @@
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-core</artifactId>
+            <version>${pi4j.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.pi4j/pi4j-device -->
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-device</artifactId>
+            <version>${pi4j.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.pi4j/pi4j-gpio-extension -->
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-gpio-extension</artifactId>
+            <version>${pi4j.version}</version>
+        </dependency>
 
     </dependencies>
     <build>

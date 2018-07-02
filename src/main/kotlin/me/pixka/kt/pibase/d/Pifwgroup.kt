@@ -17,9 +17,7 @@ import javax.persistence.Entity
 @Cacheable
 @Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 class Pifwgroup : En() {
-
     var name: String? = null
-
     @Column(columnDefinition = "text")
     var description: String? = null
 
