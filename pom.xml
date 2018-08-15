@@ -23,16 +23,7 @@
     </repositories>
 
 
-    <pluginRepositories>
-        <pluginRepository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>bintray-kotlin-kotlin-dev</id>
-            <name>bintray-plugins</name>
-            <url>https://dl.bintray.com/kotlin/kotlin-dev</url>
-        </pluginRepository>
-    </pluginRepositories>
+
     <dependencies>
 
         <dependency>
@@ -109,7 +100,7 @@
         <dependency>
             <groupId>me.pixka</groupId>
             <artifactId>io</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
