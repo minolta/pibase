@@ -31,7 +31,19 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
             if (ip == null || ip.ip == null) {
                 logger.error("Can not find ip ${ip}")
             }
-            val url = "http://${ip?.ip}/ds18valuebysensor/${sensor.name}"
+
+            if (sensor.name == null) {
+                logger.error("Sensor name is null")
+                return null
+            }
+            var url = "http://${ip?.ip}/ds18valuebysensor/${sensor.name}"
+
+            if (sensor.name?.indexOf("28-") == -1) {
+                //เป็น ktype จะไม่มี 28- ให้อานตรงๆเลย
+                url = "http://${ip?.ip}/ktype"
+            }
+
+
             logger.debug("Read URL: ${url}")
             var value = ""
 

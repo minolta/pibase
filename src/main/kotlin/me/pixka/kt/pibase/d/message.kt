@@ -15,11 +15,11 @@ import javax.transaction.Transactional
 @Entity
 class Message(@ManyToOne var messagetype: MessageType? = null,
               @Column(insertable = false, updatable = false) var messagetype_id: Long? = null,
-              var source: String? = null, var message: String? = null,
+              var source: String? = null, @Column(columnDefinition = "text") var message: String? = null,
               var openstatus: Boolean? = null, @ManyToOne var pidevice: PiDevice? = null,
               @Column(insertable = false, updatable = false) var pidevice_id: Long? = null,
               var gid: Long? = null, var messagedate: Date? = null, var toserver: Boolean? = null,
-              var endevent: Date? = null) : En() {
+              var endevent: Date? = null, var refid:Long?=null) : En() {
     constructor() : this(openstatus = true, toserver = false)
 
     override fun toString(): String {
@@ -29,7 +29,7 @@ class Message(@ManyToOne var messagetype: MessageType? = null,
 
 @Repository
 interface MessageRepo : JpaRepository<Message, Long> {
-    @Query("from Message m where m.source like %?1% or m.message like %?1% order by m.id desc")
+    @Query("from Message m where m.pidevice.name like %?1% or m.messagetype.name like %?1% or m.source like %?1% or m.message like %?1% order by m.id desc")
     fun search(search: String, topage: Pageable): List<Message>?
 
     @Query("from Message m where m.toserver = ?1")

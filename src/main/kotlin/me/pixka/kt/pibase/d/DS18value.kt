@@ -26,7 +26,7 @@ class DS18value(@ManyToOne var pidevice: PiDevice? = null,
 
     override fun toString(): String {
         return ("DS18value [pidevice=" + pidevice?.name + ", pidevice_id=" + pidevice_id + ", t=" + t + ", valuedate="
-                + valuedate + ", ip=" + ip + ", toserver=" + toserver + "]")
+                + valuedate + ", ip=" + ip + ", toserver=" + toserver + "${ds18sensor}]")
     }
 
 }

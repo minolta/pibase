@@ -2,15 +2,17 @@ package me.pixka.pibase.s
 
 import me.pixka.kt.base.s.Ds
 import me.pixka.kt.pibase.d.Pifw
+import me.pixka.pibase.r.PidevicegroupRepo
 import me.pixka.pibase.r.PifwRepo
 import org.springframework.stereotype.Service
 
 @Service
-class PifwService(override val repo:PifwRepo) : Ds<Pifw>() {
+class PifwService(override val repo: PifwRepo,val pdrp:PidevicegroupRepo) : Ds<Pifw>() {
     override fun search(search: String, page: Long, limit: Long): List<Pifw>? {
 
-        return repo.search(search,topage(page,limit))
+        return repo.search(search, topage(page, limit))
     }
+
 
 
     fun searchMatch(n: String): Pifw? {

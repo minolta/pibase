@@ -18,7 +18,6 @@ class Pifw : En() {
     var pifwgroup: Pifwgroup? = null
     @Column(insertable = false, updatable = false)
     var pifwgroup_id: Long? = null
-
     var verno: String? = null
     var checksum: String? = null
     var pathtofile: String? = null

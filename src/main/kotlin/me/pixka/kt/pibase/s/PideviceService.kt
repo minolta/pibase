@@ -11,7 +11,7 @@ class PideviceService(override val repo: PideviceRepo) : Ds<PiDevice>() {
         return repo.search(search, this.topage(page, limit))
     }
 
-    fun findByMac(s: String): PiDevice {
+    fun findByMac(s: String): PiDevice ?{
         return repo.findByMac(s)
     }
 
@@ -32,7 +32,12 @@ class PideviceService(override val repo: PideviceRepo) : Ds<PiDevice>() {
 
         return save(pd)
     }
-
+    fun create(mac: String, name: String): PiDevice? {
+        val pd = PiDevice()
+        pd.name = name
+        pd.mac = mac
+        return save(pd)
+    }
 
     fun searchMatch(n: String): PiDevice {
         return repo.findByName(n)

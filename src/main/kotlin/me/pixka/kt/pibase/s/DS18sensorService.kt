@@ -25,13 +25,30 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
         return s
     }
 
-    fun newobject(n: String): DS18sensor {
-        val s = DS18sensor()
-        s.name = n
-        s.call = n
+    fun findorcreate(n: String,callname:String): DS18sensor? {
+        var s: DS18sensor? = repo.findByName(n)
+        if (s == null) {
+            s = newobject(n,callname)
+            s = save(s)
+        }
 
         return s
     }
+
+    fun newobject(n: String): DS18sensor {
+        val s = DS18sensor()
+        s.name = n
+        s.callname = n
+        return s
+    }
+
+    fun newobject(n: String,callname:String): DS18sensor {
+        val s = DS18sensor()
+        s.name = n
+        s.callname = callname
+        return s
+    }
+
 
     fun search(s:String,uid:Long,page:Long=0,limit:Long=50):List<DS18sensor>?{
         return repo.search(s,uid,this.topage(page,limit))
@@ -59,7 +76,7 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
 
         if (ds == null) {
             ds = DS18sensor()
-            ds.call = ds18sensor.call
+            ds.callname = ds18sensor.callname
             ds.forread = ds18sensor.forread
             ds.name = ds18sensor.name
             ds.refid = ds18sensor.id

@@ -18,19 +18,21 @@ class DS18sensor(var name: String? = null,// สำหรับ บอกว่�
                  var last: BigDecimal? = null,
                  var refid: Long? = null,
                  @Column(columnDefinition = "text") var description: String? = null,
-                 var call: String? = null, @ManyToOne var devicegroup: Devicegroup? = null,
-                 @Column(insertable = false, updatable = false) var devicegroup_id: Long? = null, @ManyToOne var pidevice: PiDevice? = null,
+                 var callname: String? = null,
+                 @ManyToOne var devicegroup: Devicegroup? = null,
+                 @Column(insertable = false, updatable = false) var devicegroup_id: Long? = null,
+                 @ManyToOne var pidevice: PiDevice? = null,
                  @Column(insertable = false, updatable = false) var pidevice_id: Long? = null,
                  var user_id: Long? = null) : En() {
 
     fun copy(item: DS18sensor) {
 
         this.name = item.name
-        this.call = item.call
+        this.callname = item.callname
         this.forread = item.forread
     }
 
     override fun toString(): String {
-        return "DS18B20 Name:${name}  Call:${call}"
+        return "DS18B20 Name:${name}  Call:${callname}"
     }
 }
