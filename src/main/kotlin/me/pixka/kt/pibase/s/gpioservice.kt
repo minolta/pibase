@@ -49,11 +49,12 @@ class GpioService(val gpio: GpioController) {
         var in23 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_23, "p23")
         in23value = in23.state.value
         addToports(in23, "p23")
+        /*
         in23.addListener(GpioPinListenerDigital { event ->
             // display pin state on console
-            println(" --> GPIO PIN STATE CHANGE: " + event.pin + " = " + event.state)
+            logger.debug(" --> GPIO PIN STATE CHANGE: " + event.pin + " = " + event.state)
             this.in23value = event.state.value
-        })
+        })*/
 
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, "p24", PinState.LOW), "p24")
         addToports(gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "p25", PinState.LOW), "p25")
