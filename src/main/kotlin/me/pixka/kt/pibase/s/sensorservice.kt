@@ -13,7 +13,8 @@ import java.io.IOException
 import java.util.*
 
 @Service
-class SensorService(val dbconfigService: DbconfigService, val ps: PideviceService, val dss: DS18sensorService, val iptableServicekt: IptableServicekt, val http: HttpControl) {
+class SensorService(val dbconfigService: DbconfigService, val ps: PideviceService,
+                    val dss: DS18sensorService, val iptableServicekt: IptableServicekt, val http: HttpControl) {
     private val om = ObjectMapper()
 
     var readbuffer = ArrayList<DS18ReadBuffer>()
@@ -36,12 +37,16 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
                 logger.error("Sensor name is null")
                 return null
             }
-            var url = "http://${ip?.ip}/ds18valuebysensor/${sensor.name}"
+            var url = ""
 
-            if (sensor.name?.indexOf("28-") == -1) {
-                //เป็น ktype จะไม่มี 28- ให้อานตรงๆเลย
-                url = "http://${ip?.ip}/ktype"
+            if (ip != null && ip.ip != null) {
+                url = " http://${ip?.ip}/ds18valuebysensor/${sensor.name}"
+                if (sensor.name?.indexOf("28-") == -1) {
+                    //เป็น ktype จะไม่มี 28- ให้อานตรงๆเลย
+                    url = "http://${ip?.ip}/ktype"
+                }
             }
+
 
 
             logger.debug("Read URL: ${url}")
