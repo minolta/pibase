@@ -230,6 +230,19 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
         return null
     }
 
+    fun readDs18value(sensorname: String): DS18value? {
+        var values = reads()
+
+        if (values != null) {
+            for (v in values) {
+                if (v.ds18sensor?.name.equals(sensorname)) {
+                    return v
+                }
+            }
+        }
+
+        return null
+    }
     internal inner class DirectoryFileFilter : FileFilter {
         override fun accept(file: File): Boolean {
             val dirName = file.name
