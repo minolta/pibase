@@ -5,6 +5,7 @@ import me.pixka.kt.base.s.DbconfigService
 import me.pixka.kt.base.s.ErrorlogService
 import me.pixka.kt.pibase.d.DS18value
 import me.pixka.kt.pibase.d.Dhtvalue
+import me.pixka.kt.pibase.d.PiDevice
 import me.pixka.pibase.s.DS18sensorService
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile
@@ -215,7 +216,11 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
         logger.error("Read ds18b20 error")
         throw Exception("Canot read ds18b20")
     }
-
+    fun getPidevice(): PiDevice {
+        var p = PiDevice()
+        p.mac = wifiMacAddress()
+        return p
+    }
     fun readDs18(sensorname: String): BigDecimal? {
         var values = reads()
 
