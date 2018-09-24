@@ -13,8 +13,9 @@ import javax.persistence.ManyToOne
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Usewaterinformation(@ManyToOne var pidevice: PiDevice? = null,
                           @Column(insertable = false, updatable = false) var pidevice_id: Long?=null,
-                          var enduse: Date? = null, var devicegroup_id: Long? = null,
-                          var pijob_id: Long? = null, var end: Boolean? = false,var status:Int?=0,var message:String?=null) : En() {
+                          var enduse: Date? = null, var devicegroupid: Long? = null,
+                          var pijob_id: Long? = null, var end: Boolean? = false,var status:Int?=0,
+                          var message:String?=null) : En() {
 
     override fun toString(): String {
         return "${pidevice} ${enduse} ${end} ${status}"
@@ -22,7 +23,7 @@ class Usewaterinformation(@ManyToOne var pidevice: PiDevice? = null,
 }
 
 //สำหรับใช้ส่งการใช้น้ำไปยังศูนย์ข้อมูลน้ำ
-class Waterinfo(var mac: String? = null, var enduse: Date? = null,var pijob:Pijob?=null)
+class Waterinfo(var mac: String? = null, var enduse: Date? = null,var pijob:Pijob?=null,var groupid:Long?=null)
 {
     override fun toString(): String {
         return "MAC:${mac} ${enduse}"
@@ -34,4 +35,5 @@ class Waterinfo(var mac: String? = null, var enduse: Date? = null,var pijob:Pijo
 interface UsewaterinformationRepo : JpaRepository<Usewaterinformation, Long> {
     fun findTop1ByEnduse(b: Boolean): Usewaterinformation?
     fun findTop1ByEnd(b: Boolean): Usewaterinformation?
+    fun findTop1ByEndAndDevicegroupid(b:Boolean,id:Long):Usewaterinformation?
 }

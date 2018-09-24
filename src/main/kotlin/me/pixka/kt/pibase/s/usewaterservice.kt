@@ -16,10 +16,13 @@ class UsewaterService(override val repo:UsewaterinformationRepo): Ds<Usewaterinf
     fun findUse():Usewaterinformation?
     {
 
-        var n = Date()
         var notend = repo.findTop1ByEnd(false)
         return notend
 
+    }
+
+    fun finUse(groupid:Long): Usewaterinformation? {
+        return repo.findTop1ByEndAndDevicegroupid(false,groupid)
     }
 
 }
