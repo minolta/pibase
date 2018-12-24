@@ -18,16 +18,18 @@ class Portstatusinjob(@ManyToOne var portname: Portname? = null,
                       var refid: Long? = null,
                       @ManyToOne var status: Logistate? = null,
                       @Column(insertable = false, updatable = false) var status_id: Long? = null,
-
-
                       @JsonBackReference
                       @ManyToOne
                       var pijob: Pijob? = null,
                       @Column(insertable = false, updatable = false)
                       var pijob_id: Long? = null,
-
                       var enable: Boolean? = true,
-                      var checkversion: Long? = 0
+                      var checkversion: Long? = 0,
+                      var runtime: Int? = 0,
+                      var waittime: Int? = 0,
+                      @ManyToOne var device: PiDevice?=null, //บอกว่าไปเปิด port ที่ตัวไหน
+                      @Column(insertable = false, updatable = false) var device_id: Long? = null
+
 ) : En() {
 
     fun copy(from: Portstatusinjob) {

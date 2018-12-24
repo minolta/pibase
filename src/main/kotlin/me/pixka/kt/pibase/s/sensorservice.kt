@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import me.pixka.c.HttpControl
 import me.pixka.kt.base.s.DbconfigService
 import me.pixka.kt.base.s.IptableServicekt
+import me.pixka.kt.pibase.d.DS18sensor
 import me.pixka.kt.pibase.d.DS18value
 import me.pixka.kt.pibase.t.HttpGetTask
 import me.pixka.pibase.s.DS18sensorService
@@ -11,48 +12,56 @@ import me.pixka.pibase.s.PideviceService
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.util.*
-import java.util.concurrent.*
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 @Service
 class SensorService(val dbconfigService: DbconfigService, val ps: PideviceService,
                     val dss: DS18sensorService, val iptableServicekt: IptableServicekt, val http: HttpControl) {
     private val om = ObjectMapper()
-  /*  val ex = ThreadPoolExecutor(
-            2,
-            5,
-            5, // <--- The keep alive for the async task
-            TimeUnit.SECONDS, // <--- TIMEOUT IN SECONDS
-            ArrayBlockingQueue(100),
-            ThreadPoolExecutor.AbortPolicy() // <-- It will abort if timeout exceeds
-    )
-*/
+    /*  val ex = ThreadPoolExecutor(
+              2,
+              5,
+              5, // <--- The keep alive for the async task
+              TimeUnit.SECONDS, // <--- TIMEOUT IN SECONDS
+              ArrayBlockingQueue(100),
+              ThreadPoolExecutor.AbortPolicy() // <-- It will abort if timeout exceeds
+      )
+  */
     var readbuffer = ArrayList<DS18ReadBuffer>()
 
-    fun findurl(desid: Long, sensorid: Long): String? {
+    fun findurl(desid: Long, sensorid: Long?): String? {
         var desdevice = ps.find(desid) //เปลียน ip แล้ว
         //var desdevice = ps.findByRefid(desid) //refid จะ save ตอน load pijob
         logger.debug("1 Find pidevice ${desid} found ===> ${desdevice} #readother")
-        var sensor = dss.find(sensorid)
+        var sensor: DS18sensor? = null
+        try {
+            sensor = dss.find(sensorid)
+        } catch (e: Exception) {
+            logger.error("Find Sensor Error")
+        }
         logger.debug("2 Find sensor ${sensorid} found ===> ${sensor} #readother")
-        var ip = iptableServicekt.findByMac(desdevice?.mac!!)
+        var ip = iptableServicekt.findByMac(desdevice.mac!!)
         logger.debug("3 Find ip of pidevice ${desdevice} found ===> ${ip} #readother")
         if (ip == null || ip.ip == null) {
             logger.error("4 Can not find ip ${ip} #readother")
             return null
         }
-
-        if (sensor.name == null) {
-            logger.error("5 Sensor name is null #readother")
-            return null
-        }
         var url = ""
 
+
+
+
         if (ip != null && ip.ip != null) {
-            url = "http://${ip?.ip}/ds18valuebysensor/${sensor.name}"
-            if (sensor.name?.indexOf("28-") == -1) {
-                //เป็น ktype จะไม่มี 28- ให้อานตรงๆเลย
+            if (sensor == null) {
                 url = "http://${ip?.ip}/ktype"
-            }
+            } else
+                if (sensor?.name != null && sensor.name?.indexOf("28-") != -1)
+                    url = "http://${ip?.ip}/ds18valuebysensor/${sensor.name}"
+                else {
+                    //เป็น ktype จะไม่มี 28- ให้อานตรงๆเลย
+                    url = "http://${ip?.ip}/ktype"
+                }
         }
         logger.debug("6 Read URL: [${url}] #readother")
         return url
@@ -77,16 +86,16 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
     fun getValue(url: String): DS18value? {
 
         try {
-            var value:String? = ""
+            var value: String? = ""
             var get = HttpGetTask(url)
-            var ee  = Executors.newSingleThreadExecutor()
+            var ee = Executors.newSingleThreadExecutor()
             var f = ee.submit(get)
             logger.debug("60 Start get value Thread => [${ee}] GET: ${get}  F${f}")
             try {
                 logger.debug("61 ${f}")
                 value = f.get(15, TimeUnit.SECONDS)
                 logger.debug("62 Value from other ${value} #readother")
-                var p =  Stringtods18value(value!!)
+                var p = Stringtods18value(value!!)
                 logger.debug("63 value [${p}]")
                 return p
             } catch (e: Exception) {
@@ -94,31 +103,33 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
                 logger.error("64 Read other timeout  ${e.message} #readother")
 
             }
-        }catch (e:Exception)
-        {
+        } catch (e: Exception) {
             logger.error("65 ERROR ${e.message}")
         }
         return null
     }
 
-    fun readDsOther(desid: Long, sensorid: Long): DS18value? {
+    fun readDsOther(desid: Long, sensorid: Long?): DS18value? {
 
         try {
 
-
+            var s = 0L
             var url = findurl(desid, sensorid)
             logger.debug("50 URL ${url}")
+            if (sensorid != null) {
+                s = sensorid
+            }
 
             if (url != null) {
                 var value = getValue(url)
                 logger.debug("51 Value [${value}]")
                 if (value != null) {
-                    update(desid, sensorid, value)
+                    update(desid, s, value)
                     logger.debug("52 return new value ${value}")
                     return value
                 }
 
-                var oldvalue = readold(desid, sensorid)
+                var oldvalue = readold(desid, s)
                 if (oldvalue != null) {
                     if (checkage(oldvalue)) {
                         logger.debug("53 return old value ${value}")

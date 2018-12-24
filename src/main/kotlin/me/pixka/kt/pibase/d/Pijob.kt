@@ -74,6 +74,8 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
         this.lowtime = from.lowtime
         this.runwithid = from.runwithid
         this.timetorun = from.timetorun
+        this.desdevice = from.desdevice
+        this.ds18sensor = from.ds18sensor
 
     }
 }

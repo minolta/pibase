@@ -12,16 +12,39 @@ import org.apache.http.util.EntityUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Controller
 import java.io.IOException
+import org.apache.http.auth.AuthScope
+import org.apache.http.auth.UsernamePasswordCredentials
+import org.apache.http.impl.client.BasicCredentialsProvider
+
+
 
 @Controller
 class HttpControl(val err: ErrorlogService) {
 
     @Throws(IOException::class)
     operator fun get(s: String): String {
-        val httpclient = HttpClients.createDefault()
+        val provider = BasicCredentialsProvider()
+        val credentials = UsernamePasswordCredentials("USER_CLIENT_APP", "password")
+        provider.setCredentials(AuthScope.ANY, credentials)
 
-        val httpGet = HttpGet(s)
-        val response1 = httpclient.execute(httpGet)
+
+        //เปลียนมาใช้ ฺ Basic Auth
+        val client = HttpClientBuilder.create()
+                .setDefaultCredentialsProvider(provider)
+                .build()
+        val response1 = client.execute(
+                HttpGet(s))
+        val statusCode = response1.statusLine
+                .statusCode
+
+
+
+//        val httpclient = HttpClients.createDefault()
+//        val httpGet = HttpGet(s)
+       // val response1 = client.execute(httpGet)
+
+
+
 
         try {
             println(response1.statusLine)
@@ -42,10 +65,22 @@ class HttpControl(val err: ErrorlogService) {
     val mapper = ObjectMapper()
     @Throws(Exception::class)
     fun postJson(url: String, obj: Any): CloseableHttpResponse {
-        val httpClient = HttpClients.createDefault() // Use this
-        // instead
-        var re: CloseableHttpResponse? = null
+
+
+
+
+
+
         try {
+            val provider = BasicCredentialsProvider()
+            val credentials = UsernamePasswordCredentials("USER_CLIENT_APP", "password")
+            provider.setCredentials(AuthScope.ANY, credentials)
+
+
+            //เปลียนมาใช้ ฺ Basic Auth
+            val client = HttpClientBuilder.create()
+                    .setDefaultCredentialsProvider(provider)
+                    .build()
 
             val request = HttpPost(url)
             val jvalue = mapper.writeValueAsString(obj)
@@ -53,7 +88,7 @@ class HttpControl(val err: ErrorlogService) {
             val params = StringEntity(jvalue)
             request.entity = params
             request.setHeader("Content-type", "application/json")
-            re = httpClient.execute(request)
+            var re = client.execute(request)
             // handle response here...
 
             return re
