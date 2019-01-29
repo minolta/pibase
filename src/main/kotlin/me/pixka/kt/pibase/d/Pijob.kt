@@ -56,26 +56,29 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
     }
 
     fun copy(from: Pijob) {
-        this.hhigh = from.hhigh
-        this.hlow = from.hlow
-        this.tlow = from.tlow
-        this.thigh = from.thigh
-        this.sdate = from.sdate
-        this.edate = from.edate
-        this.stime = from.stime
-        this.etime = from.etime
-        this.name = from.name
-        this.runtime = from.runtime
-        this.waittime = from.waittime
-        this.enable = from.enable
-        this.etimes = from.etimes
-        this.stimes = from.stimes
-        this.hightime = from.hightime
-        this.lowtime = from.lowtime
-        this.runwithid = from.runwithid
-        this.timetorun = from.timetorun
-        this.desdevice = from.desdevice
-        this.ds18sensor = from.ds18sensor
+        if(verref==null || verref != from.ver) {
+            this.hhigh = from.hhigh
+            this.hlow = from.hlow
+            this.tlow = from.tlow
+            this.thigh = from.thigh
+            this.sdate = from.sdate
+            this.edate = from.edate
+            this.stime = from.stime
+            this.etime = from.etime
+            this.name = from.name
+            this.runtime = from.runtime
+            this.waittime = from.waittime
+            this.enable = from.enable
+            this.etimes = from.etimes
+            this.stimes = from.stimes
+            this.hightime = from.hightime
+            this.lowtime = from.lowtime
+            this.runwithid = from.runwithid
+            this.timetorun = from.timetorun
+            this.desdevice = from.desdevice
+            this.ds18sensor = from.ds18sensor
+            this.verref = from.ver
+        }
 
     }
 }

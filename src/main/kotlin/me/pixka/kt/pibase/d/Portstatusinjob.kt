@@ -33,11 +33,14 @@ class Portstatusinjob(@ManyToOne var portname: Portname? = null,
 ) : En() {
 
     fun copy(from: Portstatusinjob) {
-        this.portname = from.portname
-        this.status = from.status
+        if(verref==null || verref!=from.ver) {
+            this.portname = from.portname
+            this.status = from.status
+            verref = from.ver
+        }
     }
 
     override fun toString(): String {
-        return "${portname?.name} = ${status} ${enable}"
+        return "${portname?.name} = ${status} ${enable} ${device} ${runtime} ${waittime} "
     }
 }
