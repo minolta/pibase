@@ -8,7 +8,6 @@ import me.pixka.kt.pibase.d.Dhtvalue
 import me.pixka.kt.pibase.d.PiDevice
 import me.pixka.pibase.s.DS18sensorService
 import org.slf4j.LoggerFactory
-import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import java.io.File
 import java.io.FileFilter
@@ -16,9 +15,11 @@ import java.io.IOException
 import java.io.InputStream
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.net.InetAddress
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
+
 
 /**
  * ใช้สำหรับติดต่อกับ H/w ของ PI
@@ -26,7 +27,7 @@ import java.util.*
  * @author kykub
  */
 @Service
-@Profile("pi", "lite","server")
+//@Profile("pi", "lite","server")
 class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: ErrorlogService) {
     /**
      * ใช้สำหรับดึง MAC address ของ WIFI
@@ -55,7 +56,11 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
             return contents
         } catch (e: Exception) {
             logger.error("Piio ${e.message}")
-            err.n("Piio", "53", "${e.message}")
+            var mac = System.getProperty("mac")
+            if (mac != null) {
+                logger.debug("Have mac ${mac}")
+                return mac
+            }
         }
         return "error"
     }
@@ -98,7 +103,7 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
      * ใช้ load config ถ้ามีการกำหนดก็จะเปลียน ตำแหน่งอ่านค่าของ dht22
      */
     private fun loadpath() {
-        dhtDirPath = dbcfg.findorcreate("dhtpath", "/sensor/dht22")?.value!!
+        dhtDirPath = dbcfg.findorcreate("dhtpath", "/sensor/dht22").value!!
     }
 
     /**
@@ -108,10 +113,24 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
      */
     fun wifiIpAddress(): String? {
 
-        var path = "/sensor/wlan"
-        var content: String? = String(Files.readAllBytes(Paths.get(path)))
-        content = content?.replace(" ".toRegex(), "")?.replace("(\\r|\\n)".toRegex(), "")
-        return content
+        try {
+            var path = "/sensor/wlan"
+            var content: String? = String(Files.readAllBytes(Paths.get(path)))
+            content = content?.replace(" ".toRegex(), "")?.replace("(\\r|\\n)".toRegex(), "")
+            return content
+        } catch (e: Exception) {
+            logger.error(e.message)
+            var fixip = System.getProperty("fixip")
+
+            if (fixip != null)
+                return fixip
+
+            val inetAddress = InetAddress.getLocalHost()
+            println("IP Address:- " + inetAddress.hostAddress)
+            println("Host Name:- " + inetAddress.hostName)
+            return inetAddress.hostAddress.toString()
+        }
+
     }
 
     /**
@@ -134,27 +153,6 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
                 val filePath = w1DirPath + File.separatorChar + file.name + File.separatorChar + "w1_slave"
                 val f = File(filePath)
                 try {
-                    /*
-                    BufferedReader(FileReader(f)).use { br ->
-                        var output: String
-                        while ((output = br.readLine()) != null) {
-                            val idx = output.indexOf("t=")
-                            if (idx > -1) {
-                                // Temp data (multiplied by 1000) in 5 chars
-                                // after t=
-                                var tempC = java.lang.Float.parseFloat(output.substring(output.indexOf("t=") + 2))
-                                // Divide by 1000 to get degrees Celsius
-                                val t = BigDecimal((tempC /= 1000f).toDouble())
-
-                                logger.debug("[ds18b20] value from io " + t)
-                                // System.out.print(String.format("%.1f ", tempC));
-                                // logger.debug(String.format("%.1f", tempF));
-                                return t.setScale(1, RoundingMode.HALF_UP)
-                            }
-                        }
-                    }
-                    */
-
 
                 } catch (ex: Exception) {
                     logger.error("[ds18b20 readio] error " + ex.message)
@@ -205,7 +203,7 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
 
                 } catch (ex: Exception) {
                     logger.error(ex.message)
-                    err.n("Piio", "198-214", "${ex.message}")
+                    // err.n("Piio", "198-214", "${ex.message}")
                 }
 
             }
@@ -216,11 +214,13 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
         logger.error("Read ds18b20 error")
         throw Exception("Canot read ds18b20")
     }
+
     fun getPidevice(): PiDevice {
         var p = PiDevice()
         p.mac = wifiMacAddress()
         return p
     }
+
     fun readDs18(sensorname: String): BigDecimal? {
         var values = reads()
 
@@ -248,6 +248,7 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
 
         return null
     }
+
     internal inner class DirectoryFileFilter : FileFilter {
         override fun accept(file: File): Boolean {
             val dirName = file.name
@@ -259,7 +260,6 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
     companion object {
 
         internal var logger = LoggerFactory.getLogger(Piio::class.java)
-
         internal var w1DirPath = "/sys/bus/w1/devices"
     }
 

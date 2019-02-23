@@ -4,9 +4,7 @@ import me.pixka.kt.base.d.Iptableskt
 import me.pixka.kt.base.s.DbconfigService
 import me.pixka.kt.base.s.ErrorlogService
 import me.pixka.kt.base.s.IptableServicekt
-import me.pixka.ktbase.io.Configfilekt
 import org.slf4j.LoggerFactory
-import org.springframework.context.annotation.Profile
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.io.BufferedReader
@@ -16,8 +14,9 @@ import java.net.InetAddress
 import java.net.NetworkInterface
 import java.net.SocketException
 import java.util.*
+import java.util.concurrent.TimeUnit
 
-@Profile("ip")
+//@Profile("ip")
 @Component
 class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: ErrorlogService) {
     companion object {
@@ -50,15 +49,19 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
 
     fun readline(std: BufferedReader): String? {
         s = std.readLine()
-        // logger.debug("Read line : ${s}")
+        logger.debug("Read line : ${s}")
         return s
     }
 
 
     fun setup() {
         // logger.debug("Set ups")
+        var p = System.getProperty("scancommand")
 
-        command = cfg.findorcreate("scancommand","C:\\nmap.exe -n -sP ").value!!
+        if (p != null) {
+            command = "${p} -n -sP "
+        } else
+            command = cfg.findorcreate("scancommand", "C:\\nmap.exe -n -sP ").value!!
 
 
     }
@@ -91,10 +94,12 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
         var buffer = ArrayList<String>()
         try {
             var nw = network()
+            logger.info("Network is ")
             for (n in nw) {
                 //var ipdata = n?.split(",")
                 val n = n.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 val nn = n[0] + "." + n[1] + "." + n[2] + ".0/24"
+                logger.debug("Network ${nn}")
                 buffer.add(nn)
             }
         } catch (e: Exception) {
@@ -106,31 +111,34 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
     }
 
     fun findIP(network: String, cmd: String): ArrayList<Ip> {
-        val c = cmd + " " + network
+        var c = cmd + " " + network
+        logger.debug("Scan command ${c}")
+
+        if (System.getProperty("scan1") != null)
+            c = System.getProperty("scan1")
 
         val proc = Runtime.getRuntime().exec(c)
-
+        TimeUnit.SECONDS.sleep(10)
         val stdInput = BufferedReader(InputStreamReader(proc.inputStream))
-
-
         // read the output from the command
-
         val buf = ArrayList<Ip>()
         var ip: Ip? = null
         while (readline(stdInput) != null) {
+            logger.debug("================>${s}")
             if (s != null) {
                 if (s!!.startsWith("Nmap scan")) {
                     if (ip == null)
                         ip = Ip()
                     val g = s!!.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                     ip.ip = g[4]
+                    logger.debug("Save ip ${ip.ip}")
                 }
 
                 if (s!!.startsWith("MAC Address:")) {
                     val g = s!!.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-
                     ip!!.mac = g[2]
                     buf.add(ip)
+                    logger.debug("Save mac ${ip.mac}")
                     ip = null
                 }
             }
@@ -175,7 +183,7 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
 
                     var mac = i.mac
                     //      logger.debug("mac value : ${mac}")
-                    var ii: Iptableskt? = service?.findByMac(mac!!)
+                    var ii: Iptableskt? = service.findByMac(mac!!)
                     //      logger.debug("Address  Found: ${ii}")
                     if (ii == null) {
                         ii = Iptableskt()
@@ -183,7 +191,7 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
                         ii.mac = i.mac
                         newIptable(ii)
                     } else {
-                        service?.updateiptable(ii, i.ip!!)
+                        service.updateiptable(ii, i.ip!!)
                     }
                 }
             }
@@ -204,7 +212,7 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
             val e = NetworkInterface.getNetworkInterfaces()
             while (e.hasMoreElements()) {
                 val n = e.nextElement() as NetworkInterface
-                val ee = n.getInetAddresses()
+                val ee = n.inetAddresses
                 while (ee.hasMoreElements()) {
                     val i = ee.nextElement() as InetAddress
                     //  logger.debug("loadiptable Internet Address ${i.address} ${n.hardwareAddress}")
@@ -254,7 +262,7 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
             idv.ip = it.ip
             idv.mac = it.mac
             idv.lastcheckin = Date()
-            idv = service!!.save(idv)!!
+            idv = service.save(idv)!!
             logger.debug("loadiptable New iptables : ${idv}")
         } catch (e: Exception) {
             e.printStackTrace()

@@ -56,7 +56,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
     }
 
     fun copy(from: Pijob) {
-        if(verref==null || verref != from.ver) {
+        if (verref == null || verref != from.ver) {
             this.hhigh = from.hhigh
             this.hlow = from.hlow
             this.tlow = from.tlow

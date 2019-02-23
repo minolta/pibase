@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 
 
 @Service
-@Profile("pi","lite","server")
+//@Profile("pi","lite","server")
 class MessageService(override val repo: MessageRepo, val io: Piio, val mtr: MessageTypeRepo) : Ds<Message>() {
     override fun search(search: String, page: Long, limit: Long): List<Message>? {
         return repo.search(search, topage(page, limit))
