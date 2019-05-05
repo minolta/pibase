@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 @Service
 class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
     override fun search(search: String, page: Long, limit: Long): List<DS18sensor>? {
-        return repo.search(search,topage(page,limit))
+        return repo.search(search, topage(page, limit))
     }
 
     fun searchMatch(n: String): DS18sensor {
@@ -25,10 +25,10 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
         return s
     }
 
-    fun findorcreate(n: String,callname:String): DS18sensor? {
+    fun findorcreate(n: String, callname: String): DS18sensor? {
         var s: DS18sensor? = repo.findByName(n)
         if (s == null) {
-            s = newobject(n,callname)
+            s = newobject(n, callname)
             s = save(s)
         }
 
@@ -42,7 +42,7 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
         return s
     }
 
-    fun newobject(n: String,callname:String): DS18sensor {
+    fun newobject(n: String, callname: String): DS18sensor {
         val s = DS18sensor()
         s.name = n
         s.callname = callname
@@ -50,16 +50,16 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
     }
 
 
-    fun search(s:String,uid:Long,page:Long=0,limit:Long=50):List<DS18sensor>?{
-        return repo.search(s,uid,this.topage(page,limit))
+    fun search(s: String, uid: Long, page: Long = 0, limit: Long = 50): List<DS18sensor>? {
+        return repo.search(s, uid, this.topage(page, limit))
     }
 
-    fun test(){}
+    fun test() {}
     fun search(s: String?, page: Long?, limit: Long?): List<DS18sensor>? {
         return repo.search(s!!, this.topage(page!!, limit!!))
     }
 
-    fun findByname(name: String): DS18sensor {
+    fun findByname(name: String): DS18sensor? {
         return repo.findByName(name)
     }
 
@@ -86,8 +86,7 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
     }
 
 
-    fun clear()
-    {
+    fun clear() {
         repo.clear()
     }
 
