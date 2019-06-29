@@ -4,12 +4,14 @@ import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.HttpClients
 import org.apache.http.util.EntityUtils
 import org.slf4j.LoggerFactory
+import java.util.*
 import java.util.concurrent.Callable
 
 
 class HttpGetTask(val url: String) : Callable<String?> {
     override fun call(): String? {
         var re: String? = null
+        Thread.currentThread().name = "Call ${url} ${Date()}"
         try {
             val httpclient = HttpClients.createDefault()
             logger.debug("0 ${this} Client ${httpclient} URL:${url} ")
@@ -29,6 +31,7 @@ class HttpGetTask(val url: String) : Callable<String?> {
                 logger.error("3 ${e.message}")
             } finally {
                 response1.close()
+                httpclient.close()
                 logger.debug("******************************************")
                 logger.debug("4 Close connection return value [${re}]")
                 logger.debug("******************************************")

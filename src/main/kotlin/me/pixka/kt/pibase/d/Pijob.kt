@@ -81,6 +81,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             this.verref = from.ver
             this.pijobgroup = from.pijobgroup
             this.pijobgroup_id = from.pijobgroup_id
+            this.description = from.description
         }
 
     }

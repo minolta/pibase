@@ -16,9 +16,10 @@ class HttpPostTask(var url: String, var obj: Any) : Callable<CloseableHttpRespon
         val httpClient = HttpClients.createDefault() // Use this
         // instead
         var re: CloseableHttpResponse? = null
+        val request = HttpPost(url)
         try {
 
-            val request = HttpPost(url)
+
             val jvalue = mapper.writeValueAsString(obj)
             logger.debug("JACK son:" + jvalue)
             val params = StringEntity(jvalue)
@@ -33,6 +34,7 @@ class HttpPostTask(var url: String, var obj: Any) : Callable<CloseableHttpRespon
 
             // Deprecated
             // httpClient.getConnectionManager().shutdown();\
+
             httpClient.close()
         }
         return null
