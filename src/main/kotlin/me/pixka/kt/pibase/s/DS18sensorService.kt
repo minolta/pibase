@@ -3,6 +3,7 @@ package me.pixka.pibase.s
 import me.pixka.kt.base.s.Ds
 import me.pixka.kt.pibase.d.DS18sensor
 import me.pixka.pibase.r.Ds18sensorRepo
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
@@ -69,20 +70,24 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
     }
 
     fun findorcreate(ds18sensor: DS18sensor?): DS18sensor? {
+        try {
+            if (ds18sensor == null)
+                return null
+            var ds: DS18sensor? = repo.findByName(ds18sensor.name!!)
 
-        if (ds18sensor == null)
-            return null
-        var ds: DS18sensor? = repo.findByName(ds18sensor.name!!)
-
-        if (ds == null) {
-            ds = DS18sensor()
-            ds.callname = ds18sensor.callname
-            ds.forread = ds18sensor.forread
-            ds.name = ds18sensor.name
-            ds.refid = ds18sensor.id
-            ds = save(ds)
+            if (ds == null) {
+                ds = DS18sensor()
+                ds.callname = ds18sensor.callname
+                ds.forread = ds18sensor.forread
+                ds.name = ds18sensor.name
+                ds.refid = ds18sensor.id
+                ds = save(ds)
+            }
+            return ds
+        } catch (e: Exception) {
+            logger.error("Find or create ERROR ${e.message}")
+            throw e
         }
-        return ds
     }
 
 
@@ -90,5 +95,7 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
         repo.clear()
     }
 
-
+    companion object {
+        internal var logger = LoggerFactory.getLogger(DS18sensorService::class.java)
+    }
 }

@@ -13,7 +13,7 @@ import javax.transaction.Transactional
 @Repository
 interface PijobRepo : JpaRepository<Pijob, Long> {
 
-    fun findByRefid(id: Long?): Pijob
+    fun findByRefid(id: Long?): Pijob?
 
     fun findByPidevice_id(id: Long?): List<*>
 

@@ -40,7 +40,9 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             var runwithid: Long? = null, var timetorun: Long? = 0//สำหรับบอกว่าทำงานกี่รอบ
             , var checkversion: Long? = 0, var usewater: Boolean? = false,
             var refverion: Long? = null, @ManyToOne var pijobgroup: Pijobgroup? = null,
-            @Column(insertable = false, updatable = false) var pijobgroup_id: Long? = null
+            @Column(insertable = false, updatable = false) var pijobgroup_id: Long? = null,
+            var token:String?=null
+
 ) : En() {
 
     constructor() : this(user_id = 0)
@@ -82,6 +84,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             this.pijobgroup = from.pijobgroup
             this.pijobgroup_id = from.pijobgroup_id
             this.description = from.description
+            this.token = from.token
         }
 
     }
