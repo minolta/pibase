@@ -12,11 +12,11 @@ import javax.transaction.Transactional
 @Repository
 interface JobRepo : JpaRepository<Job, Long> {
 
-    fun findByName(n: String): Job
+    fun findByName(n: String): Job?
 
-    fun findByRefid(id: Long?): Job
+    fun findByRefid(id: Long?): Job?
 
-    fun findTop1ByName(name: String): Job
+    fun findTop1ByName(name: String): Job?
 
     @Query("from Job j where j.name like %?1%")
     fun search(s: String, page: Pageable): List<Job>?

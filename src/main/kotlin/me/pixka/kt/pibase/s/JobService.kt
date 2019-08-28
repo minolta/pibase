@@ -13,11 +13,11 @@ class JobService (override val repo:JobRepo): Ds<Job>() {
     }
 
 
-    fun searchMatch(n: String): Job {
+    fun searchMatch(n: String): Job? {
         return repo.findByName(n)
     }
 
-    fun findByName(n: String): Job {
+    fun findByName(n: String): Job? {
         return repo.findByName(n)
     }
 
@@ -30,7 +30,7 @@ class JobService (override val repo:JobRepo): Ds<Job>() {
         return j
     }
 
-    fun findByRefid(id: Long?): Job {
+    fun findByRefid(id: Long?): Job? {
         return repo.findByRefid(id)
     }
     fun findorcreate(n:String): Job {
@@ -55,7 +55,7 @@ class JobService (override val repo:JobRepo): Ds<Job>() {
         return job
     }
 
-    fun findTop1ByName(name: String): Job {
+    fun findTop1ByName(name: String): Job? {
         return repo.findTop1ByName(name)
     }
 

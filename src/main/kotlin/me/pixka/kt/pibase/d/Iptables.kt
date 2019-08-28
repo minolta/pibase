@@ -11,7 +11,6 @@ import javax.persistence.Entity
 @Cacheable
 @Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 class Iptables : En() {
-
     var mac: String? = null
     var ip: String? = null
     var lastcheckin: Date? = null
