@@ -10,9 +10,9 @@ import javax.transaction.Transactional
 @Repository
 interface PortstatusinjobRepo : JpaRepository<Portstatusinjob, Long> {
 
-    fun findByPijob_id(pijobid: Long?): List<*>
+    fun findByPijob_id(pijobid: Long?): List<*>?
 
-    fun findByRefid(id: Long?): Portstatusinjob
+    fun findByRefid(id: Long?): Portstatusinjob?
 
     @Modifying
     @Transactional

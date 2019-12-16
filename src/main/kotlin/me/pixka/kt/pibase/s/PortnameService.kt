@@ -14,7 +14,7 @@ class PortnameService(override val repo: PortnameRepo) : Ds<Portname>() {
         return repo.search(search, topage(page, limit))
     }
 
-    fun searchMatch(n: String): Portname {
+    fun searchMatch(n: String): Portname? {
         return repo.findByName(n)
     }
 

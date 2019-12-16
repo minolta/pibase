@@ -11,8 +11,8 @@ import me.pixka.kt.pibase.d.Routedatajob
 interface RoutedatajobRepo : JpaRepository<Routedatajob, Long> {
 
     @Query("from Routedatajob r where r.name like %?1% or r.url like %?1%")
-    fun search(s: String, page: Pageable): List<*>
+    fun search(s: String, page: Pageable): List<*>?
 
-    fun findByName(n: String): Routedatajob
+    fun findByName(n: String): Routedatajob?
 
 }

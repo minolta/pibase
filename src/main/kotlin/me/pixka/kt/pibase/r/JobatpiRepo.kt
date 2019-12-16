@@ -8,6 +8,6 @@ import me.pixka.kt.pibase.d.Jobatpi
 @Repository
 interface JobatpiRepo : JpaRepository<Jobatpi, Long> {
 
-    fun findByPidevice_id(id: Long?): List<*>
+    fun findByPidevice_id(id: Long?): List<*>?
 
 }

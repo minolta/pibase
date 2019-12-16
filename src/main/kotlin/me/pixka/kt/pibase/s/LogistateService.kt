@@ -15,7 +15,7 @@ class LogistateService(override val repo:LogistateRepo) : Ds<Logistate>() {
     }
 
 
-    fun findByName(n:String): Logistate {
+    fun findByName(n:String): Logistate? {
         return repo.findByName(n)
     }
 
@@ -40,7 +40,7 @@ class LogistateService(override val repo:LogistateRepo) : Ds<Logistate>() {
         return null
     }
 
-    fun findBtRefid(id: Long?): Logistate {
+    fun findBtRefid(id: Long?): Logistate? {
         return repo.findByRefid(id)
     }
 

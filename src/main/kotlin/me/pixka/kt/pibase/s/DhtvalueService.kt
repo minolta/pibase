@@ -39,12 +39,12 @@ class DhtvalueService(override val repo: DhtvalueRepo) : Ds<Dhtvalue>() {
      *
      * @return
      */
-    fun notInserver(): List<*> {
+    fun notInserver(): List<*>? {
         return repo.findByToserver(false, topage(0, 500))
     }
 
 
-    fun findValueforgraph(pideviceid: Long?, s: Date, e: Date): List<*> {
+    fun findValueforgraph(pideviceid: Long?, s: Date, e: Date): List<*>? {
         return repo.findgraph(pideviceid, s, e)
     }
 

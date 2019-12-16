@@ -19,7 +19,7 @@ class Ds18valueService(override val repo: Ds18valueRepo) : Ds<DS18value>() {
      *
      * @return
      */
-    fun last(): DS18value {
+    fun last(): DS18value? {
         // return dao.findTop1ByOrderByIdDesc();
         return repo.findTop1ByOrderByValuedateDesc()
     }
@@ -35,7 +35,7 @@ class Ds18valueService(override val repo: Ds18valueRepo) : Ds<DS18value>() {
     }
 
 
-    fun notInserver(): List<DS18value> {
+    fun notInserver(): List<DS18value>? {
 
         return repo.findTop500ByToserver(false)
     }
@@ -44,15 +44,15 @@ class Ds18valueService(override val repo: Ds18valueRepo) : Ds<DS18value>() {
         return repo.findgraphvalue(piid, s, e) as List<DS18value>
     }
 
-    fun last(id: Long?): DS18value {
+    fun last(id: Long?): DS18value? {
         return repo.findTop1ByPidevice_idOrderByValuedateDesc(id)
     }
 
-    fun lastBysensor(id: Long?): DS18value {
+    fun lastBysensor(id: Long?): DS18value? {
         return repo.findTop1ByDs18sensor_idOrderByValuedateDesc(id)
     }
 
-    fun findGraphvalueBysensor(sid: Long?, s: Date, e: Date): List<DS18value> {
+    fun findGraphvalueBysensor(sid: Long?, s: Date, e: Date): List<DS18value>? {
         return repo.findgraphvalueBySensor(sid, s, e)
     }
 

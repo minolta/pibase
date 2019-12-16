@@ -51,11 +51,11 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
         return repo.findByJob_id(id)
     }
 
-    fun findByPidevice_id(id: Long?): List<*> {
+    fun findByPidevice_id(id: Long?): List<*>? {
         return repo.findByPidevice_id(id)
     }
 
-    fun findByHT(h: BigDecimal, t: BigDecimal, jobid: Long?): List<*> {
+    fun findByHT(h: BigDecimal, t: BigDecimal, jobid: Long?): List<*>? {
         return repo.findByHT(h, t, jobid)
     }
 
@@ -71,7 +71,7 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
         return repo.findByT(t, jobid, true)
     }
 
-    fun findAllByT(page: Long?, limit: Long?): List<*> {
+    fun findAllByT(page: Long?, limit: Long?): List<*>? {
         return repo.fintAllOrderByT(this.topage(page!!, limit!!))
     }
 
@@ -94,6 +94,7 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
             time = df.parse(s)
             logger.debug("[ds18b20 finbydstime] Time to search " + time)
             val list = repo.findByDS(t, time, jobid)
+            if(list!=null)
             logger.debug("[ds18b20 finbydstime] Job founds " + list.size)
             return list
         } catch (e: ParseException) {

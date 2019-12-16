@@ -20,7 +20,7 @@ class JobatpiService : Ds<Jobatpi>() {
         return null
     }
 
-    fun findByPiID(id: Long?): List<*> {
+    fun findByPiID(id: Long?): List<*>? {
         return dao!!.findByPidevice_id(id)
     }
 

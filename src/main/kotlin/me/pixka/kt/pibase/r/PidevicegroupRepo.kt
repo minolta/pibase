@@ -8,6 +8,6 @@ import me.pixka.kt.pibase.d.Pidevicegroup
 @Repository
 interface PidevicegroupRepo : JpaRepository<Pidevicegroup, Long> {
 
-    fun findByName(name: String): Pidevicegroup
+    fun findByName(name: String): Pidevicegroup?
 
 }

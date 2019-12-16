@@ -15,10 +15,10 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
 
     fun findByRefid(id: Long?): Pijob?
 
-    fun findByPidevice_id(id: Long?): List<*>
+    fun findByPidevice_id(id: Long?): List<*>?
 
     @Query("from Pijob pj where (pj.hlow <= ?1 and pj.hhigh >=?1) and (pj.tlow <= ?2 and pj.thigh >=?2)  and pj.job_id = ?3 and (pj.stime is null and pj.etime is null)")
-    fun findByHT(h: BigDecimal, t: BigDecimal, id: Long?): List<*>
+    fun findByHT(h: BigDecimal, t: BigDecimal, id: Long?): List<*>?
 
     /**
      * สำหรับ ค้นหา แต่ค่า h อย่างเดียว
@@ -48,10 +48,10 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
     fun findByDS(t: BigDecimal, jobtypeid: Long?, e: Boolean?): List<Pijob>?
 
     @Query("from Pijob pj order by pj.tlow  ")
-    fun fintAllOrderByT(page: Pageable): List<*>
+    fun fintAllOrderByT(page: Pageable): List<*>?
 
     @Query("from Pijob pj where (pj.tlow <= ?1 and pj.thigh >=?1)  and pj.job_id = ?3 and (pj.stime >= ?2 and pj.etime <= ?2) and pj.enable=true")
-    fun findByDS(t: BigDecimal, time: Date, jobid: Long?): List<*>
+    fun findByDS(t: BigDecimal, time: Date, jobid: Long?): List<*>?
 
     @Query("from Pijob pj where pj.job_id =?1 and pj.enable = true")
     fun findByJob_id(id: Long?): List<Pijob>?

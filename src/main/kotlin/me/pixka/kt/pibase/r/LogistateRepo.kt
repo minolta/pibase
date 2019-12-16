@@ -10,9 +10,9 @@ import org.springframework.data.jpa.repository.Query
 @Repository
 interface LogistateRepo : JpaRepository<Logistate, Long> {
 
-    fun findByName(n: String): Logistate
+    fun findByName(n: String): Logistate?
 
-    fun findByRefid(id: Long?): Logistate
+    fun findByRefid(id: Long?): Logistate?
     @Query("from Logistate l where l.name like %?1%")
     fun search(search: String, topage: Pageable): List<Logistate>?
 

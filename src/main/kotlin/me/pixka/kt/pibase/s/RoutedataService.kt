@@ -21,19 +21,19 @@ class RoutedataService : Ds<Routedata>() {
      * @param mac
      * @return
      */
-    fun findByMac(mac: String): List<*> {
+    fun findByMac(mac: String): List<*>? {
         return dao!!.findBySrcmac(mac)
     }
 
-    fun findByRefid(refid: Long?): Routedata {
+    fun findByRefid(refid: Long?): Routedata? {
         return dao!!.findByRefid(refid)
     }
 
-    fun searchMatch(n: String): Routedata {
+    fun searchMatch(n: String): Routedata? {
         return dao!!.findByName(n)
     }
 
-    fun findbyJobId(id: Long?): Routedata {
+    fun findbyJobId(id: Long?): Routedata? {
         return dao!!.findTop1ByJob_idAndEnableOrderByIdDesc(id, true)
     }
 

@@ -19,20 +19,20 @@ class PifwService(override val repo: PifwRepo,val pdrp:PidevicegroupRepo) : Ds<P
         return repo.findByVerno(n)
     }
 
-    fun findByVersion(ver: String): Pifw {
+    fun findByVersion(ver: String): Pifw? {
         return repo.findByVerno(ver)
     }
 
-    fun last(): Pifw {
+    fun last(): Pifw? {
         return repo.findTop1ByOrderByIdDesc()
     }
 
 
-    fun findlast(): Pifw {
+    fun findlast(): Pifw? {
         return repo.findTop1ByOrderByIdDesc()
     }
 
-    fun last(groupid: Long?): Pifw {
+    fun last(groupid: Long?): Pifw? {
         return repo.findTop1ByPifwgroup_idOrderByIdDesc(groupid)
     }
 

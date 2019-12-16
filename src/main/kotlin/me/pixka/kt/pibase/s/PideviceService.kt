@@ -39,7 +39,7 @@ class PideviceService(override val repo: PideviceRepo) : Ds<PiDevice>() {
         return save(pd)
     }
 
-    fun searchMatch(n: String): PiDevice {
+    fun searchMatch(n: String): PiDevice? {
         return repo.findByName(n)
     }
     fun clear()

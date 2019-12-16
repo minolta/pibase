@@ -12,7 +12,7 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
         return repo.search(search, topage(page, limit))
     }
 
-    fun searchMatch(n: String): DS18sensor {
+    fun searchMatch(n: String): DS18sensor? {
         return repo.findByName(n)
     }
 
@@ -64,7 +64,7 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
         return repo.findByName(name)
     }
 
-    fun findForread(): DS18sensor {
+    fun findForread(): DS18sensor? {
 
         return repo.findTop1ByForreadOrderByLasteditDesc(true)
     }

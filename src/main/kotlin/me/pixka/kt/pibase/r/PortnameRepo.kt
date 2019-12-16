@@ -10,11 +10,11 @@ import me.pixka.kt.pibase.d.Portname
 @Repository
 interface PortnameRepo: JpaRepository<Portname, Long> {
 
-    fun findByName(n: String): Portname
+    fun findByName(n: String): Portname?
 
     @Query("from Portname pn where pn.name like %?1% or pn.piport like %?1%")
     fun search(s: String, page: Pageable): List<Portname>?
 
-    fun findByRefid(id: Long?): Portname
+    fun findByRefid(id: Long?): Portname?
 
 }

@@ -15,11 +15,11 @@ class RoutedatajobService : Ds<Routedatajob>() {
     @Autowired
     private val dao: RoutedatajobRepo? = null
 
-    fun search(s: String?, page: Long?, limit: Long?): List<*> {
+    fun search(s: String?, page: Long?, limit: Long?): List<*>? {
         return dao!!.search(s!!, this.topage(page!!, limit!!)!!)
     }
 
-    fun searchMatch(n: String): Routedatajob {
+    fun searchMatch(n: String): Routedatajob? {
         return dao!!.findByName(n)
     }
 

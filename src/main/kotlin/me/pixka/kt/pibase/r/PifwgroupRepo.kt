@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query
 @Repository
 interface PifwgroupRepo : JpaRepository<Pifwgroup, Long> {
 
-    fun findByName(appname: String): Pifwgroup
+    fun findByName(appname: String): Pifwgroup?
     @Query("from Pifwgroup p where p.name like %?1%")
     fun search(search: String, topage: Pageable): List<Pifwgroup>?
 

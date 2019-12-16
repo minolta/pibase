@@ -26,7 +26,7 @@ class PidevicegroupService : Ds<Pidevicegroup>() {
         return dao!!.findByName(name) ?: return create(name)
     }
 
-    fun searchMatch(n: String): Pidevicegroup {
+    fun searchMatch(n: String): Pidevicegroup? {
         return dao!!.findByName(n)
     }
 }

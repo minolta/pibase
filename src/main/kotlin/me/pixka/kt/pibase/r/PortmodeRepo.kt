@@ -8,6 +8,6 @@ import me.pixka.kt.pibase.d.Portmode
 @Repository
 interface PortmodeRepo : JpaRepository<Portmode, Long> {
 
-    fun findByName(name: String): Portmode
+    fun findByName(name: String): Portmode?
 
 }

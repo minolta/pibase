@@ -17,7 +17,7 @@ class PortstatusinjobService(override val repo: PortstatusinjobRepo) : Ds<Portst
         return null
     }
 
-    fun findByPijobid(pijobid: Long?): List<*> {
+    fun findByPijobid(pijobid: Long?): List<*>? {
         return repo.findByPijob_id(pijobid)
     }
 
