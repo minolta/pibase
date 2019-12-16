@@ -1,5 +1,6 @@
 package me.pixka.kt.pibase.s
 
+import me.pixka.kt.base.s.DefaultService
 import me.pixka.kt.base.s.Ds
 import me.pixka.kt.pibase.d.Usewaterinformation
 import me.pixka.kt.pibase.d.UsewaterinformationRepo
@@ -7,22 +8,18 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class UsewaterService(override val repo:UsewaterinformationRepo): Ds<Usewaterinformation>()
-{
-    override fun search(search: String, page: Long, limit: Long): List<Usewaterinformation>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class UsewaterService(val r: UsewaterinformationRepo) : DefaultService<Usewaterinformation>() {
 
-    fun findUse():Usewaterinformation?
-    {
 
-        var notend = repo.findTop1ByEnd(false)
+    fun findUse(): Usewaterinformation? {
+
+        var notend = r.findTop1ByEnd(false)
         return notend
 
     }
 
-    fun finUse(groupid:Long): Usewaterinformation? {
-        return repo.findTop1ByEndAndDevicegroupid(false,groupid)
+    fun finUse(groupid: Long): Usewaterinformation? {
+        return r.findTop1ByEndAndDevicegroupid(false, groupid)
     }
 
 }

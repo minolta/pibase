@@ -2,6 +2,7 @@ package me.pixka.pibase.s
 
 import com.pi4j.io.gpio.GpioController
 import com.pi4j.io.gpio.GpioPinDigitalOutput
+import me.pixka.kt.base.s.DefaultService
 import me.pixka.kt.base.s.Ds
 import me.pixka.kt.pibase.d.Portname
 import me.pixka.pibase.r.PortnameRepo
@@ -9,13 +10,11 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
-class PortnameService(override val repo: PortnameRepo) : Ds<Portname>() {
-    override fun search(search: String, page: Long, limit: Long): List<Portname>? {
-        return repo.search(search, topage(page, limit))
-    }
+class PortnameService( val r: PortnameRepo) : DefaultService<Portname>() {
+
 
     fun searchMatch(n: String): Portname? {
-        return repo.findByName(n)
+        return r.findByName(n)
     }
 
     fun findorcreate(n: String): Portname? {
@@ -43,7 +42,7 @@ class PortnameService(override val repo: PortnameRepo) : Ds<Portname>() {
 
     fun findByRefid(id: Long?): Portname? {
         try {
-            return repo.findByRefid(id)
+            return r.findByRefid(id)
         } catch (e: Exception) {
             logger.error("findByrefid PortnameService  : error " + e.message)
             e.printStackTrace()

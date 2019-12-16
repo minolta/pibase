@@ -36,12 +36,12 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
         logger.debug("1 Find pidevice ${desid} found ===> ${desdevice} #readother")
         var sensor: DS18sensor? = null
         try {
-            sensor = dss.find(sensorid)
+            sensor = dss.find(sensorid!!)
         } catch (e: Exception) {
             logger.error("Find Sensor Error")
         }
         logger.debug("2 Find sensor ${sensorid} found ===> ${sensor} #readother")
-        var ip = iptableServicekt.findByMac(desdevice.mac!!)
+        var ip = iptableServicekt.findByMac(desdevice?.mac!!)
         logger.debug("3 Find ip of pidevice ${desdevice} found ===> ${ip} #readother")
         if (ip == null || ip.ip == null) {
             logger.error("4 Can not find ip ${ip} #readother")

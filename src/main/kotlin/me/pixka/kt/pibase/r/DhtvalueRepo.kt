@@ -1,5 +1,7 @@
 package me.pixka.pibase.r
 
+import me.pixka.kt.base.s.findByName
+import me.pixka.kt.base.s.search
 import java.util.Date
 
 import org.springframework.data.domain.Pageable

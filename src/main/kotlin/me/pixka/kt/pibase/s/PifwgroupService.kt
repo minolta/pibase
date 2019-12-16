@@ -1,16 +1,13 @@
 package me.pixka.pibase.s
 
+import me.pixka.kt.base.s.DefaultService
 import me.pixka.kt.base.s.Ds
 import me.pixka.kt.pibase.d.Pifwgroup
 import me.pixka.pibase.r.PifwgroupRepo
 import org.springframework.stereotype.Service
 
 @Service
-class PifwgroupService(override val repo: PifwgroupRepo) : Ds<Pifwgroup>() {
-    override fun search(search: String, page: Long, limit: Long): List<Pifwgroup>? {
-
-        return repo.search(search, topage(page, limit))
-    }
+class PifwgroupService( val r: PifwgroupRepo) : DefaultService<Pifwgroup>() {
 
 
     fun searchMatch(n: String): Pifwgroup? {
@@ -18,7 +15,7 @@ class PifwgroupService(override val repo: PifwgroupRepo) : Ds<Pifwgroup>() {
     }
 
     fun findorcreate(appname: String): Pifwgroup? {
-        var pn: Pifwgroup? = repo.findByName(appname)
+        var pn: Pifwgroup? = r.findByName(appname)
         if (pn == null) {
             pn = Pifwgroup()
             pn.name = appname

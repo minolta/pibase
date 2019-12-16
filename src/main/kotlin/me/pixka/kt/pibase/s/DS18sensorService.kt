@@ -1,5 +1,6 @@
 package me.pixka.pibase.s
 
+import me.pixka.kt.base.s.DefaultService
 import me.pixka.kt.base.s.Ds
 import me.pixka.kt.pibase.d.DS18sensor
 import me.pixka.pibase.r.Ds18sensorRepo
@@ -7,17 +8,14 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
-class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
-    override fun search(search: String, page: Long, limit: Long): List<DS18sensor>? {
-        return repo.search(search, topage(page, limit))
-    }
+class DS18sensorService( val r: Ds18sensorRepo) : DefaultService<DS18sensor>() {
 
     fun searchMatch(n: String): DS18sensor? {
-        return repo.findByName(n)
+        return r.findByName(n)
     }
 
     fun findorcreate(n: String): DS18sensor? {
-        var s: DS18sensor? = repo.findByName(n)
+        var s: DS18sensor? = r.findByName(n)
         if (s == null) {
             s = newobject(n)
             s = save(s)
@@ -27,7 +25,7 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
     }
 
     fun findorcreate(n: String, callname: String): DS18sensor? {
-        var s: DS18sensor? = repo.findByName(n)
+        var s: DS18sensor? = r.findByName(n)
         if (s == null) {
             s = newobject(n, callname)
             s = save(s)
@@ -52,28 +50,28 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
 
 
     fun search(s: String, uid: Long, page: Long = 0, limit: Long = 50): List<DS18sensor>? {
-        return repo.search(s, uid, this.topage(page, limit))
+        return r.search(s, uid, this.topage(page, limit))
     }
 
     fun test() {}
     fun search(s: String?, page: Long?, limit: Long?): List<DS18sensor>? {
-        return repo.search(s!!, this.topage(page!!, limit!!))
+        return r.search(s!!, this.topage(page!!, limit!!))
     }
 
     fun findByname(name: String): DS18sensor? {
-        return repo.findByName(name)
+        return r.findByName(name)
     }
 
     fun findForread(): DS18sensor? {
 
-        return repo.findTop1ByForreadOrderByLasteditDesc(true)
+        return r.findTop1ByForreadOrderByLasteditDesc(true)
     }
 
     fun findorcreate(ds18sensor: DS18sensor?): DS18sensor? {
         try {
             if (ds18sensor == null)
                 return null
-            var ds: DS18sensor? = repo.findByName(ds18sensor.name!!)
+            var ds: DS18sensor? = r.findByName(ds18sensor.name!!)
 
             if (ds == null) {
                 ds = DS18sensor()
@@ -92,7 +90,7 @@ class DS18sensorService(override val repo: Ds18sensorRepo) : Ds<DS18sensor>() {
 
 
     fun clear() {
-        repo.clear()
+        r.clear()
     }
 
     companion object {

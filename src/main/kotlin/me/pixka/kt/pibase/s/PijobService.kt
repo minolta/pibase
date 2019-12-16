@@ -13,30 +13,30 @@ import java.util.*
 
 
 @Service
-class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<Pijob>() {
+class PijobService( var r: PijobRepo, val dss: Ds18sensorRepo) : Ds<Pijob>() {
     override fun search(search: String, page: Long, limit: Long): List<Pijob>? {
-        return repo.search(search, topage(page, limit))
+        return r.search(search, topage(page, limit))
     }
 
     fun findJob(jobid:Long):List<Pijob>?
     {
-        return repo.findByJob_idAndEnable(jobid,true)
+        return r.findByJob_idAndEnable(jobid,true)
     }
     fun findByTime(currenttime: Date, jobid: Long): List<Pijob>? {
         var c = datetoLong(currenttime)
-        return repo.fineByTime(c, jobid)
+        return r.fineByTime(c, jobid)
     }
 
     fun search(search: String, uid: Long, page: Long, limit: Long): List<Pijob>? {
-        return repo.search(search, uid, topage(page, limit))
+        return r.search(search, uid, topage(page, limit))
     }
 
     fun findByName(n: String): Pijob? {
-        return repo.findByName(n)
+        return r.findByName(n)
     }
 
     fun findByName(n: String, uid: Long): Pijob? {
-        return repo.findByNameAndAddby(n, uid)
+        return r.findByNameAndAddby(n, uid)
     }
 
     fun searchMatch(n: String): Pijob? {
@@ -44,35 +44,35 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
     }
 
     fun findByRefid(id: Long?): Pijob? {
-        return repo.findByRefid(id)
+        return r.findByRefid(id)
     }
 
     fun findByCounter(id: Long): List<Pijob>? {
-        return repo.findByJob_id(id)
+        return r.findByJob_id(id)
     }
 
     fun findByPidevice_id(id: Long?): List<*>? {
-        return repo.findByPidevice_id(id)
+        return r.findByPidevice_id(id)
     }
 
     fun findByHT(h: BigDecimal, t: BigDecimal, jobid: Long?): List<*>? {
-        return repo.findByHT(h, t, jobid)
+        return r.findByHT(h, t, jobid)
     }
 
     fun findByDS(t: BigDecimal, jobid: Long?): List<Pijob>? {
-        return repo.findByDS(t, jobid, true) // ต้องเอาแต่ enable เท่านั้น
+        return r.findByDS(t, jobid, true) // ต้องเอาแต่ enable เท่านั้น
     }
 
     fun findByH(h: BigDecimal, jobid: Long?): List<Pijob>? {
-        return repo.findByH(h, jobid, true)
+        return r.findByH(h, jobid, true)
     }
 
     fun findByT(t: BigDecimal, jobid: Long?): List<Pijob>? {
-        return repo.findByT(t, jobid, true)
+        return r.findByT(t, jobid, true)
     }
 
     fun findAllByT(page: Long?, limit: Long?): List<*>? {
-        return repo.fintAllOrderByT(this.topage(page!!, limit!!))
+        return r.fintAllOrderByT(this.topage(page!!, limit!!))
     }
 
     /**
@@ -93,7 +93,7 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
         try {
             time = df.parse(s)
             logger.debug("[ds18b20 finbydstime] Time to search " + time)
-            val list = repo.findByDS(t, time, jobid)
+            val list = r.findByDS(t, time, jobid)
             if(list!=null)
             logger.debug("[ds18b20 finbydstime] Job founds " + list.size)
             return list
@@ -112,7 +112,7 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
         try {
 
             logger.debug("[ds18b20 finbyHbytimetime Hbytime] Time to search " + time)
-            val list = repo.findByHByTime(h, jobid!!, true, time)
+            val list = r.findByHByTime(h, jobid!!, true, time)
             logger.debug("[ds18b20 finbydstime Hbytime] Job founds " + list!!.size)
             return list
         } catch (e: Exception) {
@@ -132,7 +132,7 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
      * ใช้สำหรับค้นหา PI job ที่อ่านค่าจาก device ตัวอื่น
      */
     fun findDSOTHERJob(jobid: Long): ArrayList<Pijob>? {
-        return repo.findDSOther(jobid)
+        return r.findDSOther(jobid)
     }
 
     /**
@@ -179,7 +179,7 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
         try {
 
             // ใช้หา pi job ที่เป็น DSDP
-            val list = repo.findByJob_id(id)
+            val list = r.findByJob_id(id)
             logger.debug("Findbydsdp Founds " + list?.size)
             return list
         } catch (e: Exception) {
@@ -191,11 +191,11 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
 
     fun searchByDeviceid(id: Long?, page: Long?, limit: Long?): List<Pijob>? {
 
-        return repo.searchByDeviceid(id, this.topage(page!!, limit!!))
+        return r.searchByDeviceid(id, this.topage(page!!, limit!!))
     }
 
     fun findOnecommand(): List<Pijob>? {
-        return repo.findByOne(true)
+        return r.findByOne(true)
     }
 
 
@@ -208,7 +208,7 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
 
     fun findDSJOBBySensor(t: BigDecimal, sensorid: Long, dsjobid: Long): ArrayList<Pijob>? {
 
-        return repo.DSBysensor(dsjobid, sensorid, t)
+        return r.DSBysensor(dsjobid, sensorid, t)
     }
 
     companion object {
@@ -226,7 +226,7 @@ class PijobService(override var repo: PijobRepo, val dss: Ds18sensorRepo) : Ds<P
     }
 
     fun deleteById(id: Long): Boolean {
-        repo.deletePijobById(id)
+        r.deletePijobById(id)
         return true
     }
 

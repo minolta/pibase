@@ -1,5 +1,6 @@
 package me.pixka.pibase.s
 
+import me.pixka.kt.base.s.DefaultService
 import me.pixka.kt.base.s.Ds
 import me.pixka.kt.pibase.d.Portmode
 import me.pixka.pibase.r.PortmodeRepo
@@ -7,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class PortmodeService(override val repo:PortmodeRepo) : Ds<Portmode>() {
-    override fun search(search: String, page: Long, limit: Long): List<Portmode>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class PortmodeService( val r:PortmodeRepo) : DefaultService<Portmode>() {
+
 
     @Autowired
     private val dao: PortmodeRepo? = null
@@ -21,7 +20,7 @@ class PortmodeService(override val repo:PortmodeRepo) : Ds<Portmode>() {
     }
 
     fun findorcreate(name: String): Portmode {
-        var pm: Portmode? = dao!!.findByName(name)
+        var pm: Portmode? = r.findByName(name)
         if (pm == null) {
             pm = newmode(name)
         }

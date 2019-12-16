@@ -1,6 +1,7 @@
 package me.pixka.pibase.s
 
 import com.pi4j.io.gpio.GpioPinDigitalOutput
+import me.pixka.kt.base.s.DefaultService
 import me.pixka.kt.base.s.Ds
 import me.pixka.kt.pibase.d.Logistate
 import me.pixka.pibase.r.LogistateRepo
@@ -8,22 +9,14 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
-class LogistateService(override val repo:LogistateRepo) : Ds<Logistate>() {
-    override fun search(search: String, page: Long, limit: Long): List<Logistate>? {
+class LogistateService(val r: LogistateRepo) : DefaultService<Logistate>() {
 
-        return repo.search(search,topage(page,limit))
-    }
-
-
-    fun findByName(n:String): Logistate? {
-        return repo.findByName(n)
-    }
 
     fun findorcreate(n: Logistate): Logistate? {
 
         try {
 
-            var lg: Logistate? = repo.findByName(n.name!!)
+            var lg: Logistate? = r.findByName(n.name!!)
             if (lg == null) {
                 lg = Logistate()
                 lg.name = n.name
@@ -41,7 +34,7 @@ class LogistateService(override val repo:LogistateRepo) : Ds<Logistate>() {
     }
 
     fun findBtRefid(id: Long?): Logistate? {
-        return repo.findByRefid(id)
+        return r.findByRefid(id)
     }
 
     /**
@@ -64,7 +57,7 @@ class LogistateService(override val repo:LogistateRepo) : Ds<Logistate>() {
     }
 
     fun findorcreate(status: String): Logistate? {
-        var lg: Logistate? = repo.findByName(status)
+        var lg: Logistate? = r.findByName(status)
         if (lg == null) {
             lg = Logistate()
             lg.name = status
@@ -77,7 +70,7 @@ class LogistateService(override val repo:LogistateRepo) : Ds<Logistate>() {
     fun findByRefid(id: Long?): Logistate? {
 
         try {
-            return repo.findByRefid(id)
+            return r.findByRefid(id)
         } catch (e: Exception) {
             logger.error("findByRefid logistateservice " + e.message)
             e.printStackTrace()

@@ -9,7 +9,7 @@ import java.math.BigDecimal
 import java.util.*
 
 @Service
-class DhtvalueService(override val repo: DhtvalueRepo) : Ds<Dhtvalue>() {
+class DhtvalueService(val r: DhtvalueRepo) : Ds<Dhtvalue>() {
     override fun search(search: String, page: Long, limit: Long): List<Dhtvalue>? {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -27,10 +27,11 @@ class DhtvalueService(override val repo: DhtvalueRepo) : Ds<Dhtvalue>() {
 
     fun last(): Dhtvalue? {
         // return dao.findTop1ByOrderByIdDesc();
-        return repo.findTop1ByOrderByValuedateDesc()
+        return r.findTop1ByOrderByValuedateDesc()
     }
-    fun last(id:Long): Dhtvalue?{
-        return repo.findTop1ByPidevice_idOrderByValuedateDesc(id)
+
+    fun last(id: Long): Dhtvalue? {
+        return r.findTop1ByPidevice_idOrderByValuedateDesc(id)
     }
 
 
@@ -40,16 +41,15 @@ class DhtvalueService(override val repo: DhtvalueRepo) : Ds<Dhtvalue>() {
      * @return
      */
     fun notInserver(): List<*>? {
-        return repo.findByToserver(false, topage(0, 500))
+        return r.findByToserver(false, topage(0, 500))
     }
 
 
     fun findValueforgraph(pideviceid: Long?, s: Date, e: Date): List<*>? {
-        return repo.findgraph(pideviceid, s, e)
+        return r.findgraph(pideviceid, s, e)
     }
 
-    fun cleanToserver()
-    {
-        repo.deleteBySend()
+    fun cleanToserver() {
+        r.deleteBySend()
     }
 }

@@ -1,5 +1,6 @@
 package me.pixka.pibase.s
 
+import me.pixka.kt.base.s.DefaultService
 import me.pixka.kt.base.s.Ds
 import me.pixka.kt.pibase.d.Portstatusinjob
 import me.pixka.pibase.r.PortstatusinjobRepo
@@ -7,10 +8,8 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
-class PortstatusinjobService(override val repo: PortstatusinjobRepo) : Ds<Portstatusinjob>() {
-    override fun search(search: String, page: Long, limit: Long): List<Portstatusinjob>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class PortstatusinjobService( val r: PortstatusinjobRepo) : DefaultService<Portstatusinjob>() {
+
 
 
     fun searchMatch(n: String): Portstatusinjob? {
@@ -18,7 +17,7 @@ class PortstatusinjobService(override val repo: PortstatusinjobRepo) : Ds<Portst
     }
 
     fun findByPijobid(pijobid: Long?): List<*>? {
-        return repo.findByPijob_id(pijobid)
+        return r.findByPijob_id(pijobid)
     }
 
     fun clear() {
@@ -31,7 +30,7 @@ class PortstatusinjobService(override val repo: PortstatusinjobRepo) : Ds<Portst
             return null
         }
         try {
-            return repo.findByRefid(refid)
+            return r.findByRefid(refid)
         } catch (e: Exception) {
             e.printStackTrace()
             logger.error("[portstatusinjobservice finByRefId] error : " + e.message)
@@ -41,7 +40,7 @@ class PortstatusinjobService(override val repo: PortstatusinjobRepo) : Ds<Portst
     }
 
     fun deleteBypideviceId(id: Long): Boolean {
-        repo.deleteByPijobId(id)
+        r.deleteByPijobId(id)
         return true
     }
 

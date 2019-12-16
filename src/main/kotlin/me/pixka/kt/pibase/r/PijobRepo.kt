@@ -1,5 +1,7 @@
 package me.pixka.pibase.r
 
+import me.pixka.kt.base.s.findByName
+import me.pixka.kt.base.s.search
 import me.pixka.kt.pibase.d.Pijob
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -11,7 +13,7 @@ import java.util.*
 import javax.transaction.Transactional
 
 @Repository
-interface PijobRepo : JpaRepository<Pijob, Long> {
+interface PijobRepo : JpaRepository<Pijob, Long>, search<Pijob>, findByName<Pijob> {
 
     fun findByRefid(id: Long?): Pijob?
 
@@ -69,7 +71,7 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
     fun findByOne(b: Boolean): List<Pijob>?
 
     @Query("from Pijob p where p.pidevice.name like %?1% or p.name like %?1%  order by p.pidevice_id,p.id")
-    fun search(search: String, topage: Pageable): List<Pijob>?
+    override fun search(search: String, topage: Pageable): List<Pijob>?
 
     @Query("from Pijob p where (p.pidevice.name like %?1% or p.name like %?1%) and p.addby = ?2  order by p.pidevice_id,p.id")
     fun search(search: String, uid: Long, topage: Pageable): List<Pijob>?
@@ -80,7 +82,6 @@ interface PijobRepo : JpaRepository<Pijob, Long> {
     @Query("from Pijob p where p.job_id =?1  and p.enable = true")
     fun findDSOther(jobid: Long): ArrayList<Pijob>?
 
-    fun findByName(n: String): Pijob?
     fun findByNameAndAddby(n: String, uid: Long): Pijob?
     @Query("from Pijob p where p.enable = true and p.job_id = ?2 and (p.lowtime <= ?1 and p.hightime >=?1 )")
     fun fineByTime(currenttime: Long, jobid: Long): List<Pijob>?

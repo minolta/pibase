@@ -1,19 +1,16 @@
 package me.pixka.kt.pibase.s
 
+import me.pixka.kt.base.s.DefaultService
 import me.pixka.kt.base.s.Ds
 import me.pixka.kt.pibase.d.Sawdustinmix
 import me.pixka.kt.pibase.d.SawdustinmixRepo
 import org.springframework.stereotype.Service
 
 @Service
-class SawdustinmixService(override val repo: SawdustinmixRepo) : Ds<Sawdustinmix>() {
-    override fun search(search: String, page: Long, limit: Long): List<Sawdustinmix>? {
-        TODO()
-        //return repo.search(search,topage(page,limit))
-    }
+class SawdustinmixService( val r: SawdustinmixRepo) : DefaultService<Sawdustinmix>() {
 
     fun findByMixdataId(id:Long):List<Sawdustinmix>?
     {
-        return repo.findByMixdata_id(id)
+        return r.findByMixdata_id(id)
     }
 }

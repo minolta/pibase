@@ -12,95 +12,91 @@ import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import java.util.*
 import com.fasterxml.jackson.databind.ObjectMapper
-
+import me.pixka.kt.base.s.DefaultService
 
 
 @Service
-//@Profile("pi","lite","server")
-class MessageService(override val repo: MessageRepo, val io: Piio, val mtr: MessageTypeRepo) : Ds<Message>() {
-    override fun search(search: String, page: Long, limit: Long): List<Message>? {
-        return repo.search(search, topage(page, limit))
-    }
+class MessageService(val r: MessageRepo) : DefaultService<Message>() {
 
     fun notsend(): List<Message>? {
-        return repo.notsend(false, topage(0, 100))
+        return r.notsend(false, topage(0, 100))
     }
 
     fun cleanToserver() {
-        repo.deleteBySend()
+        r.deleteBySend()
     }
 
-    @Synchronized fun message(msg: String, msgtype: String): Message? {
-
-        try {
-            if (msg.equals("")) {
-                logger.error("Message is empty")
-                return null
-            }
-            var mess = Message()
-            //  var p = PiDevice()
-            // p.mac = io.wifiMacAddress()
-            // mess.pidevice = p
-            mess.message = msg
-            mess.messagedate = Date()
-            var mt = mtr.findByName(msgtype)
-            if (mt == null) {
-                mt = MessageType(msgtype)
-                mt = mtr.save(mt)
-            }
-            mess.messagetype = mt
-
-
-            var m = save(mess)
-
-            logger.debug("Message is ${m}")
-            return m
-        }
-        catch (e:Exception)
-        {
-            logger.error("${e.message}")
-            e.printStackTrace()
-            throw e
-        }
-
-
-    }
-    @Synchronized fun tojsonmessage(msg: Any, msgtype: String): Message? {
-
-        val objectMapper = ObjectMapper()
-        try {
-            if (msg.equals("")) {
-                logger.error("Message is empty")
-                return null
-            }
-            var mess = Message()
-            //  var p = PiDevice()
-            // p.mac = io.wifiMacAddress()
-            // mess.pidevice = p
-            mess.message = objectMapper.writeValueAsString(msg)
-            mess.messagedate = Date()
-            var mt = mtr.findByName(msgtype)
-            if (mt == null) {
-                mt = MessageType(msgtype)
-                mt = mtr.save(mt)
-            }
-            mess.messagetype = mt
-
-
-            var m = save(mess)
-
-            logger.debug("Message is ${m}")
-            return m
-        }
-        catch (e:Exception)
-        {
-            logger.error("${e.message}")
-            e.printStackTrace()
-            throw e
-        }
-
-
-    }
+//    @Synchronized fun message(msg: String, msgtype: String): Message? {
+//
+//        try {
+//            if (msg.equals("")) {
+//                logger.error("Message is empty")
+//                return null
+//            }
+//            var mess = Message()
+//            //  var p = PiDevice()
+//            // p.mac = io.wifiMacAddress()
+//            // mess.pidevice = p
+//            mess.message = msg
+//            mess.messagedate = Date()
+//            var mt = mtr.findByName(msgtype)
+//            if (mt == null) {
+//                mt = MessageType(msgtype)
+//                mt = mtr.save(mt)
+//            }
+//            mess.messagetype = mt
+//
+//
+//            var m = save(mess)
+//
+//            logger.debug("Message is ${m}")
+//            return m
+//        }
+//        catch (e:Exception)
+//        {
+//            logger.error("${e.message}")
+//            e.printStackTrace()
+//            throw e
+//        }
+//
+//
+//    }
+//    @Synchronized fun tojsonmessage(msg: Any, msgtype: String): Message? {
+//
+//        val objectMapper = ObjectMapper()
+//        try {
+//            if (msg.equals("")) {
+//                logger.error("Message is empty")
+//                return null
+//            }
+//            var mess = Message()
+//            //  var p = PiDevice()
+//            // p.mac = io.wifiMacAddress()
+//            // mess.pidevice = p
+//            mess.message = objectMapper.writeValueAsString(msg)
+//            mess.messagedate = Date()
+//            var mt = mtr.findByName(msgtype)
+//            if (mt == null) {
+//                mt = MessageType(msgtype)
+//                mt = mtr.save(mt)
+//            }
+//            mess.messagetype = mt
+//
+//
+//            var m = save(mess)
+//
+//            logger.debug("Message is ${m}")
+//            return m
+//        }
+//        catch (e:Exception)
+//        {
+//            logger.error("${e.message}")
+//            e.printStackTrace()
+//            throw e
+//        }
+//
+//
+//    }
 
     companion object {
         internal var logger = LoggerFactory.getLogger(MessageService::class.java!!)

@@ -1,13 +1,13 @@
 package me.pixka.pibase.r
 
+import me.pixka.kt.base.s.findByName
+import me.pixka.kt.pibase.d.Portmode
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
-import me.pixka.kt.pibase.d.Portmode
-
 @Repository
-interface PortmodeRepo : JpaRepository<Portmode, Long> {
+interface PortmodeRepo : JpaRepository<Portmode, Long>,findByName<Portmode> {
 
-    fun findByName(name: String): Portmode?
+
 
 }

@@ -1,6 +1,8 @@
 package me.pixka.kt.pibase.d
 
 import me.pixka.kt.base.d.En
+import me.pixka.kt.base.s.findByName
+import me.pixka.kt.base.s.search
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
@@ -15,9 +17,7 @@ class Devicegroup(var name: String? = null,
 }
 
 @Repository
-interface DevicegroupRepo : JpaRepository<Devicegroup, Long> {
+interface DevicegroupRepo : JpaRepository<Devicegroup, Long>, search<Devicegroup>, findByName<Devicegroup> {
     @Query("from Devicegroup d where d.name like %?1%")
-    fun search(search: String, topage: Pageable): List<Devicegroup>?
-
-    fun findByName(n: String): Devicegroup?
+    override fun search(search: String, topage: Pageable): List<Devicegroup>?
 }

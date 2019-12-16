@@ -1,5 +1,7 @@
 package me.pixka.pibase.r
 
+import me.pixka.kt.base.s.findByName
+import me.pixka.kt.base.s.search
 import me.pixka.kt.pibase.d.DS18value
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -10,7 +12,9 @@ import java.util.*
 import javax.transaction.Transactional
 
 @Repository
-interface Ds18valueRepo : JpaRepository<DS18value, Long> {
+interface Ds18valueRepo : JpaRepository<DS18value, Long>
+//        search<DS18value>
+        {
 
     fun findTop1ByOrderByIdDesc(): DS18value?
 
@@ -31,8 +35,8 @@ interface Ds18valueRepo : JpaRepository<DS18value, Long> {
     @Query(" from  DS18value  t where t.ds18sensor_id = ?1 and t.valuedate >= ?2 and t.valuedate <= ?3 order by t.valuedate ")
     fun findgraphvalueBySensor(sid: Long?, s: Date, e: Date): List<DS18value>?
 
-    @Query("from DS18value d ")
-    fun search(search: String, topage: Pageable?): List<DS18value>?
+//    @Query("from DS18value d where  ")
+//    override fun search(search: String, topage: Pageable): List<DS18value>?
 
     @Modifying
     @Transactional

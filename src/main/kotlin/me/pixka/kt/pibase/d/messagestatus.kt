@@ -10,4 +10,4 @@ class Messagestatus(var name: String? = null) : En()
 
 
 @Repository
-interface MessagestatusRepo : JpaRepository<MessageType, Long>
+interface MessagestatusRepo : JpaRepository<Messagestatus, Long>

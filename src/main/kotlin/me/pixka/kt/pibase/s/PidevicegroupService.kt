@@ -1,5 +1,6 @@
 package me.pixka.pibase.s
 
+import me.pixka.kt.base.s.DefaultService
 import me.pixka.kt.base.s.Ds
 import me.pixka.kt.pibase.d.Pidevicegroup
 import me.pixka.pibase.r.PidevicegroupRepo
@@ -7,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class PidevicegroupService : Ds<Pidevicegroup>() {
-    override fun search(search: String, page: Long, limit: Long): List<Pidevicegroup>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class PidevicegroupService : DefaultService<Pidevicegroup>() {
+
 
     @Autowired
     private val dao: PidevicegroupRepo? = null

@@ -1,5 +1,6 @@
 package me.pixka.pibase.s
 
+import me.pixka.kt.base.s.DefaultService
 import me.pixka.kt.base.s.Ds
 import me.pixka.kt.pibase.d.Routedata
 import me.pixka.pibase.r.RoutedataRepo
@@ -7,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class RoutedataService : Ds<Routedata>() {
-    override fun search(search: String, page: Long, limit: Long): List<Routedata>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class RoutedataService : DefaultService<Routedata>() {
+
 
     @Autowired
     private val dao: RoutedataRepo? = null

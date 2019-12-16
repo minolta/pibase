@@ -1,25 +1,22 @@
 package me.pixka.pibase.s
 
+import me.pixka.kt.base.s.DefaultService
 import me.pixka.kt.base.s.Ds
+import me.pixka.kt.base.s.findByName
+import me.pixka.kt.base.s.search
 import me.pixka.kt.pibase.d.Job
 import me.pixka.pibase.r.JobRepo
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
-class JobService (override val repo:JobRepo): Ds<Job>() {
-    override fun search(search: String, page: Long, limit: Long): List<Job>? {
-        return repo.search(search,topage(page,limit))
-    }
+class JobService(val r: JobRepo) : DefaultService<Job>() {
 
 
     fun searchMatch(n: String): Job? {
-        return repo.findByName(n)
+        return r.findByName(n)
     }
 
-    fun findByName(n: String): Job? {
-        return repo.findByName(n)
-    }
 
     fun create(name: String, description: String, refid: Long?): Job {
         var j = Job()
@@ -31,16 +28,17 @@ class JobService (override val repo:JobRepo): Ds<Job>() {
     }
 
     fun findByRefid(id: Long?): Job? {
-        return repo.findByRefid(id)
+        return r.findByRefid(id)
     }
-    fun findorcreate(n:String): Job {
+
+    fun findorcreate(n: String): Job {
         var f = findByName(n)
-        if(f==null)
-        {
-            return create(n,"auto",null)
+        if (f == null) {
+            return create(n, "auto", null)
         }
         return f
     }
+
     fun findandcreateLocal(from: Job): Job? {
 
         logger.debug("[jobservice] find job from " + from)
@@ -56,13 +54,13 @@ class JobService (override val repo:JobRepo): Ds<Job>() {
     }
 
     fun findTop1ByName(name: String): Job? {
-        return repo.findTop1ByName(name)
+        return r.findTop1ByName(name)
     }
 
     fun search(s: String?, page: Long?, limit: Long?): List<*>? {
         try {
             logger.debug("[jobservce search ] try to search : " + s!!)
-            val list = repo.search(s, this.topage(page!!, limit!!)!!)
+            val list = r.search(s, this.topage(page!!, limit!!)!!)
 
             logger.debug("[jobservce search ] founds " + list?.size)
             return list
@@ -75,9 +73,8 @@ class JobService (override val repo:JobRepo): Ds<Job>() {
     }
 
 
-    fun clear()
-    {
-        repo.clear()
+    fun clear() {
+        r.clear()
     }
 
     companion object {
