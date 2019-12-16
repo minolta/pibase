@@ -8,11 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class PidevicegroupService : DefaultService<Pidevicegroup>() {
-
-
-    @Autowired
-    private val dao: PidevicegroupRepo? = null
+class PidevicegroupService(val r:PidevicegroupRepo) : DefaultService<Pidevicegroup>() {
 
     fun create(name: String): Pidevicegroup {
         val pg = Pidevicegroup()
@@ -22,10 +18,10 @@ class PidevicegroupService : DefaultService<Pidevicegroup>() {
 
     fun getorcreate(name: String): Pidevicegroup {
 
-        return dao!!.findByName(name) ?: return create(name)
+        return r.findByName(name) ?: return create(name)
     }
 
     fun searchMatch(n: String): Pidevicegroup? {
-        return dao!!.findByName(n)
+        return r.findByName(n)
     }
 }

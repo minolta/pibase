@@ -8,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class RoutedataService : DefaultService<Routedata>() {
+class RoutedataService(val r:RoutedataRepo) : DefaultService<Routedata>() {
 
 
-    @Autowired
-    private val dao: RoutedataRepo? = null
+
 
     /**
      * สำหรับให้ Server ส่งค่า Route ออกไปยัง client ที่ส่ง mac เข้ามา
@@ -21,19 +20,19 @@ class RoutedataService : DefaultService<Routedata>() {
      * @return
      */
     fun findByMac(mac: String): List<*>? {
-        return dao!!.findBySrcmac(mac)
+        return r.findBySrcmac(mac)
     }
 
     fun findByRefid(refid: Long?): Routedata? {
-        return dao!!.findByRefid(refid)
+        return r.findByRefid(refid)
     }
 
     fun searchMatch(n: String): Routedata? {
-        return dao!!.findByName(n)
+        return r.findByName(n)
     }
 
     fun findbyJobId(id: Long?): Routedata? {
-        return dao!!.findTop1ByJob_idAndEnableOrderByIdDesc(id, true)
+        return r.findTop1ByJob_idAndEnableOrderByIdDesc(id, true)
     }
 
     fun create(d: Routedata): Routedata {

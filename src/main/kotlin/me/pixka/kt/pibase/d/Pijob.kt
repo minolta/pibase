@@ -22,9 +22,12 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             var ports: List<Portstatusinjob>? = null,// สำหรับ เก็บว่า job นี้ทำงานกับ อะไรงานไหนเช่น H
             @Column(insertable = false, updatable = false) var job_id: Long? = null,// ก็ทำงานกับค่า h อย่างเดียว HT ทำงานกับ H และ T
             @ManyToOne var job: Job? = null, @ManyToOne var pidevice: PiDevice? = null,
-            @Column(insertable = false, updatable = false) var pidevice_id: Long? = null, var name: String? = null,// ช่วงความร้อนที่ทำงาน
-            @Column(precision = 10, scale = 3) var tlow: BigDecimal? = null, @Column(precision = 10, scale = 3) var thigh: BigDecimal? = null,// ช่วงความชื้นที่ทำงาน
-            @Column(precision = 10, scale = 3) var hlow: BigDecimal? = null, @Column(precision = 10, scale = 3) var hhigh: BigDecimal? = null,
+            @Column(insertable = false, updatable = false) var pidevice_id: Long? = null
+            , var name: String? = null,// ช่วงความร้อนที่ทำงาน
+            @Column(precision = 10, scale = 3) var tlow: BigDecimal? = null,
+            @Column(precision = 10, scale = 3) var thigh: BigDecimal? = null,// ช่วงความชื้นที่ทำงาน
+            @Column(precision = 10, scale = 3) var hlow: BigDecimal? = null,
+            @Column(precision = 10, scale = 3) var hhigh: BigDecimal? = null,
         /* @Temporal(TemporalType.TIME) @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss") */
             var stime: Date? = null,
         /*@Temporal(TemporalType.TIME) @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss") */
