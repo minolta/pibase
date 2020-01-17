@@ -143,29 +143,6 @@ class PijobService( var r: PijobRepo, val dss: Ds18sensorRepo) : Ds<Pijob>() {
         try {
             val p = Pijob()
             p.copy(item)
-//            p.refid = item.id
-//            p.enable = item.enable  //Issue #34
-//            p.etime = item.etime
-//            p.stime = item.stime
-//            p.sdate = item.sdate
-//            p.edate = item.edate
-//
-//            p.thigh = item.thigh
-//            p.tlow = item.tlow
-//
-//            p.hhigh = item.hhigh
-//            p.hlow = item.hlow
-//            p.runtime = item.runtime
-//            p.waittime = item.waittime
-//            p.ds18sensor = item.ds18sensor
-//            p.stimes = item.stimes
-//            p.etimes = item.etimes
-//            p.lowtime = item.lowtime
-//            p.hightime = item.hightime
-//
-//            p.desdevice = item.desdevice
-//            p.job = item.job
-//            logger.debug("[loadpijob] Item to save " + item)
             return p
         } catch (e: Exception) {
             logger.error("Canon add pijob")

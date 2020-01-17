@@ -62,7 +62,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
     }
 
     fun copy(from: Pijob) {
-        if (verref == null || verref != from.ver) {
+
             this.hhigh = from.hhigh
             this.hlow = from.hlow
             this.tlow = from.tlow
@@ -88,7 +88,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             this.pijobgroup_id = from.pijobgroup_id
             this.description = from.description
             this.token = from.token
-        }
+
 
     }
 }

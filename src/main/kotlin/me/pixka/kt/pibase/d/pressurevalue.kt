@@ -24,7 +24,7 @@ class PressureValue(var rawvalue: BigDecimal? = null, var pressurevalue: BigDeci
                     @Column(insertable = false, updatable = false) var device_id: Long? = null,
                     var valuedate: Date? = null, var toserver: Boolean? = false) : En() {
     override fun toString(): String {
-        return "${rawvalue} ${pressurevalue}"
+        return "${rawvalue} ${pressurevalue} ${device}"
     }
 }
 
