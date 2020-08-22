@@ -1,13 +1,11 @@
 package me.pixka.kt.pibase.c
 
 
-import me.pixka.kt.base.s.DbconfigService
-import me.pixka.kt.base.s.ErrorlogService
 import me.pixka.kt.pibase.d.DS18value
 import me.pixka.kt.pibase.d.Dhtvalue
 import me.pixka.kt.pibase.d.PiDevice
-import me.pixka.pibase.s.DS18sensorService
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import java.io.File
 import java.io.FileFilter
@@ -26,9 +24,9 @@ import java.util.*
  *
  * @author kykub
  */
-@Service
+@Component
 //@Profile("pi", "lite","server")
-class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: ErrorlogService) {
+class Piio {
     /**
      * ใช้สำหรับดึง MAC address ของ WIFI
      *
@@ -40,10 +38,7 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
     var dhtDirPath = "/sensor/dht22"
 
     var dhtTvalue: BigDecimal? = null
-        private set
     var dhtHvalue: BigDecimal? = null
-        private set
-    private val ds18value: BigDecimal? = null
 
     @Throws(IOException::class)
     fun wifiMacAddress(): String {
@@ -90,7 +85,6 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
             }
         } catch (e: Exception) {
 
-            err.n("Piio", "65-79", "${e.message}")
             logger.error("Canot read DHT22 ${e.message}")
             this.dhtTvalue = null
             this.dhtHvalue = null
@@ -103,7 +97,11 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
      * ใช้ load config ถ้ามีการกำหนดก็จะเปลียน ตำแหน่งอ่านค่าของ dht22
      */
     private fun loadpath() {
-        dhtDirPath = dbcfg.findorcreate("dhtpath", "/sensor/dht22").value!!
+//        dhtDirPath = dbcfg.findorcreate("dhtpath", "/sensor/dht22").value!!
+        dhtDirPath = System.getProperty("dhtpath")
+        if (dhtDirPath == null)
+            dhtDirPath = "/sensor/dht22"
+        //, "/sensor/dht22").value!!
     }
 
     /**
@@ -166,6 +164,7 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
     }
 
     val b1000 = BigDecimal("1000")
+
     @Throws(Exception::class)
     fun reads(): ArrayList<DS18value>? {
         // logger.debug("DS18b20 read");
@@ -191,10 +190,10 @@ class Piio(val dbcfg: DbconfigService, val ds18s: DS18sensorService, val err: Er
                                 var bv = BigDecimal(value).divide(b1000, 2, RoundingMode.HALF_UP)
                                 var d = DS18value()
                                 d.t = bv
-                                val ss = ds18s.findorcreate(file.name)
-                                d.ds18sensor = ss
-                                d.valuedate = Date()
-                                buf.add(d)
+//                                val ss = ds18s.findorcreate(file.name)
+//                                d.ds18sensor = ss
+//                                d.valuedate = Date()
+//                                buf.add(d)
 
                             }
                         }

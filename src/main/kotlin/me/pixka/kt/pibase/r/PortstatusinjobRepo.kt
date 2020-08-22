@@ -1,7 +1,5 @@
-package me.pixka.pibase.r
+package me.pixka.kt.pibase.r
 
-import me.pixka.kt.base.s.findByName
-import me.pixka.kt.base.s.search
 import me.pixka.kt.pibase.d.Portstatusinjob
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying

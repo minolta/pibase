@@ -1,9 +1,7 @@
 package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import me.pixka.kt.base.d.En
-import me.pixka.kt.pibase.d.DS18sensor
-import me.pixka.kt.pibase.d.PiDevice
+import me.pixka.base.d.En
 import org.hibernate.annotations.Cache
 import java.math.BigDecimal
 import java.util.*

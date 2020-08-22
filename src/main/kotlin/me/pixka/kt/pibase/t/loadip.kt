@@ -1,9 +1,7 @@
 package me.pixka.kt.pibase.t
 
-import me.pixka.kt.base.d.Iptableskt
-import me.pixka.kt.base.s.DbconfigService
-import me.pixka.kt.base.s.ErrorlogService
-import me.pixka.kt.base.s.IptableServicekt
+import me.pixka.kt.pibase.d.IptableServicekt
+import me.pixka.kt.pibase.d.Iptableskt
 import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -18,7 +16,7 @@ import java.util.concurrent.TimeUnit
 
 //@Profile("ip")
 @Component
-class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: ErrorlogService) {
+class Iptask(val service: IptableServicekt) {
     companion object {
         internal var logger = LoggerFactory.getLogger(Iptask::class.java)
     }
@@ -61,7 +59,7 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
         if (p != null) {
             command = "${p} -n -sP "
         } else
-            command = cfg.findorcreate("scancommand", "C:\\nmap.exe -n -sP ").value!!
+            command = System.getProperty("scancommand", "C:\\nmap.exe -n -sP ")
 
 
     }
@@ -104,8 +102,6 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
             }
         } catch (e: Exception) {
             logger.error("getNet ${e.message}")
-            es.n("load ip ", "110", "${e.message}")
-            //  e.printStackTrace()
         }
         return buffer
     }
@@ -167,7 +163,6 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
 
         } catch (e: Exception) {
             logger.error("R() ${e.message}")
-            es.n("Loadip", "180", "${e.message}")
             e.printStackTrace()
         }
         return buf

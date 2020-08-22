@@ -1,10 +1,9 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
 import com.pi4j.io.gpio.GpioPinDigitalOutput
-import me.pixka.kt.base.s.DefaultService
-import me.pixka.kt.base.s.Ds
+import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.Logistate
-import me.pixka.pibase.r.LogistateRepo
+import me.pixka.kt.pibase.r.LogistateRepo
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 

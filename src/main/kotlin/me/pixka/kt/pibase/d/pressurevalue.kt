@@ -1,9 +1,9 @@
 package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import me.pixka.kt.base.d.En
-import me.pixka.kt.base.r.REPOBase
-import me.pixka.kt.base.s.ServiceImpl
+import me.pixka.base.d.En
+import me.pixka.base.s.DefaultService
+import me.pixka.base.s.search
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
@@ -30,10 +30,12 @@ class PressureValue(var rawvalue: BigDecimal? = null, var pressurevalue: BigDeci
 
 
 @Repository
-interface PressureValueRepo : JpaRepository<PressureValue, Long>, REPOBase<PressureValue> {
-    @Query("from PressureValue pv where pv.device.name like %?1%")
-    override fun search(search: String?, page: Pageable): List<PressureValue>?
+interface PressureValueRepo : JpaRepository<PressureValue, Long>,search<PressureValue> {
+//    @Query("from PressureValue pv where pv.device.name like %?1%")
+//    override fun search(search: String?, page: Pageable): List<PressureValue>?
 
+    @Query("from PressureValue pv where pv.device.name like %?1%")
+    override fun search(s: String, page: Pageable): List<PressureValue>?
     @Query("from PressureValue pv where pv.device.id=?1 and pv.valuedate >= ?2 and pv.valuedate<=?3")
     fun findDataforgraph(piid: Long?, s: Date?, e: Date?): List<PressureValue>?
 
@@ -45,7 +47,7 @@ interface PressureValueRepo : JpaRepository<PressureValue, Long>, REPOBase<Press
 }
 
 @Service
-class PressurevalueService(val r: PressureValueRepo) : ServiceImpl<PressureValue>() {
+class PressurevalueService(val r: PressureValueRepo) : DefaultService<PressureValue>() {
 
     fun findGraphvalue(piid: Long?, s: Date, e: Date): List<PressureValue>? {
         return r.findDataforgraph(piid, s, e)

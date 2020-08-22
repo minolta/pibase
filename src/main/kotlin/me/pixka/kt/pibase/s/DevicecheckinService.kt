@@ -1,9 +1,8 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
-import me.pixka.kt.base.s.DefaultService
-import me.pixka.kt.base.s.Ds
+import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.Devicecheckin
-import me.pixka.pibase.r.DevicecheckinRepo
+import me.pixka.kt.pibase.r.DevicecheckinRepo
 import org.springframework.stereotype.Service
 
 @Service

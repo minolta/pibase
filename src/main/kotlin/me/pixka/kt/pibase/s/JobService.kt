@@ -1,11 +1,8 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
-import me.pixka.kt.base.s.DefaultService
-import me.pixka.kt.base.s.Ds
-import me.pixka.kt.base.s.findByName
-import me.pixka.kt.base.s.search
+import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.Job
-import me.pixka.pibase.r.JobRepo
+import me.pixka.kt.pibase.r.JobRepo
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 

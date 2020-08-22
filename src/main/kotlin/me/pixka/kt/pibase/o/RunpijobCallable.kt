@@ -10,8 +10,8 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput
 
 import me.pixka.kt.pibase.d.Pijob
 import me.pixka.kt.pibase.d.Portstatusinjob
-import me.pixka.pibase.s.LogistateService
-import me.pixka.pibase.s.PortnameService
+import me.pixka.kt.pibase.s.LogistateService
+import me.pixka.kt.pibase.s.PortnameService
 
 class RunpijobCallable : Callable<Pijob> {
     var isIsrun = true

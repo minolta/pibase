@@ -1,6 +1,5 @@
 package me.pixka.kt.pibase.s
 
-import me.pixka.kt.base.s.DbconfigService
 import me.pixka.pi.io.Dotmatrix
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile
@@ -10,7 +9,7 @@ import java.util.*
 
 @Service
 @Profile("pi")
-class DisplayService(val dot: Dotmatrix, val dbs: DbconfigService) {
+class DisplayService(val dot: Dotmatrix) {
 
     var lock: Boolean = false
     var obj: Any? = null //who use display

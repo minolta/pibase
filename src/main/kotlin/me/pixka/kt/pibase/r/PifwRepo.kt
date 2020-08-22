@@ -1,4 +1,4 @@
-package me.pixka.pibase.r
+package me.pixka.kt.pibase.r
 
 import me.pixka.kt.pibase.d.Pifw
 import org.springframework.data.domain.Pageable

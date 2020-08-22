@@ -1,7 +1,7 @@
-package me.pixka.pibase.r
+package me.pixka.kt.pibase.r
 
-import me.pixka.kt.base.s.findByName
-import me.pixka.kt.base.s.search
+import me.pixka.base.s.findByName
+import me.pixka.base.s.search
 import me.pixka.kt.pibase.d.Pijob
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository

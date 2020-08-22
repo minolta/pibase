@@ -1,13 +1,8 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import me.pixka.c.HttpControl
-import me.pixka.kt.base.s.IptableServicekt
-import me.pixka.ktbase.io.Configfilekt
-import me.pixka.kt.pibase.d.DS18value
-import me.pixka.kt.pibase.d.Dhtvalue
-import me.pixka.kt.pibase.d.Job
-import me.pixka.kt.pibase.d.Routedata
+import me.pixka.kt.pibase.c.HttpControl
+import me.pixka.kt.pibase.d.*
 import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -26,7 +21,7 @@ class ReadSensorService(val rs: RoutedataService,
                         val dhts: DhtvalueService,
                         val ds18s: Ds18valueService,
                         val http: HttpControl,
-                        val cf: Configfilekt,var ps:PideviceService
+                        var ps: PideviceService
                         ) {
 
     private val om = ObjectMapper()
@@ -255,7 +250,7 @@ class ReadSensorService(val rs: RoutedataService,
 
     private fun gettimeout() {
         try {
-            this.readbuffertimeout = cf!!.getPropertie("valueexp")
+            this.readbuffertimeout = System.getProperty("valueexp","100")
             logger.debug("useold : time out : valueexp " + readbuffertimeout!!)
             if (readbuffertimeout != null)
                 timeout = Integer.valueOf(readbuffertimeout!!)!!

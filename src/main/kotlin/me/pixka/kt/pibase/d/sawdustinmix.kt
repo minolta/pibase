@@ -1,6 +1,6 @@
 package me.pixka.kt.pibase.d
 
-import me.pixka.kt.base.d.En
+import me.pixka.base.d.En
 import org.hibernate.annotations.Cache
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository

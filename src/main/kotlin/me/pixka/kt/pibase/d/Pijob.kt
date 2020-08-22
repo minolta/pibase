@@ -2,7 +2,7 @@ package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonManagedReference
-import me.pixka.kt.base.d.En
+import me.pixka.base.d.En
 import org.hibernate.annotations.Cache
 import java.math.BigDecimal
 import java.util.*
@@ -44,7 +44,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             , var checkversion: Long? = 0, var usewater: Boolean? = false,
             var refverion: Long? = null, @ManyToOne var pijobgroup: Pijobgroup? = null,
             @Column(insertable = false, updatable = false) var pijobgroup_id: Long? = null,
-            var token:String?=null
+            var token:String?=null,var priority:Int?=0
 
 ) : En() {
 

@@ -1,10 +1,10 @@
 package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import me.pixka.kt.base.d.En
-import me.pixka.kt.base.s.DefaultService
-import me.pixka.kt.base.s.findByName
-import me.pixka.kt.base.s.search
+import me.pixka.base.d.En
+import me.pixka.base.s.DefaultService
+import me.pixka.base.s.findByName
+import me.pixka.base.s.search
 import org.hibernate.annotations.Cache
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository

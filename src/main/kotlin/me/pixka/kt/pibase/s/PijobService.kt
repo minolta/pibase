@@ -1,9 +1,9 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
-import me.pixka.kt.base.s.Ds
+import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.Pijob
-import me.pixka.pibase.r.Ds18sensorRepo
-import me.pixka.pibase.r.PijobRepo
+import me.pixka.kt.pibase.r.Ds18sensorRepo
+import me.pixka.kt.pibase.r.PijobRepo
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
@@ -13,10 +13,8 @@ import java.util.*
 
 
 @Service
-class PijobService( var r: PijobRepo, val dss: Ds18sensorRepo) : Ds<Pijob>() {
-    override fun search(search: String, page: Long, limit: Long): List<Pijob>? {
-        return r.search(search, topage(page, limit))
-    }
+class PijobService(var r: PijobRepo, val dss: Ds18sensorRepo) : DefaultService<Pijob>() {
+
 
     fun findJob(jobid:Long):List<Pijob>?
     {
@@ -31,9 +29,7 @@ class PijobService( var r: PijobRepo, val dss: Ds18sensorRepo) : Ds<Pijob>() {
         return r.search(search, uid, topage(page, limit))
     }
 
-    fun findByName(n: String): Pijob? {
-        return r.findByName(n)
-    }
+
 
     fun findByName(n: String, uid: Long): Pijob? {
         return r.findByNameAndAddby(n, uid)

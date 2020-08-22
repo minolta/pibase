@@ -1,8 +1,8 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
-import me.pixka.kt.base.s.DefaultService
+import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.Jobatpi
-import me.pixka.pibase.r.JobatpiRepo
+import me.pixka.kt.pibase.r.JobatpiRepo
 import org.springframework.stereotype.Service
 
 @Service

@@ -11,9 +11,8 @@ import javax.persistence.ManyToOne
 import org.hibernate.annotations.Cache
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import me.pixka.base.d.En
 
-import me.pixka.kt.base.d.En
-import me.pixka.kt.pibase.d.PiDevice
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity

@@ -1,9 +1,8 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
-import me.pixka.kt.base.s.DefaultService
-import me.pixka.kt.base.s.Ds
+import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.Portstatusinjob
-import me.pixka.pibase.r.PortstatusinjobRepo
+import me.pixka.kt.pibase.r.PortstatusinjobRepo
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 

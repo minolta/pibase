@@ -1,10 +1,9 @@
-package me.pixka.pibase.r
+package me.pixka.kt.pibase.r
 
-import me.pixka.kt.base.s.search
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.web.bind.annotation.RestController
 
 import me.pixka.kt.pibase.d.Devicecheckin
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 interface DevicecheckinRepo : JpaRepository<Devicecheckin, Long> {
