@@ -2,7 +2,6 @@ package me.pixka.kt.pibase.r
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
-
 import me.pixka.kt.pibase.d.Routedata
 
 @Repository
