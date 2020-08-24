@@ -13,6 +13,7 @@ class PideviceService(val r: PideviceRepo) : DefaultService<PiDevice>() {
     fun search(s: String, uid: Long, page: Long?, limit: Long?): List<PiDevice>? {
         return r.search(s, uid, this.topage(page!!, limit!!))
     }
+    fun listcheckin(ids: List<Long>) = r.findbyid(ids)
     fun findByRefid(id: Long): PiDevice? {
         return r.findByRefid(id)
     }

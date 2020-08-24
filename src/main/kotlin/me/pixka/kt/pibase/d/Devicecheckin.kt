@@ -16,6 +16,6 @@ import javax.persistence.ManyToOne
 class Devicecheckin(@ManyToOne var pidevice: PiDevice? = null,
                     @Column(insertable = false, updatable = false) var pidevice_id: Long? = null,
                     var ip: String? = null, var checkindate: Date? = null,
-                    var password: String? = null) : En() {
+                    var password: String? = null,var uptime:Long?=null) : En() {
 
 }

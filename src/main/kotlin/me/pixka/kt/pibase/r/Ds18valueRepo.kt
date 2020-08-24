@@ -6,16 +6,17 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
+import java.math.BigDecimal
 import java.util.*
 import javax.transaction.Transactional
 
 @Repository
 interface Ds18valueRepo : JpaRepository<DS18value, Long>
-//        search<DS18value>
         {
 
     fun findTop1ByOrderByIdDesc(): DS18value?
-
+            @Query("select avg(t.t) from DS18value t where t. ds18sensor_id = ?1 and t.valuedate >= ?2 and t.valuedate <= ?3 ")
+            fun findAvg(id:Long?,s:Date,e:Date): BigDecimal?
     fun findTop100ByToserver(b: Boolean): List<DS18value>?
     fun findTop500ByToserver(b: Boolean): List<DS18value>?
 

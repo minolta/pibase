@@ -13,23 +13,26 @@ class DS18sensorService( val r: Ds18sensorRepo) : DefaultService<DS18sensor>() {
         return r.findByName(n)
     }
 
+    //    fun findByMac(n: String) = r.findByMac(n)
     fun findorcreate(n: String): DS18sensor? {
+        logger.debug("Find Sensor by ${n}")
         var s: DS18sensor? = r.findByName(n)
         if (s == null) {
             s = newobject(n)
             s = save(s)
         }
-
+        logger.debug("Find ${n} return ${s}")
         return s
     }
 
     fun findorcreate(n: String, callname: String): DS18sensor? {
+        logger.debug("Find Sensor by ${n} cn ${callname}")
         var s: DS18sensor? = r.findByName(n)
         if (s == null) {
             s = newobject(n, callname)
             s = save(s)
         }
-
+        logger.debug("Find ${n} call ${callname} return ${s}")
         return s
     }
 
@@ -52,7 +55,6 @@ class DS18sensorService( val r: Ds18sensorRepo) : DefaultService<DS18sensor>() {
         return r.search(s, uid, this.topage(page, limit))
     }
 
-    fun test() {}
     fun search(s: String?, page: Long?, limit: Long?): List<DS18sensor>? {
         return r.search(s!!, this.topage(page!!, limit!!))
     }
@@ -67,24 +69,20 @@ class DS18sensorService( val r: Ds18sensorRepo) : DefaultService<DS18sensor>() {
     }
 
     fun findorcreate(ds18sensor: DS18sensor?): DS18sensor? {
-        try {
-            if (ds18sensor == null)
-                return null
-            var ds: DS18sensor? = r.findByName(ds18sensor.name!!)
 
-            if (ds == null) {
-                ds = DS18sensor()
-                ds.callname = ds18sensor.callname
-                ds.forread = ds18sensor.forread
-                ds.name = ds18sensor.name
-                ds.refid = ds18sensor.id
-                ds = save(ds)
-            }
-            return ds
-        } catch (e: Exception) {
-            logger.error("Find or create ERROR ${e.message}")
-            throw e
+        if (ds18sensor == null)
+            return null
+        var ds: DS18sensor? = r.findByName(ds18sensor.name!!)
+
+        if (ds == null) {
+            ds = DS18sensor()
+            ds.callname = ds18sensor.callname
+            ds.forread = ds18sensor.forread
+            ds.name = ds18sensor.name
+            ds.refid = ds18sensor.id.toLong()
+            ds = save(ds)
         }
+        return ds
     }
 
 

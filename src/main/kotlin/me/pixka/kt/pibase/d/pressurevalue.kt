@@ -30,16 +30,18 @@ class PressureValue(var rawvalue: BigDecimal? = null, var pressurevalue: BigDeci
 
 
 @Repository
-interface PressureValueRepo : JpaRepository<PressureValue, Long>,search<PressureValue> {
-//    @Query("from PressureValue pv where pv.device.name like %?1%")
-//    override fun search(search: String?, page: Pageable): List<PressureValue>?
-
+interface PressureValueRepo : JpaRepository<PressureValue, Long>, search<PressureValue> {
     @Query("from PressureValue pv where pv.device.name like %?1%")
     override fun search(s: String, page: Pageable): List<PressureValue>?
+
     @Query("from PressureValue pv where pv.device.id=?1 and pv.valuedate >= ?2 and pv.valuedate<=?3")
     fun findDataforgraph(piid: Long?, s: Date?, e: Date?): List<PressureValue>?
 
+    @Query("select avg(pv.pressurevalue) from PressureValue pv where pv.device_id = ?1 and pv.valuedate >= ?2 and pv.valuedate<=?3 ")
+    fun findAvg(id: Long?, s: Date?, e: Date?): BigDecimal?
+
     fun findByToserver(b: Boolean): List<PressureValue>?
+
     @Modifying
     @Transactional
     @Query("delete from PressureValue d where d.toserver = true")
@@ -51,6 +53,10 @@ class PressurevalueService(val r: PressureValueRepo) : DefaultService<PressureVa
 
     fun findGraphvalue(piid: Long?, s: Date, e: Date): List<PressureValue>? {
         return r.findDataforgraph(piid, s, e)
+    }
+
+    fun findavgvaue(id: Long?, s: Date, e: Date): BigDecimal? {
+        return r.findAvg(id, s, e)
     }
 
     fun findNottoserver(): List<PressureValue>? {

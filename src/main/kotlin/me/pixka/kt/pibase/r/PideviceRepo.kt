@@ -12,7 +12,8 @@ import javax.transaction.Transactional
 
 @Repository
 interface PideviceRepo : JpaRepository<PiDevice, Long>, search<PiDevice>, findByName<PiDevice> {
-
+    @Query("from PiDevice p where p.id in ?1")
+    fun findbyid(ids:List<Long>):List<PiDevice>?
     fun findByMac(s: String): PiDevice?
 
     @Query("from PiDevice p where p.name like %?1% or p.mac like %?1% order by p.id")

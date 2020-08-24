@@ -31,7 +31,9 @@ class Ds18valueService( val r: Ds18valueRepo) : DefaultService<DS18value>() {
         return d
 
     }
-
+    fun findAvg(id: Long?, s: Date, e: Date): BigDecimal? {
+        return r.findAvg(id, s, e)
+    }
 
     fun notInserver(): List<DS18value>? {
 

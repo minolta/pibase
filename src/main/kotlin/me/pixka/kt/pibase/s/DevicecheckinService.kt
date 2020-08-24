@@ -10,4 +10,7 @@ class DevicecheckinService( val r: DevicecheckinRepo) : DefaultService<Deviceche
     fun last(id: Long): Devicecheckin? {
         return r.findTop1ByPidevice_idOrderByIdDesc(id)
     }
+
+
+    fun findByMac(mac:String) = r.findByMac(mac)
 }
