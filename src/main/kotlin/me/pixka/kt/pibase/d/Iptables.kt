@@ -16,7 +16,8 @@ import javax.persistence.Entity
 @Entity
 @Cacheable
 @Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
-class Iptableskt(var devicename: String? = null, var ip: String? = null, var mac: String? = null, var lastupdate: Date, var lastcheckin: Date) : En() {
+class Iptableskt(var devicename: String? = null, var ip: String? = null,
+                 var mac: String? = null, var lastupdate: Date, var lastcheckin: Date) : En() {
     constructor() : this(lastupdate = Date(), lastcheckin = Date())
 
     override fun toString(): String {

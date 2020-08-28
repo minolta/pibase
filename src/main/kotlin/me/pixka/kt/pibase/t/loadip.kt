@@ -3,6 +3,7 @@ package me.pixka.kt.pibase.t
 import me.pixka.kt.pibase.d.IptableServicekt
 import me.pixka.kt.pibase.d.Iptableskt
 import org.slf4j.LoggerFactory
+import org.springframework.context.annotation.Profile
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.io.BufferedReader
@@ -14,7 +15,7 @@ import java.net.SocketException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-//@Profile("ip")
+@Profile("ip")
 @Component
 class Iptask(val service: IptableServicekt) {
     companion object {
@@ -184,7 +185,9 @@ class Iptask(val service: IptableServicekt) {
                         ii = Iptableskt()
                         ii.ip = i.ip
                         ii.mac = i.mac
-                        newIptable(ii)
+                        ii.id=0
+                        ii = service.save(ii)
+//                        newIptable(ii)
                     } else {
                         service.updateiptable(ii, i.ip!!)
                     }
@@ -254,10 +257,11 @@ class Iptask(val service: IptableServicekt) {
     fun newIptable(it: Iptableskt) {
         try {
             var idv = Iptableskt()
+            idv.id = 0
             idv.ip = it.ip
             idv.mac = it.mac
             idv.lastcheckin = Date()
-            idv = service.save(idv)!!
+            idv = service.save(idv)
             logger.debug("loadiptable New iptables : ${idv}")
         } catch (e: Exception) {
             e.printStackTrace()
