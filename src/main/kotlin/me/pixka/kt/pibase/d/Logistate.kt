@@ -22,4 +22,17 @@ class Logistate : En() {
         return "Logistate [name=$name, refid=$refid]"
     }
 
+    fun toInt(): Int {
+        if(name?.toLowerCase()?.indexOf("high")!=-1)
+            return 1
+
+        if(name?.toLowerCase()?.indexOf("1")!=-1)
+            return 1
+
+        if(name?.toLowerCase()?.indexOf("true")!=-1)
+            return 1
+
+        return 0
+    }
+
 }

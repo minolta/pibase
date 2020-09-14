@@ -52,7 +52,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
 
     override fun toString(): String {
 
-        return "*** ${enable} *** id:${id} ref:${refid} name:${name}  runtime:${runtime} waittime${waittime} tlow:${tlow} thigh${thigh} hlow:${hlow} hhigh:${hhigh} job:${job} dssensor:${ds18sensor} read from ${desdevice}"
+        return "${name} *** ${enable} *** id:${id} ref:${refid} runtime:${runtime} waittime${waittime} tlow:${tlow} thigh${thigh} hlow:${hlow} hhigh:${hhigh} job:${job} dssensor:${ds18sensor} read from ${desdevice}"
     }
 
     override fun equals(obj: Any?): Boolean {
@@ -88,6 +88,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             this.pijobgroup_id = from.pijobgroup_id
             this.description = from.description
             this.token = from.token
+
 
 
     }

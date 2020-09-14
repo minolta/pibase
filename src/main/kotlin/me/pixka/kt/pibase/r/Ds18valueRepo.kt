@@ -31,7 +31,8 @@ interface Ds18valueRepo : JpaRepository<DS18value, Long>
 
     fun findTop1ByDs18sensor_idOrderByValuedateDesc(id: Long?): DS18value?
 
-    @Query(" from  DS18value  t where t.ds18sensor_id = ?1 and t.valuedate >= ?2 and t.valuedate <= ?3 order by t.valuedate ")
+//            @Query(" from  DS18value  t where t.ds18sensor_id = ?1 and t.valuedate >= ?2 and t.valuedate <= ?3 order by t.valuedate ")
+            @Query(" from  DS18value  t where t.pidevice_id = ?1 and t.valuedate >= ?2 and t.valuedate <= ?3 order by t.valuedate ")
     fun findgraphvalueBySensor(sid: Long?, s: Date, e: Date): List<DS18value>?
 
 //    @Query("from DS18value d where  ")

@@ -22,4 +22,13 @@ class Portname(var name: String? = null, var piport: String? = null, var refid: 
                @Column(insertable = false, updatable = false) var portmode_id: Long? = null,
                var checkversion:Long?=0) : En() {
 
+    fun toInt(): Int {
+        if(name?.toLowerCase()?.indexOf("high")!=-1)
+            return 1
+        if(name?.toLowerCase()?.indexOf("1")!=-1)
+            return 1
+        if(name?.toLowerCase()?.indexOf("true")!=-1)
+            return 1
+        return 0
+    }
 }
