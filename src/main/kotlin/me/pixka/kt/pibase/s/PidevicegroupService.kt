@@ -11,10 +11,10 @@ class PidevicegroupService(val r: PidevicegroupRepo) : DefaultService<Pidevicegr
     fun create(name: String): Pidevicegroup {
         val pg = Pidevicegroup()
         pg.name = name
-        return save(pg)!!
+        return save(pg)
     }
 
-    fun getorcreate(name: String): Pidevicegroup {
+    fun findOrcreate(name: String): Pidevicegroup {
 
         return r.findByName(name) ?: return create(name)
     }

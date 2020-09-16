@@ -29,5 +29,16 @@ interface PijobgroupRepo : JpaRepository<Pijobgroup, Long>, findByName<Pijobgrou
 @Service
 class PijobgroupService(val r: PijobgroupRepo) : DefaultService<Pijobgroup>() {
 
+    fun findOrCreate(groupname:String): Pijobgroup? {
+        var gn = findByName(groupname)
+        if(gn==null)
+        {
+            gn = Pijobgroup()
+            gn.name = groupname
+            return save(gn)
+        }
+
+        return gn
+    }
 
 }

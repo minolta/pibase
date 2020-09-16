@@ -36,8 +36,42 @@ class PideviceService(val r: PideviceRepo) : DefaultService<PiDevice>() {
     fun clear() {
         r.clear()
     }
-    fun showTables(): List<*>? {
-        var tables = r.showtables()
-        return tables
+
+    fun findOrCreate(pd:PiDevice): PiDevice? {
+        try {
+            var d = findByMac(pd.mac!!)
+            if(d==null)
+            {
+                d = PiDevice()
+                d.name = pd.name
+                d.mac = pd.mac
+                d.ip = pd.ip
+                return save(d)
+            }
+            return d
+        }catch (e:Exception)
+        {
+            e.printStackTrace()
+            throw e
+        }
+
+    }
+    fun findOrCreate(mac:String): PiDevice? {
+        try {
+            var d = findByMac(mac)
+            if(d==null)
+            {
+                var d = PiDevice()
+                d.name = mac
+                d.mac = mac
+                d = save(d)
+            }
+            return d
+        }catch (e:Exception)
+        {
+            e.printStackTrace()
+            throw e
+        }
+
     }
 }

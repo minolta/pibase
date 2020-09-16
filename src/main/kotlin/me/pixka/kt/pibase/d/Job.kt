@@ -20,7 +20,7 @@ class Job(var refid: Long? = null, var name: String? = null,
           @Column(columnDefinition = "text") var description: String? = null,var checkversion:Long?=0) : En() {
 
     override fun toString(): String {
-        return "Job [id " + this.id + " refid=" + refid + ", name=" + name + ", description=" + description + "]"
+        return "Job ${name} [id " + this.id + " refid=" + refid + ", name=" + name + ", description=" + description + "]"
     }
 
 }

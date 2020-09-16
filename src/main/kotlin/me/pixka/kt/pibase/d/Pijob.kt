@@ -82,7 +82,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             this.runwithid = from.runwithid
             this.timetorun = from.timetorun
             this.desdevice = from.desdevice
-            this.ds18sensor = from.ds18sensor
+//            this.ds18sensor = from.ds18sensor  //ไม่ใช้แล้ว
             this.verref = from.ver
             this.pijobgroup = from.pijobgroup
             this.pijobgroup_id = from.pijobgroup_id

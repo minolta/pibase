@@ -42,3 +42,7 @@ class Dhtvalue : En() {
     }
 
 }
+
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+class DHTObject(var t:BigDecimal?=null,var h:BigDecimal?=null,var mac:String?=null,var ip:String?=null)
