@@ -167,7 +167,6 @@ class Piio {
 
     @Throws(Exception::class)
     fun reads(): ArrayList<DS18value>? {
-        // logger.debug("DS18b20 read");
         val buf = ArrayList<DS18value>()
         val dir = File(w1DirPath)
         val files = dir.listFiles(DirectoryFileFilter())
@@ -176,8 +175,6 @@ class Piio {
             logger.debug("[ioreaddsvalue] found sensors : " + files.size)
             // while (true) {
             for (file in files) {
-                // System.out.print(file.getName() + ": ");
-                // Device data in w1_slave file
                 val filePath = w1DirPath + File.separatorChar + file.name + File.separatorChar + "w1_slave"
                 val f = File(filePath)
                 try {
@@ -190,11 +187,6 @@ class Piio {
                                 var bv = BigDecimal(value).divide(b1000, 2, RoundingMode.HALF_UP)
                                 var d = DS18value()
                                 d.t = bv
-//                                val ss = ds18s.findorcreate(file.name)
-//                                d.ds18sensor = ss
-//                                d.valuedate = Date()
-//                                buf.add(d)
-
                             }
                         }
                     }
@@ -214,25 +206,20 @@ class Piio {
         throw Exception("Canot read ds18b20")
     }
 
-    fun getPidevice(): PiDevice {
-        var p = PiDevice()
-        p.mac = wifiMacAddress()
-        return p
-    }
-
-    fun readDs18(sensorname: String): BigDecimal? {
-        var values = reads()
-
-        if (values != null) {
-            for (v in values) {
-                if (v.ds18sensor?.name.equals(sensorname)) {
-                    return v.t
-                }
-            }
-        }
-
-        return null
-    }
+//
+//    fun readDs18(sensorname: String): BigDecimal? {
+//        var values = reads()
+//
+//        if (values != null) {
+//            for (v in values) {
+//                if (v.ds18sensor?.name.equals(sensorname)) {
+//                    return v.t
+//                }
+//            }
+//        }
+//
+//        return null
+//    }
 
     fun readDs18value(sensorname: String): DS18value? {
         var values = reads()
