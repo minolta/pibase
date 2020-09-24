@@ -4,7 +4,7 @@
     <groupId>me.pixka.kt</groupId>
     <artifactId>pibasekt</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.4-stable</version>
+    <version>1.0.5-stable</version>
     <name>pibasekt</name>
     <url>http://maven.apache.org</url>
     <parent>

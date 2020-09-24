@@ -12,8 +12,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @EnableAsync
 @EnableScheduling
 @ComponentScan(basePackages = arrayOf("me.pixka"))
-@EnableJpaRepositories(basePackages = arrayOf("me.pixka"))
-@EntityScan(basePackages = arrayOf("me.pixka"))
 class PibaseApplication
 
 fun main(args: Array<String>) {

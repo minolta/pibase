@@ -9,17 +9,21 @@ import java.net.URL
 import java.nio.charset.Charset
 
 @Service
-class HttpService {
+class HttpService (){
     val om = ObjectMapper()
 
     fun get(url: String, timeout: Int = 2000): String {
-        println("call")
-        var url = URL(url)
-        var c = url.openConnection() as HttpURLConnection
-        c.requestMethod = "GET"
-        c.connectTimeout = timeout
-        var response = readrespone(c)
-        return response.toString()
+        try {
+//            println("call")
+            var url = URL(url)
+            var c = url.openConnection() as HttpURLConnection
+            c.requestMethod = "GET"
+            c.connectTimeout = timeout
+            var response = readrespone(c)
+            return response.toString()
+        } catch (e: Exception) {
+            throw e
+        }
     }
 
     fun readrespone(c: HttpURLConnection): StringBuilder {
@@ -45,7 +49,7 @@ class HttpService {
         c.doOutput = true
 
         var jsonstring = om.writeValueAsString(json)
-        c.getOutputStream().use({ os ->
+        c.outputStream.use({ os ->
             val input: ByteArray = jsonstring.toByteArray(Charset.forName("UTF-8"))
             os.write(input, 0, input.size)
         })
