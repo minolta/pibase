@@ -12,13 +12,15 @@ import java.nio.charset.Charset
 class HttpService (){
     val om = ObjectMapper()
 
-    fun get(url: String, timeout: Int = 2000): String {
+    @Throws(Exception::class)
+    fun get(url: String, timeout: Int ): String {
         try {
 //            println("call")
             var url = URL(url)
             var c = url.openConnection() as HttpURLConnection
             c.requestMethod = "GET"
             c.connectTimeout = timeout
+            c.readTimeout = timeout
             var response = readrespone(c)
             return response.toString()
         } catch (e: Exception) {
@@ -38,25 +40,29 @@ class HttpService (){
 
         return response
     }
+    @Throws(Exception::class)
+    fun post(url: String, json: Any, timeout: Int): String {
+        try {
+            var url = URL(url)
+            var c = url.openConnection() as HttpURLConnection
+            c.requestMethod = "POST"
+            c.setRequestProperty("Content-Type", "application/json; utf-8")
+            c.setRequestProperty("Accept", "application/json")
+            c.connectTimeout = timeout
+            c.readTimeout=timeout
+            c.doOutput = true
 
-    fun post(url: String, json: Any, timeout: Int = 2000): String {
-        var url = URL(url)
-        var c = url.openConnection() as HttpURLConnection
-        c.requestMethod = "POST"
-        c.setRequestProperty("Content-Type", "application/json; utf-8")
-        c.setRequestProperty("Accept", "application/json")
-        c.connectTimeout = timeout
-        c.doOutput = true
-
-        var jsonstring = om.writeValueAsString(json)
-        c.outputStream.use({ os ->
-            val input: ByteArray = jsonstring.toByteArray(Charset.forName("UTF-8"))
-            os.write(input, 0, input.size)
-        })
+            var jsonstring = om.writeValueAsString(json)
+            c.outputStream.use({ os ->
+                val input: ByteArray = jsonstring.toByteArray(Charset.forName("UTF-8"))
+                os.write(input, 0, input.size)
+            })
 
 
-        var response = readrespone(c)
-        return response.toString()
+            var response = readrespone(c)
+            return response.toString()
+        } catch (e: Exception) {
+            throw e
+        }
     }
-
 }
