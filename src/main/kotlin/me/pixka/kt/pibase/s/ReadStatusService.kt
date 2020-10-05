@@ -12,17 +12,13 @@ import java.util.concurrent.TimeUnit
  * ใช้สำหรับ อ่านค่าต่างๆ ของstatus
  */
 @Service
-class ReadStatusService {
+class ReadStatusService(val httpService: HttpService) {
     var om = ObjectMapper()
 
     fun get(url: String, timeout: Long): String? {
-
-        var get = HttpGetTask(url)
-        var ee = Executors.newSingleThreadExecutor()
-        var f = ee.submit(get)
         try {
-            var re = f.get(timeout, TimeUnit.SECONDS)
-            return re
+            var get = httpService.get(url,timeout.toInt()*1000)
+            return get
         } catch (e: Exception) {
             throw e
         }
