@@ -72,6 +72,9 @@ class HttpService() {
         }
     }
 
+    /**
+     * Support Thai parameter
+     */
     fun get2(url: String, timeout: Int = 2000): String? {
         val ee = Executors.newSingleThreadExecutor()
         var t = HttpGetTask(url)
