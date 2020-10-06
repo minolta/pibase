@@ -14,22 +14,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <properties>
-<!--        <kotlin.version>1.2.70</kotlin.version>-->
-<!--        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>-->
         <pi4j.version>1.2</pi4j.version>
-<!--        <jackson.version>2.9.5</jackson.version>-->
-<!--        <spring.jpa>2.2.3.RELEASE</spring.jpa>-->
-<!--        <spring.version>5.2.2.RELEASE</spring.version>-->
-<!--        <hibernate.version>5.4.10.Final</hibernate.version>-->
     </properties>
-
-<!--    <repositories>-->
-<!--      <repository>-->
-<!--        <id>pi4j</id>-->
-<!--        <name>pi4j</name>-->
-<!--        <url>https://oss.sonatype.org/content/groups/public</url>-->
-<!--      </repository>-->
-<!--    </repositories>-->
 
 
 
