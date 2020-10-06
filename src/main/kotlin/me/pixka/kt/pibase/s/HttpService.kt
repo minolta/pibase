@@ -36,7 +36,7 @@ class HttpService() {
     fun readrespone(c: HttpURLConnection): StringBuilder {
         val buf = BufferedReader(
                 InputStreamReader(
-                        c.inputStream, Charset.forName("UTF-8")))
+                        c.inputStream))
         val response = StringBuilder()
         var inputLine: String? = ""
 
