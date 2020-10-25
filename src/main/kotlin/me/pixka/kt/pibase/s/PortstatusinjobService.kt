@@ -18,7 +18,7 @@ class PortstatusinjobService( val r: PortstatusinjobRepo) : DefaultService<Ports
     fun findByPijobid(pijobid: Long?): List<*>? {
         return r.findByPijob_id(pijobid)
     }
-
+//    fun deleteById(id: Long)=r.deleteById(id)
     fun clear() {
         repo.deleteAll()
     }

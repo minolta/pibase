@@ -86,10 +86,10 @@ interface PijobRepo : JpaRepository<Pijob, Long>, search<Pijob>, findByName<Pijo
     @Query("from Pijob p where p.enable = true and p.job_id = ?2 and (p.lowtime <= ?1 and p.hightime >=?1 )")
     fun fineByTime(currenttime: Long, jobid: Long): List<Pijob>?
 
-    @Modifying
-    @Transactional
-    @Query("delete from Pijob p where p.id = ?1")
-    fun deletePijobById(id: Long)
+//    @Modifying
+//    @Transactional
+//    @Query("delete from Pijob p where p.id = ?1")
+//    fun deletePijobById(id: Long)
 
     fun findByJob_idAndEnable(jobid: Long, b: Boolean): List<Pijob>?
 

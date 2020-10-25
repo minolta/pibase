@@ -18,4 +18,11 @@ interface PortstatusinjobRepo : JpaRepository<Portstatusinjob, Long> {
     @Query("delete from Portstatusinjob p where p.pijob_id = ?1")
     fun deleteByPijobId(id: Long)
 
+
+//    @Modifying
+//    @Transactional
+//    @Query("delete from Portstatusinjob p where p.id= ?1")
+//    fun deleteById(id: Long)
+
+
 }

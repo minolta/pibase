@@ -197,11 +197,11 @@ class PijobService(var r: PijobRepo, val dss: Ds18sensorRepo) : DefaultService<P
         return d.time
 
     }
-
-    fun deleteById(id: Long): Boolean {
-        r.deletePijobById(id)
-        return true
-    }
+//
+//    fun deleteById(id: Long): Boolean {
+//        r.deletePijobById(id)
+//        return true
+//    }
 
     fun datetoLong(d: Date): Long {
         var s = df.format(d)
