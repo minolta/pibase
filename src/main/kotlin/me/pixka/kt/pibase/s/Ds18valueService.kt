@@ -9,7 +9,7 @@ import java.math.BigDecimal
 import java.util.*
 
 @Service
-class Ds18valueService( val r: Ds18valueRepo) : DefaultService<DS18value>() {
+class Ds18valueService(val r: Ds18valueRepo) : DefaultService<DS18value>() {
 
 
     /**
@@ -22,7 +22,9 @@ class Ds18valueService( val r: Ds18valueRepo) : DefaultService<DS18value>() {
         return r.findTop1ByOrderByValuedateDesc()
     }
 
-    fun create(pidevice: PiDevice?=null, t: BigDecimal?, valuedate: Date?=Date(), ip: String?=null): DS18value {
+    fun deleteAll(id: Long) = r.deleteByAll(id)
+    fun deleteBydate(id: Long, s: Date, e: Date) = r.deleteByDate(id, s, e)
+    fun create(pidevice: PiDevice? = null, t: BigDecimal?, valuedate: Date? = Date(), ip: String? = null): DS18value {
         val d = DS18value()
         d.ip = ip
         d.pidevice = pidevice
@@ -31,6 +33,7 @@ class Ds18valueService( val r: Ds18valueRepo) : DefaultService<DS18value>() {
         return d
 
     }
+
     fun findAvg(id: Long?, s: Date, e: Date): BigDecimal? {
         return r.findAvg(id, s, e)
     }
@@ -56,8 +59,7 @@ class Ds18valueService( val r: Ds18valueRepo) : DefaultService<DS18value>() {
         return r.findgraphvalueBySensor(sid, s, e)
     }
 
-    fun cleanToserver()
-    {
+    fun cleanToserver() {
         r.cleanToserver()
     }
 }
