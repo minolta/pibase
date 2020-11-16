@@ -36,8 +36,15 @@ class IptableServicekt(val r: IptablesktRepo) : DefaultService<Iptableskt>() {
 
 
     fun findByMac(mac: String): Iptableskt? {
-        return r.findByMac(mac)
+        try {
+            return r.findByMac(mac)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return null
     }
+
     fun resetAll() = r.deleteAll()
     fun updateiptable(iptable: Iptableskt, ip: String): Iptableskt? {
         try {
