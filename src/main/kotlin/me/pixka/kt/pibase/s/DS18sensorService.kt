@@ -7,13 +7,14 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
-class DS18sensorService( val r: Ds18sensorRepo) : DefaultService<DS18sensor>() {
+class DS18sensorService(val r: Ds18sensorRepo) : DefaultService<DS18sensor>() {
 
     fun searchMatch(n: String): DS18sensor? {
         return r.findByName(n)
     }
 
     //    fun findByMac(n: String) = r.findByMac(n)
+    @Synchronized
     fun findorcreate(n: String): DS18sensor? {
         logger.debug("Find Sensor by ${n}")
         var s: DS18sensor? = r.findByName(n)
@@ -25,6 +26,7 @@ class DS18sensorService( val r: Ds18sensorRepo) : DefaultService<DS18sensor>() {
         return s
     }
 
+    @Synchronized
     fun findorcreate(n: String, callname: String): DS18sensor? {
         logger.debug("Find Sensor by ${n} cn ${callname}")
         var s: DS18sensor? = r.findByName(n)
@@ -68,6 +70,7 @@ class DS18sensorService( val r: Ds18sensorRepo) : DefaultService<DS18sensor>() {
         return r.findTop1ByForreadOrderByLasteditDesc(true)
     }
 
+    @Synchronized
     fun findorcreate(ds18sensor: DS18sensor?): DS18sensor? {
 
         if (ds18sensor == null)

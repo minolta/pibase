@@ -12,6 +12,7 @@ class PortmodeService(val r: PortmodeRepo) : DefaultService<Portmode>() {
         return null
     }
 
+    @Synchronized
     fun findorcreate(name: String): Portmode {
         var pm: Portmode? = r.findByName(name)
         if (pm == null) {

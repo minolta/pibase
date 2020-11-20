@@ -211,9 +211,7 @@ class SensorService(val ps: PideviceService,
 
     }
 
-    companion object {
-        internal var logger = LoggerFactory.getLogger(SensorService::class.java)
-    }
+         var logger = LoggerFactory.getLogger(SensorService::class.java)
 }
 
 class DS18ReadBuffer(var disid: Long, var sensorid: Long, var value: DS18value, var readdate: Date)

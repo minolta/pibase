@@ -11,7 +11,7 @@ import me.pixka.base.s.DefaultService
 
 
 @Service
-class MessageService(val r: MessageRepo,val mtr:MessagetypeService) : DefaultService<Message>() {
+class MessageService(val r: MessageRepo, val mtr: MessagetypeService) : DefaultService<Message>() {
 
     fun notsend(): List<Message>? {
         return r.notsend(false, topage(0, 100))
@@ -21,7 +21,8 @@ class MessageService(val r: MessageRepo,val mtr:MessagetypeService) : DefaultSer
         r.deleteBySend()
     }
 
-    @Synchronized fun message(msg: String, msgtype: String): Message? {
+    @Synchronized
+    fun message(msg: String, msgtype: String): Message? {
 
         try {
             if (msg.equals("")) {
@@ -46,15 +47,15 @@ class MessageService(val r: MessageRepo,val mtr:MessagetypeService) : DefaultSer
 
             logger.debug("Message is ${m}")
             return m
-        }
-        catch (e:Exception)
-        {
+        } catch (e: Exception) {
             logger.error("${e.message}")
             e.printStackTrace()
             throw e
         }
     }
-    @Synchronized fun tojsonmessage(msg: Any, msgtype: String): Message? {
+
+    @Synchronized
+    fun tojsonmessage(msg: Any, msgtype: String): Message? {
 
         val objectMapper = ObjectMapper()
         try {
@@ -80,14 +81,13 @@ class MessageService(val r: MessageRepo,val mtr:MessagetypeService) : DefaultSer
 
             logger.debug("Message is ${m}")
             return m
-        }
-        catch (e:Exception)
-        {
+        } catch (e: Exception) {
             logger.error("${e.message}")
             e.printStackTrace()
             throw e
         }
     }
+
     companion object {
         internal var logger = LoggerFactory.getLogger(MessageService::class.java!!)
     }

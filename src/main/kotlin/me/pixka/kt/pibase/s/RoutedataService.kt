@@ -7,10 +7,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class RoutedataService(val r: RoutedataRepo) : DefaultService<Routedata>() {
-
-
-
-
     /**
      * สำหรับให้ Server ส่งค่า Route ออกไปยัง client ที่ส่ง mac เข้ามา
      *

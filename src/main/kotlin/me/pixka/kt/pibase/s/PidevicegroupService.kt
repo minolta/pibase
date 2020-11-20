@@ -14,6 +14,7 @@ class PidevicegroupService(val r: PidevicegroupRepo) : DefaultService<Pidevicegr
         return save(pg)
     }
 
+    @Synchronized
     fun findOrcreate(name: String): Pidevicegroup {
 
         return r.findByName(name) ?: return create(name)

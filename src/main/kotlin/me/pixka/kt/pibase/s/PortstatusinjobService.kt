@@ -43,8 +43,6 @@ class PortstatusinjobService( val r: PortstatusinjobRepo) : DefaultService<Ports
         return true
     }
 
-    companion object {
-        internal var logger = LoggerFactory.getLogger(PortstatusinjobService::class.java!!)
-    }
+    var logger = LoggerFactory.getLogger(PortstatusinjobService::class.java)
 
 }

@@ -8,45 +8,32 @@ import org.springframework.stereotype.Service
 @Service
 class PideviceService(val r: PideviceRepo) : DefaultService<PiDevice>() {
 
-//     override fun save(o:PiDevice): PiDevice {
-//
-//         return PiDevice()
-//    }
+
     fun findByMac(s: String): PiDevice? {
         return r.findByMac(s)
     }
+
     fun search(s: String, uid: Long, page: Long?, limit: Long?): List<PiDevice>? {
         return r.search(s, uid, this.topage(page!!, limit!!))
     }
+
     fun listcheckin(ids: List<Long>) = r.findbyid(ids)
     fun findByRefid(id: Long): PiDevice? {
         return r.findByRefid(id)
     }
-//    fun create(mac: String, refid: Long): PiDevice? {
-//        val pd = PiDevice()
-//        pd.name = "name-" + mac
-//        pd.mac = mac
-//        pd.refid = refid
-//        return save(pd)
-//    }
-//    fun create(mac: String, name: String): PiDevice? {
-//        val pd = PiDevice()
-//        pd.name = name
-//        pd.mac = mac
-//        return save(pd)
-//    }
     fun searchMatch(n: String): PiDevice? {
         return r.findByName(n)
     }
+
     fun clear() {
         r.clear()
     }
 
-    fun findOrCreate(pd:PiDevice): PiDevice? {
+    @Synchronized
+    fun findOrCreate(pd: PiDevice): PiDevice? {
         try {
             var d = findByMac(pd.mac!!)
-            if(d==null)
-            {
+            if (d == null) {
                 d = PiDevice()
                 d.name = pd.name
                 d.mac = pd.mac
@@ -54,8 +41,7 @@ class PideviceService(val r: PideviceRepo) : DefaultService<PiDevice>() {
                 return save(d)
             }
             return d
-        }catch (e:Exception)
-        {
+        } catch (e: Exception) {
             e.printStackTrace()
             throw e
         }

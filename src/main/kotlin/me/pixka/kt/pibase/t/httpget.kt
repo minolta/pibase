@@ -46,7 +46,5 @@ class HttpGetTask(val url: String) : Callable<String?> {
         return re
     }
 
-    companion object {
-        internal var logger = LoggerFactory.getLogger(HttpGetTask::class.java)
-    }
+         var logger = LoggerFactory.getLogger(HttpGetTask::class.java)
 }

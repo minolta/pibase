@@ -12,7 +12,7 @@ class PifwgroupService( val r: PifwgroupRepo) : DefaultService<Pifwgroup>() {
     fun searchMatch(n: String): Pifwgroup? {
         return null
     }
-
+    @Synchronized
     fun findorcreate(appname: String): Pifwgroup? {
         var pn: Pifwgroup? = r.findByName(appname)
         if (pn == null) {

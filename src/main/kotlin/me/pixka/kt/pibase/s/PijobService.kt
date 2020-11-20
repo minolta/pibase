@@ -16,10 +16,10 @@ import java.util.*
 class PijobService(var r: PijobRepo, val dss: Ds18sensorRepo) : DefaultService<Pijob>() {
 
 
-    fun findJob(jobid:Long):List<Pijob>?
-    {
-        return r.findByJob_idAndEnable(jobid,true)
+    fun findJob(jobid: Long): List<Pijob>? {
+        return r.findByJob_idAndEnable(jobid, true)
     }
+
     fun findByTime(currenttime: Date, jobid: Long): List<Pijob>? {
         var c = datetoLong(currenttime)
         return r.fineByTime(c, jobid)
@@ -28,7 +28,6 @@ class PijobService(var r: PijobRepo, val dss: Ds18sensorRepo) : DefaultService<P
     fun search(search: String, uid: Long, page: Long, limit: Long): List<Pijob>? {
         return r.search(search, uid, topage(page, limit))
     }
-
 
 
     fun findByName(n: String, uid: Long): Pijob? {
@@ -90,8 +89,8 @@ class PijobService(var r: PijobRepo, val dss: Ds18sensorRepo) : DefaultService<P
             time = df.parse(s)
             logger.debug("[ds18b20 finbydstime] Time to search " + time)
             val list = r.findByDS(t, time, jobid)
-            if(list!=null)
-            logger.debug("[ds18b20 finbydstime] Job founds " + list.size)
+            if (list != null)
+                logger.debug("[ds18b20 finbydstime] Job founds " + list.size)
             return list
         } catch (e: ParseException) {
             logger.error("[ds18b20 finbydstime] " + e.message)
@@ -184,9 +183,6 @@ class PijobService(var r: PijobRepo, val dss: Ds18sensorRepo) : DefaultService<P
         return r.DSBysensor(dsjobid, sensorid, t)
     }
 
-    companion object {
-        internal var logger = LoggerFactory.getLogger(PijobService::class.java)
-    }
 
     val d = SimpleDateFormat("yyyy/mm/dd HH:mm")
     val df = SimpleDateFormat("HH:mm")
@@ -207,4 +203,6 @@ class PijobService(var r: PijobRepo, val dss: Ds18sensorRepo) : DefaultService<P
         var s = df.format(d)
         return timeTolong(s)
     }
+
+    var logger = LoggerFactory.getLogger(PijobService::class.java)
 }

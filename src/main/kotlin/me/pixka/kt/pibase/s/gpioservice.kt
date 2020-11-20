@@ -223,9 +223,7 @@ class GpioService(val gpio: GpioController) {
     }
 
 
-    companion object {
-        internal var logger = LoggerFactory.getLogger(GpioService::class.java)
-    }
+         var logger = LoggerFactory.getLogger(GpioService::class.java)
 }
 
 class Portstatus(var pin: GpioPinDigital? = null, var inuse: Boolean = false, var portname: String = "")

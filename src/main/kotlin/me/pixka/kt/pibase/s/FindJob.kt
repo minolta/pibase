@@ -22,7 +22,5 @@ class FindJob(val js: JobService, val pjs: PijobService) {
         }
     }
 
-    companion object {
-        internal var logger = LoggerFactory.getLogger(FindJob::class.java)
-    }
+    var logger = LoggerFactory.getLogger(FindJob::class.java)
 }

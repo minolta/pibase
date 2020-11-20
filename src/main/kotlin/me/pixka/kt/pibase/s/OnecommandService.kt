@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service
 @Service
 class OnecommandService( val r: OnecommandRepo): DefaultService<Onecommand>()
 {
-//    override fun search(search: String, page: Long, limit: Long): List<Onecommand>? {
-//        return r.search(search,topage(page,limit))
-//    }
 
     fun findNotrunByeviceId(did:Long): List<Onecommand>? {
         return r.findByPidevice_idAndRun(did,false)

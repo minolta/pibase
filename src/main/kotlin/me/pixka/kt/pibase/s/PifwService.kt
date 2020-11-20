@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service
 @Service
 class PifwService(val r: PifwRepo, val pdrp: PidevicegroupRepo) : DefaultService<Pifw>() {
 
-
-
-
     fun searchMatch(n: String): Pifw? {
         return r.findByVerno(n)
     }

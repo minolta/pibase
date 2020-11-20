@@ -34,7 +34,7 @@ open interface IptablesktRepo : JpaRepository<Iptableskt, Long> {
 @Service
 class IptableServicekt(val r: IptablesktRepo) : DefaultService<Iptableskt>() {
 
-
+    fun deleteALL() = r.deleteAll()
     fun findByMac(mac: String): Iptableskt? {
         try {
             return r.findByMac(mac)

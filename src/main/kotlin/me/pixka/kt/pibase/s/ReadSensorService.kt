@@ -22,21 +22,23 @@ class ReadSensorService(val rs: RoutedataService,
                         val ds18s: Ds18valueService,
                         val http: HttpControl,
                         var ps: PideviceService
-                        ) {
+) {
 
     private val om = ObjectMapper()
+
     // now support 4 sensor
     private var HT: Job? = null
     private var DS: Job? = null
     private val port = "80"
     private var readbuffertimeout: String? = null // ใช้สำหรับบอกว่า
+
     // ถ้าอ่านข้อมูลจากเพื่อนไม่ได้ให้ใช้ค่าเดิมไปก่อนกี่ชั่วโมง
     private var timeout: Int = 0 // อายุของค่าสุดท้ายสำหรัวให้ระบบเก็บไว้
     private var lastds: Dslast? = null
 
-    init {
-        logger.info("readsensor constrnctor ")
-    }
+//    init {
+//        logger.info("readsensor constrnctor ")
+//    }
 
     @Throws(Exception::class)
     fun readDhtvalue(): Dhtvalue? {
@@ -250,7 +252,7 @@ class ReadSensorService(val rs: RoutedataService,
 
     private fun gettimeout() {
         try {
-            this.readbuffertimeout = System.getProperty("valueexp","100")
+            this.readbuffertimeout = System.getProperty("valueexp", "100")
             logger.debug("useold : time out : valueexp " + readbuffertimeout!!)
             if (readbuffertimeout != null)
                 timeout = Integer.valueOf(readbuffertimeout!!)!!
@@ -313,10 +315,7 @@ class ReadSensorService(val rs: RoutedataService,
         return 0
     }
 
-    companion object {
-        internal var logger = LoggerFactory.getLogger(ReadSensorService::class.java!!)
-    }
-
+    var logger = LoggerFactory.getLogger(ReadSensorService::class.java)
 
 
 }

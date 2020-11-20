@@ -28,6 +28,7 @@ class JobService(val r: JobRepo) : DefaultService<Job>() {
         return r.findByRefid(id)
     }
 
+    @Synchronized
     fun findorcreate(n: String): Job {
         var f = findByName(n)
         if (f == null) {
@@ -73,9 +74,8 @@ class JobService(val r: JobRepo) : DefaultService<Job>() {
     fun clear() {
         r.clear()
     }
-
+    var logger = LoggerFactory.getLogger(JobService::class.java)
     companion object {
-        internal var logger = LoggerFactory.getLogger(JobService::class.java!!)
         val HT = 0
         val H = 1
         val T = 2

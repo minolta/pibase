@@ -9,13 +9,14 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
-class PortnameService( val r: PortnameRepo) : DefaultService<Portname>() {
+class PortnameService(val r: PortnameRepo) : DefaultService<Portname>() {
 
 
     fun searchMatch(n: String): Portname? {
         return r.findByName(n)
     }
 
+    @Synchronized
     fun findorcreate(n: String): Portname? {
         try {
             var pn: Portname? = this.searchMatch(n)
