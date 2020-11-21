@@ -1,6 +1,7 @@
 package me.pixka.kt.pibase.s
 
 import me.pixka.base.s.DefaultService
+import me.pixka.kt.pibase.d.Pijob
 import me.pixka.kt.pibase.d.Portstatusinjob
 import me.pixka.kt.pibase.r.PortstatusinjobRepo
 import org.slf4j.LoggerFactory
@@ -43,6 +44,15 @@ class PortstatusinjobService( val r: PortstatusinjobRepo) : DefaultService<Ports
         return true
     }
 
+    fun copy(pijobid: Long): ArrayList<Portstatusinjob> {
+       var list =  findByPijobid(pijobid) as ArrayList<Portstatusinjob>?
+        var re = ArrayList<Portstatusinjob>()
+        if(list!=null)
+        list.forEach {
+            re.add(it.c())
+        }
+        return re
+    }
     var logger = LoggerFactory.getLogger(PortstatusinjobService::class.java)
 
 }

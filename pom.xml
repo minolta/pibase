@@ -96,6 +96,13 @@
             <artifactId>pi4j-device</artifactId>
             <version>${pi4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk</artifactId>
+            <version>1.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.pi4j/pi4j-gpio-extension -->
         <dependency>
             <groupId>com.pi4j</groupId>

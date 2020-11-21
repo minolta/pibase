@@ -22,8 +22,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             var ports: List<Portstatusinjob>? = null,// สำหรับ เก็บว่า job นี้ทำงานกับ อะไรงานไหนเช่น H
             @Column(insertable = false, updatable = false) var job_id: Long? = null,// ก็ทำงานกับค่า h อย่างเดียว HT ทำงานกับ H และ T
             @ManyToOne var job: Job? = null, @ManyToOne var pidevice: PiDevice? = null,
-            @Column(insertable = false, updatable = false) var pidevice_id: Long? = null
-            , var name: String? = null,// ช่วงความร้อนที่ทำงาน
+            @Column(insertable = false, updatable = false) var pidevice_id: Long? = null, var name: String? = null,// ช่วงความร้อนที่ทำงาน
             @Column(precision = 10, scale = 3) var tlow: BigDecimal? = null,
             @Column(precision = 10, scale = 3) var thigh: BigDecimal? = null,// ช่วงความชื้นที่ทำงาน
             @Column(precision = 10, scale = 3) var hlow: BigDecimal? = null,
@@ -37,14 +36,13 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
             var user_id: Long? = null,
             var lowtime: Long? = null, var hightime: Long? = null,
             var stimes: String? = null, var etimes: String? = null
-        /*Run first สำหรับให้ Run ตัวนี้ก่อนก่อนจะ Run Job หลัก*/
-            , var runfirstid: Long? = null,
+        /*Run first สำหรับให้ Run ตัวนี้ก่อนก่อนจะ Run Job หลัก*/, var runfirstid: Long? = null,
         /*Run ด้วยกันเลย*/
             var runwithid: Long? = null, var timetorun: Long? = 0//สำหรับบอกว่าทำงานกี่รอบ
             , var checkversion: Long? = 0, var usewater: Boolean? = false,
             var refverion: Long? = null, @ManyToOne var pijobgroup: Pijobgroup? = null,
             @Column(insertable = false, updatable = false) var pijobgroup_id: Long? = null,
-            var token:String?=null,var priority:Int?=0
+            var token: String? = null, var priority: Int? = 0
 
 ) : En() {
 
@@ -63,33 +61,46 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
 
     fun copy(from: Pijob) {
 
-            this.hhigh = from.hhigh
-            this.hlow = from.hlow
-            this.tlow = from.tlow
-            this.thigh = from.thigh
-            this.sdate = from.sdate
-            this.edate = from.edate
-            this.stime = from.stime
-            this.etime = from.etime
-            this.name = from.name
-            this.runtime = from.runtime
-            this.waittime = from.waittime
-            this.enable = from.enable
-            this.etimes = from.etimes
-            this.stimes = from.stimes
-            this.hightime = from.hightime
-            this.lowtime = from.lowtime
-            this.runwithid = from.runwithid
-            this.timetorun = from.timetorun
-            this.desdevice = from.desdevice
+        this.hhigh = from.hhigh
+        this.hlow = from.hlow
+        this.tlow = from.tlow
+        this.thigh = from.thigh
+        this.sdate = from.sdate
+        this.edate = from.edate
+        this.stime = from.stime
+        this.etime = from.etime
+        this.name = from.name
+        this.runtime = from.runtime
+        this.waittime = from.waittime
+        this.enable = from.enable
+        this.etimes = from.etimes
+        this.stimes = from.stimes
+        this.hightime = from.hightime
+        this.lowtime = from.lowtime
+        this.runwithid = from.runwithid
+        this.timetorun = from.timetorun
+        this.desdevice = from.desdevice
 //            this.ds18sensor = from.ds18sensor  //ไม่ใช้แล้ว
-            this.verref = from.ver
-            this.pijobgroup = from.pijobgroup
-            this.pijobgroup_id = from.pijobgroup_id
-            this.description = from.description
-            this.token = from.token
+        this.verref = from.ver
+        this.pijobgroup = from.pijobgroup
+        this.pijobgroup_id = from.pijobgroup_id
+        this.description = from.description
+        this.pidevice = from.pidevice
+        this.pidevice_id = from.pidevice_id
+        this.job = from.job
+        this.pijobgroup = from.pijobgroup
+        this.token = from.token
 
 
+    }
 
+    fun c(): Pijob {
+        var p = Pijob()
+        p.copy(this)
+        p.name = p.name + " copy"
+        p.id = 0
+        p.ver = 0
+
+        return p
     }
 }
