@@ -9,4 +9,15 @@ import org.springframework.stereotype.Service
 class DevicegroupService( val r: DevicegroupRepo) : DefaultService<Devicegroup>() {
 
 
+    @Synchronized
+    fun findOeCreate(n:String): Devicegroup? {
+        var d  = findByName(n)
+        if(d == null)
+        {
+            d = Devicegroup(n)
+            return save(d)
+        }
+        return d
+    }
+
 }

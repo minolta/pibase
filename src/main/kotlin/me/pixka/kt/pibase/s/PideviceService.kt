@@ -30,6 +30,18 @@ class PideviceService(val r: PideviceRepo) : DefaultService<PiDevice>() {
     }
 
     @Synchronized
+    fun findOrCreate(mac:String): PiDevice {
+        var d = findByMac(mac)
+        if(d==null)
+        {
+            d = PiDevice()
+            d.name = mac
+            d.mac = mac
+            return save(d)
+        }
+        return d
+    }
+    @Synchronized
     fun findOrCreate(pd: PiDevice): PiDevice? {
         try {
             var d = findByMac(pd.mac!!)
