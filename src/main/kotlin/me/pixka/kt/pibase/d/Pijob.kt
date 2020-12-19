@@ -72,7 +72,7 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
         this.name = from.name
         this.runtime = from.runtime
         this.waittime = from.waittime
-        this.enable = from.enable
+        this.enable = from.enable // default is disable
         this.etimes = from.etimes
         this.stimes = from.stimes
         this.hightime = from.hightime
