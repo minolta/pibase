@@ -55,6 +55,12 @@ class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? =
 
     override fun equals(obj: Any?): Boolean {
 
+        if(obj is Pijob)
+        {
+            if(obj.id == this.id)
+                return true
+        }
+
         return false
 
     }
