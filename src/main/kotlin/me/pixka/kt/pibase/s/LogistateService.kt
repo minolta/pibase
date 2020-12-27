@@ -1,10 +1,9 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
 import com.pi4j.io.gpio.GpioPinDigitalOutput
-import me.pixka.kt.base.s.DefaultService
-import me.pixka.kt.base.s.Ds
+import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.Logistate
-import me.pixka.pibase.r.LogistateRepo
+import me.pixka.kt.pibase.r.LogistateRepo
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service
 class LogistateService(val r: LogistateRepo) : DefaultService<Logistate>() {
 
 
+    @Synchronized
     fun findorcreate(n: Logistate): Logistate? {
 
         try {
@@ -56,6 +56,7 @@ class LogistateService(val r: LogistateRepo) : DefaultService<Logistate>() {
             pin.low()
     }
 
+    @Synchronized
     fun findorcreate(status: String): Logistate? {
         var lg: Logistate? = r.findByName(status)
         if (lg == null) {
@@ -93,7 +94,5 @@ class LogistateService(val r: LogistateRepo) : DefaultService<Logistate>() {
         return null
     }
 
-    companion object {
-        internal var logger = LoggerFactory.getLogger(LogistateService::class.java!!)
-    }
+    var logger = LoggerFactory.getLogger(LogistateService::class.java)
 }

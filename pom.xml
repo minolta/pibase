@@ -4,108 +4,80 @@
     <groupId>me.pixka.kt</groupId>
     <artifactId>pibasekt</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.3-stable</version>
+    <version>1.0.5-stable</version>
     <name>pibasekt</name>
     <url>http://maven.apache.org</url>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.1</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
     <properties>
-        <kotlin.version>1.2.70</kotlin.version>
-        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <pi4j.version>1.2-SNAPSHOT</pi4j.version>
-        <jackson.version>2.9.5</jackson.version>
-        <spring.jpa>2.2.3.RELEASE</spring.jpa>
-        <spring.version>5.2.2.RELEASE</spring.version>
-        <hibernate.version>5.4.10.Final</hibernate.version>
+        <pi4j.version>1.2</pi4j.version>
     </properties>
-
-    <repositories>
-      <repository>
-        <id>pi4j</id>
-        <name>pi4j</name>
-        <url>https://oss.sonatype.org/content/groups/public</url>
-      </repository>
-    </repositories>
-
-
-
     <dependencies>
-
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
-            <version>${kotlin.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>${spring.jpa}</version>
+            <groupId>me.pixka</groupId>
+            <artifactId>base</artifactId>
+            <version>0.1.3-SNAPSHOT</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
+            <groupId>me.pixka.base</groupId>
+            <artifactId>line</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>me.pixka.kt</groupId>
-            <artifactId>base</artifactId>
-            <version>1.1-SNAPSHOT</version>
-        </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>RELEASE</version>
+            <version>4.5.12</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
+            <groupId>me.pixka</groupId>
+            <artifactId>base</artifactId>
+            <version>0.1.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>2.9.9</version>
-        </dependency>
-
-        <dependency>
-            <groupId>me.pixka</groupId>
-            <artifactId>io</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -124,6 +96,13 @@
             <artifactId>pi4j-device</artifactId>
             <version>${pi4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk</artifactId>
+            <version>1.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.pi4j/pi4j-gpio-extension -->
         <dependency>
             <groupId>com.pi4j</groupId>
@@ -133,48 +112,48 @@
 
     </dependencies>
     <build>
+        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>attach-sources</id>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>repackage</goal>
                         </goals>
+                        <configuration>
+                            <attach>false</attach>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <configuration>
-                    <jvmTarget>1.8</jvmTarget>
+                    <args>
+                        <arg>-Xjsr305=strict</arg>
+                    </args>
+                    <compilerPlugins>
+                        <plugin>spring</plugin>
+                        <plugin>jpa</plugin>
+                    </compilerPlugins>
                 </configuration>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <version>${kotlin.version}</version>
-
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-
-                    <execution>
-                        <id>test-compile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>test-compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-allopen</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-noarg</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
-
-        <sourceDirectory>src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>src/test/kotlin</testSourceDirectory>
     </build>
 </project>

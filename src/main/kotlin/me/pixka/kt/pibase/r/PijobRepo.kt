@@ -1,7 +1,7 @@
-package me.pixka.pibase.r
+package me.pixka.kt.pibase.r
 
-import me.pixka.kt.base.s.findByName
-import me.pixka.kt.base.s.search
+import me.pixka.base.s.findByName
+import me.pixka.base.s.search
 import me.pixka.kt.pibase.d.Pijob
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -86,10 +86,10 @@ interface PijobRepo : JpaRepository<Pijob, Long>, search<Pijob>, findByName<Pijo
     @Query("from Pijob p where p.enable = true and p.job_id = ?2 and (p.lowtime <= ?1 and p.hightime >=?1 )")
     fun fineByTime(currenttime: Long, jobid: Long): List<Pijob>?
 
-    @Modifying
-    @Transactional
-    @Query("delete from Pijob p where p.id = ?1")
-    fun deletePijobById(id: Long)
+//    @Modifying
+//    @Transactional
+//    @Query("delete from Pijob p where p.id = ?1")
+//    fun deletePijobById(id: Long)
 
     fun findByJob_idAndEnable(jobid: Long, b: Boolean): List<Pijob>?
 

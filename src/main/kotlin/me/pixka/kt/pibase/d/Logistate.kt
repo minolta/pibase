@@ -1,7 +1,7 @@
 package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import me.pixka.kt.base.d.En
+import me.pixka.base.d.En
 import org.hibernate.annotations.Cache
 import javax.persistence.Cacheable
 import javax.persistence.Entity
@@ -20,6 +20,19 @@ class Logistate : En() {
 
     override fun toString(): String {
         return "Logistate [name=$name, refid=$refid]"
+    }
+
+    fun toInt(): Int {
+        if(name?.toLowerCase()?.indexOf("high")!=-1)
+            return 1
+
+        if(name?.toLowerCase()?.indexOf("1")!=-1)
+            return 1
+
+        if(name?.toLowerCase()?.indexOf("true")!=-1)
+            return 1
+
+        return 0
     }
 
 }

@@ -1,16 +1,15 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
-import me.pixka.kt.base.s.DefaultService
-import me.pixka.kt.base.s.Ds
+import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.DS18value
 import me.pixka.kt.pibase.d.PiDevice
-import me.pixka.pibase.r.Ds18valueRepo
+import me.pixka.kt.pibase.r.Ds18valueRepo
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.util.*
 
 @Service
-class Ds18valueService( val r: Ds18valueRepo) : DefaultService<DS18value>() {
+class Ds18valueService(val r: Ds18valueRepo) : DefaultService<DS18value>() {
 
 
     /**
@@ -23,7 +22,9 @@ class Ds18valueService( val r: Ds18valueRepo) : DefaultService<DS18value>() {
         return r.findTop1ByOrderByValuedateDesc()
     }
 
-    fun create(pidevice: PiDevice?=null, t: BigDecimal?, valuedate: Date?=Date(), ip: String?=null): DS18value {
+    fun deleteAll(id: Long) = r.deleteByAll(id)
+    fun deleteBydate(id: Long, s: Date, e: Date) = r.deleteByDate(id, s, e)
+    fun create(pidevice: PiDevice? = null, t: BigDecimal?, valuedate: Date? = Date(), ip: String? = null): DS18value {
         val d = DS18value()
         d.ip = ip
         d.pidevice = pidevice
@@ -33,6 +34,9 @@ class Ds18valueService( val r: Ds18valueRepo) : DefaultService<DS18value>() {
 
     }
 
+    fun findAvg(id: Long?, s: Date, e: Date): BigDecimal? {
+        return r.findAvg(id, s, e)
+    }
 
     fun notInserver(): List<DS18value>? {
 
@@ -55,8 +59,7 @@ class Ds18valueService( val r: Ds18valueRepo) : DefaultService<DS18value>() {
         return r.findgraphvalueBySensor(sid, s, e)
     }
 
-    fun cleanToserver()
-    {
+    fun cleanToserver() {
         r.cleanToserver()
     }
 }

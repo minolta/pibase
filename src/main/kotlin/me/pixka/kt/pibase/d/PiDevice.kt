@@ -1,9 +1,10 @@
 package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import me.pixka.kt.base.d.En
+import me.pixka.base.d.En
 import me.pixka.kt.pibase.d.Devicegroup
 import org.hibernate.annotations.Cache
+import java.math.BigDecimal
 import java.util.*
 import javax.persistence.Cacheable
 import javax.persistence.Column
@@ -24,7 +25,8 @@ class PiDevice(
         var refid:Long?=null,
         @ManyToOne var devicegroup: Devicegroup? = null,
         @Column(insertable = false, updatable = false) var devicegroup_id: Long? = null,
-        var user_id: Long? = null) : En() {
+        var user_id: Long? = null, var lastuptime:Long?=null, var lastcheckinlong:Long?=null,
+        var a0: BigDecimal?= BigDecimal.ZERO) : En() {
 
     constructor() : this(ip = null)
 

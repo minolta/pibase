@@ -11,9 +11,8 @@ import javax.persistence.ManyToOne
 import org.hibernate.annotations.Cache
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import me.pixka.base.d.En
 
-import me.pixka.kt.base.d.En
-import me.pixka.kt.pibase.d.PiDevice
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
@@ -43,3 +42,7 @@ class Dhtvalue : En() {
     }
 
 }
+
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+class DHTObject(var t:BigDecimal?=null,var h:BigDecimal?=null,var mac:String?=null,var ip:String?=null)

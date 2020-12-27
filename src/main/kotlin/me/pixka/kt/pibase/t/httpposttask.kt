@@ -40,7 +40,5 @@ class HttpPostTask(var url: String, var obj: Any) : Callable<CloseableHttpRespon
         return null
     }
 
-    companion object {
-        internal var logger = LoggerFactory.getLogger(HttpPostTask::class.java)
-    }
+    var logger = LoggerFactory.getLogger(HttpPostTask::class.java)
 }

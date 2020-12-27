@@ -1,9 +1,8 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
-import me.pixka.kt.base.s.DefaultService
+import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.Portmode
-import me.pixka.pibase.r.PortmodeRepo
-import org.springframework.beans.factory.annotation.Autowired
+import me.pixka.kt.pibase.r.PortmodeRepo
 import org.springframework.stereotype.Service
 
 @Service
@@ -13,6 +12,7 @@ class PortmodeService(val r: PortmodeRepo) : DefaultService<Portmode>() {
         return null
     }
 
+    @Synchronized
     fun findorcreate(name: String): Portmode {
         var pm: Portmode? = r.findByName(name)
         if (pm == null) {

@@ -1,10 +1,9 @@
 package me.pixka.kt.pibase.t
 
-import me.pixka.kt.base.d.Iptableskt
-import me.pixka.kt.base.s.DbconfigService
-import me.pixka.kt.base.s.ErrorlogService
-import me.pixka.kt.base.s.IptableServicekt
+import me.pixka.kt.pibase.d.IptableServicekt
+import me.pixka.kt.pibase.d.Iptableskt
 import org.slf4j.LoggerFactory
+import org.springframework.context.annotation.Profile
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.io.BufferedReader
@@ -16,9 +15,9 @@ import java.net.SocketException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-//@Profile("ip")
+@Profile("ip")
 @Component
-class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: ErrorlogService) {
+class Iptask(val service: IptableServicekt) {
     companion object {
         internal var logger = LoggerFactory.getLogger(Iptask::class.java)
     }
@@ -61,7 +60,7 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
         if (p != null) {
             command = "${p} -n -sP "
         } else
-            command = cfg.findorcreate("scancommand", "C:\\nmap.exe -n -sP ").value!!
+            command = System.getProperty("scancommand", "C:\\nmap.exe -n -sP ")
 
 
     }
@@ -104,8 +103,6 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
             }
         } catch (e: Exception) {
             logger.error("getNet ${e.message}")
-            es.n("load ip ", "110", "${e.message}")
-            //  e.printStackTrace()
         }
         return buffer
     }
@@ -167,7 +164,6 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
 
         } catch (e: Exception) {
             logger.error("R() ${e.message}")
-            es.n("Loadip", "180", "${e.message}")
             e.printStackTrace()
         }
         return buf
@@ -189,7 +185,9 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
                         ii = Iptableskt()
                         ii.ip = i.ip
                         ii.mac = i.mac
-                        newIptable(ii)
+                        ii.id=0
+                        ii = service.save(ii)
+//                        newIptable(ii)
                     } else {
                         service.updateiptable(ii, i.ip!!)
                     }
@@ -259,10 +257,11 @@ class Iptask(val service: IptableServicekt, val cfg: DbconfigService, val es: Er
     fun newIptable(it: Iptableskt) {
         try {
             var idv = Iptableskt()
+            idv.id = 0
             idv.ip = it.ip
             idv.mac = it.mac
             idv.lastcheckin = Date()
-            idv = service.save(idv)!!
+            idv = service.save(idv)
             logger.debug("loadiptable New iptables : ${idv}")
         } catch (e: Exception) {
             e.printStackTrace()

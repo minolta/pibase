@@ -2,7 +2,7 @@ package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import me.pixka.kt.base.d.En
+import me.pixka.base.d.En
 import org.hibernate.annotations.Cache
 import javax.persistence.Cacheable
 import javax.persistence.Column
@@ -27,17 +27,33 @@ class Portstatusinjob(@ManyToOne var portname: Portname? = null,
                       var checkversion: Long? = 0,
                       var runtime: Int? = 0,
                       var waittime: Int? = 0,
-                      @ManyToOne var device: PiDevice?=null, //บอกว่าไปเปิด port ที่ตัวไหน
+                      @ManyToOne var device: PiDevice? = null, //บอกว่าไปเปิด port ที่ตัวไหน
                       @Column(insertable = false, updatable = false) var device_id: Long? = null
 
 ) : En() {
 
     fun copy(from: Portstatusinjob) {
-        if(verref==null || verref!=from.ver) {
-            this.portname = from.portname
-            this.status = from.status
-            verref = from.ver
-        }
+
+        this.portname = from.portname
+        this.status = from.status
+        this.runtime = from.runtime
+        this.waittime = from.waittime
+        this.pijob = from.pijob
+        this.pijob_id = from.pijob_id
+        this.device = from.device
+        this.enable = from.enable
+        verref = from.ver
+
+    }
+
+    /**
+     * สร้าง object ใหม่
+     */
+    fun c(): Portstatusinjob {
+        var p = Portstatusinjob()
+        p.copy(this)
+        return p
+
     }
 
     override fun toString(): String {

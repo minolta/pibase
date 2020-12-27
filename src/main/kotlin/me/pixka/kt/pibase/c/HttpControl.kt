@@ -1,25 +1,22 @@
-package me.pixka.c
+package me.pixka.kt.pibase.c
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import me.pixka.kt.base.s.ErrorlogService
-import org.apache.http.client.methods.CloseableHttpResponse
-import org.apache.http.client.methods.HttpGet
-import org.apache.http.client.methods.HttpPost
-import org.apache.http.entity.StringEntity
-import org.apache.http.impl.client.HttpClientBuilder
-import org.apache.http.impl.client.HttpClients
-import org.apache.http.util.EntityUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Controller
 import java.io.IOException
 import org.apache.http.auth.AuthScope
 import org.apache.http.auth.UsernamePasswordCredentials
+import org.apache.http.client.methods.CloseableHttpResponse
+import org.apache.http.client.methods.HttpGet
+import org.apache.http.client.methods.HttpPost
+import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.BasicCredentialsProvider
-
+import org.apache.http.impl.client.HttpClientBuilder
+import org.apache.http.util.EntityUtils
 
 
 @Controller
-class HttpControl(val err: ErrorlogService) {
+class HttpControl() {
 
     @Throws(IOException::class)
     operator fun get(s: String): String {
@@ -54,7 +51,6 @@ class HttpControl(val err: ErrorlogService) {
             return re
         } catch (e: Exception) {
             logger.error("HTTP Control error :" + e.message)
-            err.n("GET HTTPCONTROL", "27-31", "${e.message}")
             throw e
         } finally {
             logger.debug("Close connection get()")
@@ -94,7 +90,6 @@ class HttpControl(val err: ErrorlogService) {
             return re
         } catch (ex: Exception) {
             logger.error("HTTP POST " + ex.message)
-            err.n("HttpControl", "49-55", "${ex.message}")
             throw ex
 
             // handle exception here
@@ -113,14 +108,13 @@ class HttpControl(val err: ErrorlogService) {
             return true
         } catch (e: IOException) {
             logger.error("[checkconnection] Can not connect to server " + e.message)
-            err.n("checkcanconnect", "73", "${e.message}")
         }
 
         return false
     }
 
     companion object {
-        internal var logger = LoggerFactory.getLogger(HttpControl::class.java!!)
+        internal var logger = LoggerFactory.getLogger(HttpControl::class.java)
     }
 
 }

@@ -1,22 +1,22 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
 import com.pi4j.io.gpio.GpioController
 import com.pi4j.io.gpio.GpioPinDigitalOutput
-import me.pixka.kt.base.s.DefaultService
-import me.pixka.kt.base.s.Ds
+import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.Portname
-import me.pixka.pibase.r.PortnameRepo
+import me.pixka.kt.pibase.r.PortnameRepo
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
-class PortnameService( val r: PortnameRepo) : DefaultService<Portname>() {
+class PortnameService(val r: PortnameRepo) : DefaultService<Portname>() {
 
 
     fun searchMatch(n: String): Portname? {
         return r.findByName(n)
     }
 
+    @Synchronized
     fun findorcreate(n: String): Portname? {
         try {
             var pn: Portname? = this.searchMatch(n)

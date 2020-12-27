@@ -1,19 +1,15 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
-import me.pixka.kt.base.s.Ds
+import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.Dhtvalue
 import me.pixka.kt.pibase.d.PiDevice
-import me.pixka.pibase.r.DhtvalueRepo
+import me.pixka.kt.pibase.r.DhtvalueRepo
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.util.*
 
 @Service
-class DhtvalueService(val r: DhtvalueRepo) : Ds<Dhtvalue>() {
-    override fun search(search: String, page: Long, limit: Long): List<Dhtvalue>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
+class DhtvalueService(val r: DhtvalueRepo) : DefaultService<Dhtvalue>() {
     fun create(device: PiDevice, t: BigDecimal, h: BigDecimal, ip: String?, adddate: Date): Dhtvalue {
         var dv = Dhtvalue()
         dv.pidevice = device

@@ -1,18 +1,12 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
-import me.pixka.kt.base.s.DefaultService
-import me.pixka.kt.base.s.Ds
+import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.Routedata
-import me.pixka.pibase.r.RoutedataRepo
-import org.springframework.beans.factory.annotation.Autowired
+import me.pixka.kt.pibase.r.RoutedataRepo
 import org.springframework.stereotype.Service
 
 @Service
-class RoutedataService(val r:RoutedataRepo) : DefaultService<Routedata>() {
-
-
-
-
+class RoutedataService(val r: RoutedataRepo) : DefaultService<Routedata>() {
     /**
      * สำหรับให้ Server ส่งค่า Route ออกไปยัง client ที่ส่ง mac เข้ามา
      *

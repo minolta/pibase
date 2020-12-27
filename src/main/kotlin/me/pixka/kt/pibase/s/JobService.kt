@@ -1,11 +1,8 @@
-package me.pixka.pibase.s
+package me.pixka.kt.pibase.s
 
-import me.pixka.kt.base.s.DefaultService
-import me.pixka.kt.base.s.Ds
-import me.pixka.kt.base.s.findByName
-import me.pixka.kt.base.s.search
+import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.Job
-import me.pixka.pibase.r.JobRepo
+import me.pixka.kt.pibase.r.JobRepo
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -31,6 +28,7 @@ class JobService(val r: JobRepo) : DefaultService<Job>() {
         return r.findByRefid(id)
     }
 
+    @Synchronized
     fun findorcreate(n: String): Job {
         var f = findByName(n)
         if (f == null) {
@@ -76,9 +74,8 @@ class JobService(val r: JobRepo) : DefaultService<Job>() {
     fun clear() {
         r.clear()
     }
-
+    var logger = LoggerFactory.getLogger(JobService::class.java)
     companion object {
-        internal var logger = LoggerFactory.getLogger(JobService::class.java!!)
         val HT = 0
         val H = 1
         val T = 2

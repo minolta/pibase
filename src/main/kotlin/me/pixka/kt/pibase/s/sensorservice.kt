@@ -1,14 +1,11 @@
 package me.pixka.kt.pibase.s
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import me.pixka.c.HttpControl
-import me.pixka.kt.base.s.DbconfigService
-import me.pixka.kt.base.s.IptableServicekt
+import me.pixka.kt.pibase.c.HttpControl
 import me.pixka.kt.pibase.d.DS18sensor
 import me.pixka.kt.pibase.d.DS18value
+import me.pixka.kt.pibase.d.IptableServicekt
 import me.pixka.kt.pibase.t.HttpGetTask
-import me.pixka.pibase.s.DS18sensorService
-import me.pixka.pibase.s.PideviceService
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.util.*
@@ -16,7 +13,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 @Service
-class SensorService(val dbconfigService: DbconfigService, val ps: PideviceService,
+class SensorService(val ps: PideviceService,
                     val dss: DS18sensorService, val iptableServicekt: IptableServicekt, val http: HttpControl) {
     private val om = ObjectMapper()
     /*  val ex = ThreadPoolExecutor(
@@ -163,13 +160,13 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
     fun checkage(old: DS18ReadBuffer): Boolean {
         logger.debug("Check age ")
         //21600000  = 6 ชม
-        var readtimeout = dbconfigService.findorcreate("readcache", "21600000").value?.toLong()
+        var readtimeout = System.getProperty("readcache", "21600000")
         var now = Date().time
         var readtime = old.readdate.time
         var t = now - readtime
 
         logger.debug("Test Age ${t} $readtimeout")
-        if (t > readtimeout!!) {
+        if (t > readtimeout.toLong()) {
             logger.error("Data can not use")
             return false
         }
@@ -214,9 +211,7 @@ class SensorService(val dbconfigService: DbconfigService, val ps: PideviceServic
 
     }
 
-    companion object {
-        internal var logger = LoggerFactory.getLogger(SensorService::class.java)
-    }
+         var logger = LoggerFactory.getLogger(SensorService::class.java)
 }
 
 class DS18ReadBuffer(var disid: Long, var sensorid: Long, var value: DS18value, var readdate: Date)
