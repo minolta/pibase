@@ -13,7 +13,7 @@ import me.pixka.kt.pibase.d.Portname
 interface PortnameRepo : JpaRepository<Portname, Long>, search<Portname>, findByName<Portname> {
 
 
-    @Query("from Portname pn where pn.name like %?1% or pn.piport like %?1%")
+    @Query("from Portname pn where pn.name like %?1% or pn.piport like %?1% order by pn.name")
     override fun search(s: String, page: Pageable): List<Portname>?
 
     fun findByRefid(id: Long?): Portname?
