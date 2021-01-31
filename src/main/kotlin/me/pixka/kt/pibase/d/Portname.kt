@@ -31,4 +31,8 @@ class Portname(var name: String? = null, var piport: String? = null, var refid: 
             return 1
         return 0
     }
+
+    override fun toString(): String {
+        return "${name}"
+    }
 }
