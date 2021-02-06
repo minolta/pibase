@@ -19,7 +19,7 @@ class PortnameService(val r: PortnameRepo) : DefaultService<Portname>() {
     @Synchronized
     fun findorcreate(n: String): Portname? {
         try {
-            var pn: Portname? = this.searchMatch(n)
+            var pn: Portname? = this.findByName(n)
             if (pn == null) {
                 pn = Portname()
                 pn.name = n

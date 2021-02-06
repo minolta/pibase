@@ -48,9 +48,13 @@ class ImportpijobService(
             it.portname = pos.findorcreate(it.portname?.name!!)
             it.pijob = pijob
             it.status = ls.findorcreate(it.status?.name!!)
-            if (it.device != null)
-                it.device = pds.findOrCreate(it.device?.mac!!)
-            psis.save(it)
+            if (it.device != null) {
+                var d  = pds.findOrCreate(it.device?.mac!!)
+                d.name = it.device?.name
+                pds.save(d)
+                it.device = d
+            }
+                psis.save(it)
 
         }
 
