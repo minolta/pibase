@@ -13,11 +13,26 @@ import javax.persistence.ManyToOne
 class Pumpforpijob(var name:String?=null,
                    @ManyToOne var pijob: Pijob?=null,@Column(insertable = false,updatable = false)
 var pijob_id:Long?=null,@ManyToOne var pidevice:PiDevice?=null,@Column(insertable = false,updatable = false)
-    var pidevice_id:Long?=null,var enable:Boolean? = true
+    var pidevice_id:Long?=null,var enable:Boolean? = true,var refid:Long?=null
             ): En()
+{
+    override fun equals(other: Any?): Boolean {
+        if(other is Pumpforpijob)
+        {
+            if(refid!=null && refid?.equals(other.refid) == true)
+                return true
+        }
+        return super.equals(other)
+    }
+            }
 
 @Repository
 interface PumpforpijobRepo : JpaRepository<Pumpforpijob,Long>
-
+{
+    fun findByPijob_id(id:Long):List<Pumpforpijob>?
+}
 @Service
-class PumpforpijobService: DefaultService<Pumpforpijob>()
+class PumpforpijobService(val r:PumpforpijobRepo): DefaultService<Pumpforpijob>()
+{
+    fun bypijobid(id:Long)=r.findByPijob_id(id)
+}
