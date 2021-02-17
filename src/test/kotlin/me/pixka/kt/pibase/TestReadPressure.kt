@@ -24,8 +24,8 @@ class TestReadPressure {
 //        var re = f.get()
 //        var psi=  om.readValue<PSI>(re, PSI::class.java)
 
-        var psi = readStatusService.readPSI("http://192.168.89.23")
-        println(psi)
+//        var psi = readStatusService.readPSI("http://192.168.89.23")
+//        println(psi)
     }
 }
 @JsonIgnoreProperties(ignoreUnknown = true)

@@ -47,7 +47,7 @@ class TestImportjob {
         val contentBuilder = StringBuilder()
 
         try {
-            Files.lines(Paths.get("c:\\tmp\\aj.json"), StandardCharsets.UTF_8).use({ stream ->
+            Files.lines(Paths.get("aj.json"), StandardCharsets.UTF_8).use({ stream ->
                 stream.forEach { s ->
                     contentBuilder.append(
                         s
