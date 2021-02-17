@@ -3,6 +3,9 @@ stages:
   - install
 
 build_base:
+  only:
+    refs:
+      - master
   stage: build
   trigger:
     project: rokkor/basejpa
@@ -10,12 +13,18 @@ build_base:
     strategy: depend
 build_base_logs:
   stage: build
+  only:
+    refs:
+      - master
   trigger:
     project: rokkor/logdata
     branch: master
     strategy: depend
 install:
   stage: install
+  only:
+    refs:
+      - master
   tags:
     - install
   script:
