@@ -1,0 +1,16 @@
+stages:
+  - build
+  - install
+
+build_base:
+  stage: build
+  trigger:
+    project: rokkor/basejpa
+    branch: master
+    strategy: depend
+stage: install
+  tags:
+    - install
+  script:
+    - mvn install
+    
