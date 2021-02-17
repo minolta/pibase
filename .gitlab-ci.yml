@@ -8,7 +8,8 @@ build_base:
     project: rokkor/basejpa
     branch: master
     strategy: depend
-stage: install
+install:
+  stage: install
   tags:
     - install
   script:
