@@ -12,6 +12,15 @@ build_base:
     project: rokkor/basejpa
     branch: master
     strategy: depend
+build_base_line:
+  stage: build
+  only:
+    refs:
+      - master
+  trigger:
+    project: rokkor/line
+    branch: master
+    strategy: depend
 build_base_logs:
   stage: build
   only:
