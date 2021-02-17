@@ -18,12 +18,12 @@ class TestReadPm ()
     @Test
     fun readPm()
     {
-       var http = HttpGetTask("http://192.168.89.243")
-
-        var re = http.call()
-
-        var o = om.readValue<Pm>(re!!)
-        println(o)
+//       var http = HttpGetTask("http://192.168.89.243")
+//
+//        var re = http.call()
+//
+//        var o = om.readValue<Pm>(re!!)
+//        println(o)
     }
 }
 

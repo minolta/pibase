@@ -18,8 +18,8 @@ class TestImportService
     @Test
     fun testImportServer()
     {
-//        ips.import("c:\\tmp\\aj.json")
-        var f = FileInputStream("c:\\tmp\\aj.json")
+//        ips.import("c:\\tmp\\aj.json")X
+        var f = FileInputStream("aj.json")
         ips.import(f)
         Assertions.assertTrue(ps.all().size>0)
     }

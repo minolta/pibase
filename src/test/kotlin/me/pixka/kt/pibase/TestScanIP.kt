@@ -34,7 +34,7 @@ class TestScanIP {
 
     @Test
     fun testscan() {
-        r()
+//        r()
     }
 
     fun r(): ArrayList<Ip>? {
@@ -92,11 +92,11 @@ class TestScanIP {
     }
     @Test
     fun scannow() {
-        val proc = Runtime.getRuntime().exec("c:\\nmap.exe -sP 192.168.88.0/24")
-        TimeUnit.SECONDS.sleep(10)
-        val stdInput = BufferedReader(InputStreamReader(proc.inputStream))
-        var buf = readOutput(stdInput)
-        println(buf)
+//        val proc = Runtime.getRuntime().exec("c:\\nmap.exe -sP 192.168.88.0/24")
+//        TimeUnit.SECONDS.sleep(10)
+//        val stdInput = BufferedReader(InputStreamReader(proc.inputStream))
+//        var buf = readOutput(stdInput)
+//        println(buf)
     }
 
     fun savetoDB(buf: ArrayList<Ip>) {
