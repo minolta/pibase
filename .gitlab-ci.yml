@@ -8,6 +8,12 @@ build_base:
     project: rokkor/basejpa
     branch: master
     strategy: depend
+build_base_logs:
+  stage: build
+  trigger:
+    project: rokkor/logdata
+    branch: master
+    strategy: depend
 install:
   stage: install
   tags:
