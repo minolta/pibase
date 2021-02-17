@@ -38,5 +38,5 @@ install:
   tags:
     - install
   script:
-    - mvn install
+    - mvn install -DskipTests=true
     
