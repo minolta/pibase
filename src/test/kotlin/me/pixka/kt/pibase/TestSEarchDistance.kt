@@ -25,10 +25,8 @@ class TestSEarchDistance {
 
     fun add() {
 
-        var device = PiDevice()
-        device.name = "test device"
+        var device = dds.findOrCreate("Test device")
 
-        device = dds.save(device)
 
         var d = Distance()
         d.pidevice = device
@@ -49,9 +47,9 @@ class TestSEarchDistance {
     fun test() {
         add()
 
-        var alls = ds.all()
+//        var alls = ds.all()
         var search = ds.searchBydate(1, df.parse("1/9/2020"), df.parse("31/10/2020"))
-        assertEquals(2, alls.size)
+//        assertEquals(2, alls.size)
         assertEquals(2, search?.size)
     }
 }

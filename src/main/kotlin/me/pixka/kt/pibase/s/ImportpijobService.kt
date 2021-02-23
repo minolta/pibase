@@ -77,12 +77,14 @@ class ImportpijobService(
             if (d != null) {
                 d = pds.findOrCreate(d.mac!!)
                 d.name = it.pidevice?.name
+                d.ip = it.pidevice?.ip
                 it.pidevice = pds.save(d)
             }
             var tg = it.desdevice
             if (tg != null) {
                 tg = pds.findOrCreate(tg.mac!!)
                 tg.name = it.desdevice?.name
+                tg.ip = it.desdevice?.ip
                 it.desdevice = pds.save(tg)
 
             }
