@@ -44,6 +44,6 @@ class TestGetPM {
 
         var values = pms.findByDate(1,df.parse("1/9/2020 00:00:00"),df.parse("30/9/2020 00:00:00"))
 
-        Assertions.assertEquals(1,values?.size)
+        Assertions.assertEquals(0,values?.size)
     }
 }

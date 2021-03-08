@@ -16,6 +16,18 @@ import java.util.*
 class PijobService(var r: PijobRepo, val dss: Ds18sensorRepo) : DefaultService<Pijob>() {
 
 
+    @Synchronized
+    fun findOrCreate(n:String): Pijob {
+        var p = findByName(n)
+        if(p==null)
+        {
+            p = Pijob()
+            p.name = n
+            return save(p)
+        }
+
+        return p
+    }
     fun findJob(jobid: Long): List<Pijob>? {
         return r.findByJob_idAndEnable(jobid, true)
     }

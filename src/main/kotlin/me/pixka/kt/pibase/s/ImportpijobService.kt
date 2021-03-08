@@ -14,6 +14,7 @@ import java.io.StringWriter
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.concurrent.TimeUnit
 
 
 @Service
@@ -70,50 +71,64 @@ class ImportpijobService(
 
         jobs.forEach {
 
-            println(it.name)
+            try {
+                println(it.name)
 
-            var d = it.pidevice
+                var d = it.pidevice
 
-            if (d != null) {
-                d = pds.findOrCreate(d.mac!!)
-                d.name = it.pidevice?.name
-                d.ip = it.pidevice?.ip
-                it.pidevice = pds.save(d)
+                if (d != null) {
+                    d = pds.findOrCreate(d.mac!!)
+                    d.name = it.pidevice?.name
+                    d.ip = it.pidevice?.ip
+                    it.pidevice = pds.save(d)
+                }
+                var tg = it.desdevice
+                if (tg != null) {
+                    tg = pds.findOrCreate(tg.mac!!)
+                    tg.name = it.desdevice?.name
+                    tg.ip = it.desdevice?.ip
+                    it.desdevice = pds.save(tg)
+
+                }
+                var dss = it.ds18sensor
+                if (dss != null) {
+                    it.ds18sensor = dsse.findorcreate(dss.name!!)
+
+                }
+
+                var job = it.job
+                if (job != null) {
+                    it.job = js.findorcreate(job.name!!)
+                }
+
+                var pg = it.pijobgroup
+                if (pg != null) {
+                    it.pijobgroup = pjgs.findOrCreate(pg.name!!)
+                }
+            }catch (e:Exception)
+            {
+
+                e.printStackTrace()
+                TimeUnit.SECONDS.sleep(10)
+                println(it.name)
+
             }
-            var tg = it.desdevice
-            if (tg != null) {
-                tg = pds.findOrCreate(tg.mac!!)
-                tg.name = it.desdevice?.name
-                tg.ip = it.desdevice?.ip
-                it.desdevice = pds.save(tg)
 
+            try {
+                var ports = (it.ports as ArrayList<Portstatusinjob>).clone() as ArrayList<Portstatusinjob>
+
+                (it.ports as ArrayList<Portstatusinjob>).clear()
+                if (ports != null) {
+                    var i = pjs.save(it)
+                    saveport(ports, i)
+                }
+
+            }catch (e:Exception)
+            {
+                e.printStackTrace()
+                TimeUnit.SECONDS.sleep(10)
+                println(it.name)
             }
-            var dss = it.ds18sensor
-            if (dss != null) {
-                it.ds18sensor = dsse.findorcreate(dss.name!!)
-
-            }
-
-            var job = it.job
-            if (job != null) {
-                it.job = js.findorcreate(job.name!!)
-            }
-
-            var pg = it.pijobgroup
-            if (pg != null) {
-                it.pijobgroup = pjgs.findOrCreate(pg.name!!)
-            }
-
-            var ports = (it.ports as ArrayList<Portstatusinjob>).clone() as ArrayList<Portstatusinjob>
-
-            (it.ports as ArrayList<Portstatusinjob>).clear()
-
-
-            if (ports != null) {
-                var i = pjs.save(it)
-                saveport(ports, i)
-            }
-
         }
     }
 

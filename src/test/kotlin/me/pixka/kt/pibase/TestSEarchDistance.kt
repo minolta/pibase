@@ -22,19 +22,23 @@ class TestSEarchDistance {
     @Autowired
     lateinit var dds: PideviceService
 
+    var device:PiDevice?=null
 
     fun add() {
 
-        var device = dds.findOrCreate("Test device")
+         device = dds.findOrCreate("Test device for search distance")
 
+        println(device?.id)
 
         var d = Distance()
+//        d.id = 1
         d.pidevice = device
         d.valuedate = df.parse("1/10/2020")
         d.distancevalue = BigDecimal(10.1)
         ds.save(d)
 
         d = Distance()
+//        d.id = 2
         d.pidevice = device
         d.valuedate = df.parse("3/10/2020")
         d.distancevalue = BigDecimal(15.1)
@@ -48,8 +52,9 @@ class TestSEarchDistance {
         add()
 
 //        var alls = ds.all()
-        var search = ds.searchBydate(1, df.parse("1/9/2020"), df.parse("31/10/2020"))
+        var search = ds.searchBydate(device?.id!!, df.parse("1/9/2020"), df.parse("31/10/2020"))
 //        assertEquals(2, alls.size)
+        println(search?.size)
         assertEquals(2, search?.size)
     }
 }

@@ -20,10 +20,10 @@ class TestDeleteall
 
     @Autowired
     lateinit var pds: PideviceService
+
+    var pi:PiDevice?=null
     fun add() {
-        var pi = PiDevice()
-        pi.name = "TEst"
-        pi = pds.save(pi)
+        pi = pds.findOrCreate("TEst for delete all")
 
         var ds = DS18value()
         ds.valuedate = df.parse("10/10/2020")
@@ -43,12 +43,7 @@ class TestDeleteall
     {
         add()
         assertEquals(2,service.all().size)
-
-        service.deleteAll(2L)
-        assertEquals(2,service.all().size)
-
-        service.deleteAll(1L)
+        service.deleteAll(pi!!.id)
         assertEquals(0,service.all().size)
-
     }
 }

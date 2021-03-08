@@ -19,29 +19,29 @@ class TestAllPijob {
     @Test
     fun TestDelete()
     {
-        var pj = Pijob()
-        pj.name = "test"
-        pj  = pjs.save(pj)
-
-
-        var port1 = Portstatusinjob()
-        port1.pijob =pj
-
-        psipjs.save(port1)
-
-       var port2 = Portstatusinjob()
-        port2.pijob =pj
-        psipjs.save(port2)
-
-
-        Assertions.assertTrue(pjs.all().size>0)
-        Assertions.assertTrue(psipjs.all().size>0)
-
-
-        psipjs.deleteBypideviceId(pj.id)
-
-        pjs.delete(pj)
-
-        Assertions.assertTrue(pjs.all().size==0)
+//        var pj = Pijob()
+//        pj.name = "test"
+//        pj  = pjs.save(pj)
+//
+//
+//        var port1 = Portstatusinjob()
+//        port1.pijob =pj
+//
+//        psipjs.save(port1)
+//
+//       var port2 = Portstatusinjob()
+//        port2.pijob =pj
+//        psipjs.save(port2)
+//
+//
+//        Assertions.assertTrue(pjs.all().size>0)
+//        Assertions.assertTrue(psipjs.all().size>0)
+//
+//
+//        psipjs.deleteBypideviceId(pj.id)
+//
+//        pjs.delete(pj)
+//
+//        Assertions.assertTrue(pjs.all().size==0)
     }
 }
