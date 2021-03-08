@@ -20,10 +20,10 @@ class TestDelateDs18valueBydate {
 
     @Autowired
     lateinit var pds: PideviceService
+    var pi:PiDevice?=null
     fun add() {
-        var pi = PiDevice()
-        pi.name = "TEst"
-        pi = pds.save(pi)
+        pi = pds.findOrCreate("for delete ds18value by date ")
+
 
         var ds = DS18value()
         ds.valuedate = df.parse("10/10/2020")
@@ -44,7 +44,7 @@ class TestDelateDs18valueBydate {
         add()
         assertEquals(2, service.all().size)
 
-        service.deleteBydate(1L,df.parse("1/10/2020"),df.parse("11/10/2020"))
+        service.deleteBydate(pi?.id!!,df.parse("1/10/2020"),df.parse("11/10/2020"))
         assertEquals(1, service.all().size)
 
     }

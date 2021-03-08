@@ -1,7 +1,6 @@
 #tesrt
 stages:
   - build
-  # - test
   - install
 
 build_base:
@@ -31,15 +30,6 @@ build_base_logs:
     project: rokkor/logdata
     branch: master
     strategy: depend
-# test:
-#   stage: test
-#   only:
-#     refs:
-#       - master
-#   tags:
-#     - test
-#   script:
-#     - mvn test
 install:
   stage: install
   only:
@@ -48,5 +38,5 @@ install:
   tags:
     - install
   script:
-    - mvn install -DskipTests=true
+    - mvn install
     

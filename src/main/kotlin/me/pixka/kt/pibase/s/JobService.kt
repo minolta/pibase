@@ -14,6 +14,20 @@ class JobService(val r: JobRepo) : DefaultService<Job>() {
         return r.findByName(n)
     }
 
+    @Synchronized
+    fun findOrCreate(name: String = "test"): Job {
+
+        var f = findByName(name)
+        if(f==null)
+        {
+            var ff = Job()
+            ff.name = name
+            return save(ff)
+
+        }
+
+        return f
+    }
 
     fun create(name: String, description: String, refid: Long?): Job {
         var j = Job()
@@ -74,7 +88,9 @@ class JobService(val r: JobRepo) : DefaultService<Job>() {
     fun clear() {
         r.clear()
     }
+
     var logger = LoggerFactory.getLogger(JobService::class.java)
+
     companion object {
         val HT = 0
         val H = 1

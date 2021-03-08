@@ -26,21 +26,16 @@ class Testcopy {
     lateinit var psts:PortstatusinjobService
 
 
-    fun addjob(): Pijob {
-        var p = Pijob()
-        p.name = "test1"
-        p.runtime = 10
+    fun addjob(n:String="test"): Pijob {
 
-        p = ps.save(p)
-        return p
+        return ps.findOrCreate(n)
+
     }
     @Test
     fun Testcopy() {
-        var p = addjob()
+        var p = addjob("test1")
         var pcopy = p.c()
         assertEquals("test1 copy",pcopy.name)
-        pcopy = ps.save(pcopy)
-        assertEquals(2,pcopy.id)
     }
 
     fun addPort(pijob:Pijob,r:Int=10,w:Int=10): Portstatusinjob {
@@ -62,7 +57,7 @@ class Testcopy {
         addPort(p)
 
 
-        var all = psts.all()
+        var all = psts.findByPijobid(p.id) as List<Portstatusinjob>
         var list = ArrayList<Portstatusinjob>()
 
         if(all!=null)
@@ -75,6 +70,7 @@ class Testcopy {
         }
 
         assertEquals(2,list.size)
+
 
     }
 

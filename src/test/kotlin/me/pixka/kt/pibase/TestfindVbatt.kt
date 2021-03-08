@@ -25,11 +25,8 @@ class TestfindVbatt {
     @Test
     fun testSearch() {
 
-        var p = PiDevice()
-        p.name = "pd"
-        p.mac = "11:@2:"
-        p = ps.save(p)
-        assertEquals(1, p.id)
+        var p = ps.findOrCreate("for vbatt test")
+
         var v = Vbatt()
         v.v = BigDecimal(10.2)
         v.pidevice = p
@@ -38,7 +35,7 @@ class TestfindVbatt {
 
         assertEquals(1, vs.all().size)
 
-        var re = vs.findBydate(1, df.parse("1/12/2019"), df.parse("2/2/2020"))
+        var re = vs.findBydate(p.id, df.parse("1/12/2019"), df.parse("2/2/2020"))
         assertEquals(1, re?.size)
     }
 }
