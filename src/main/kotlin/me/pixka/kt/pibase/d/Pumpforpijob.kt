@@ -30,9 +30,12 @@ var pijob_id:Long?=null,@ManyToOne var pidevice:PiDevice?=null,@Column(insertabl
 interface PumpforpijobRepo : JpaRepository<Pumpforpijob,Long>
 {
     fun findByPijob_id(id:Long):List<Pumpforpijob>?
+    fun findByPidevice_idAndPijob_id(pid:Long,jid:Long):Pumpforpijob?
 }
 @Service
 class PumpforpijobService(val r:PumpforpijobRepo): DefaultService<Pumpforpijob>()
 {
     fun bypijobid(id:Long)=r.findByPijob_id(id)
+    @Synchronized
+    fun checkPumpinjob(pid:Long,jid:Long)=r.findByPidevice_idAndPijob_id(pid,jid)
 }
