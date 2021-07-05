@@ -15,12 +15,12 @@ import java.util.*
 @Service
 class PijobService(var r: PijobRepo, val dss: Ds18sensorRepo) : DefaultService<Pijob>() {
 
+    fun deleteByPideviceId(id: Long) = r.deleteByPidevice_id(id)
 
     @Synchronized
-    fun findOrCreate(n:String): Pijob {
+    fun findOrCreate(n: String): Pijob {
         var p = findByName(n)
-        if(p==null)
-        {
+        if (p == null) {
             p = Pijob()
             p.name = n
             return save(p)
@@ -28,6 +28,7 @@ class PijobService(var r: PijobRepo, val dss: Ds18sensorRepo) : DefaultService<P
 
         return p
     }
+
     fun findJob(jobid: Long): List<Pijob>? {
         return r.findByJob_idAndEnable(jobid, true)
     }
