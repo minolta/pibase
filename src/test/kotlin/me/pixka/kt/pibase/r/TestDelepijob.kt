@@ -31,7 +31,7 @@ class TestDelepijob {
     {
 
         var p = Pijob()
-        p.pidevice = pds.findOrCreate("fortestdelete")
+        p.pidevice = pds.findOrCreate("fortestdeletepijob")
         p.pidevice_id = p.pidevice!!.id
         p = ps.save(p)
 
@@ -39,19 +39,21 @@ class TestDelepijob {
         Assertions.assertNotNull(p.pidevice)
 
 
-        var port = pns.findorcreate("d1")
+        var port = pns.findorcreate("d1222")
 
         var portstatusinjob = Portstatusinjob()
         portstatusinjob.portname = port
         portstatusinjob.pijob = p
         portstatusinjob = pijs.save(portstatusinjob)
 
+        var id = p.pidevice_id!!
         Assertions.assertNotNull(portstatusinjob)
-        pijs.deleteBypideviceId(p.pidevice!!.id)
-        ps.deleteByPideviceId(p.pidevice_id!!)
+        pijs.deleteBypideviceId(id)
+        ps.deleteByPideviceId(id)
 
-        Assertions.assertTrue(ps.all().size == 0)
-
+//        var jobs = ps.searchByDeviceid(id,0L,1000L)
+//        println(jobs!!.size)
+//        Assertions.assertTrue(jobs!!.size==0)
 
     }
 
