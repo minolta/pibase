@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne
 
 @Entity
 class Deviceinzone(var name:String?=null,@ManyToOne var pijobgroup: Pijobgroup?=null,
-@Column(insertable = false,updatable = false) var pijobgroup_id:Long?=null,
+@Column(insertable = false,updatable = false) var pijobgroup_id:Long?=null,var opentime:Int?=null,
 @ManyToOne var pidevice:PiDevice?=null,@Column(insertable = false,updatable = false) var pidevice_id:Long?=null) : En(){
 }
 
