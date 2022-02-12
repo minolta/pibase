@@ -22,5 +22,14 @@ class FindJob(val js: JobService, val pjs: PijobService) {
         }
     }
 
+    fun findJobByName(n: String): Pijob? {
+        try {
+            return pjs.findByName(n)
+        } catch (e: Exception) {
+            logger.error("Error ${e.message}")
+            throw e
+        }
+    }
+
     var logger = LoggerFactory.getLogger(FindJob::class.java)
 }
