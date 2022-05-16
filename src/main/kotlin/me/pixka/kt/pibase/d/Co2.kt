@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne
 @Entity
 class Co2(var name:String?=null,var ppm:BigDecimal?=null,var valuedate: Date?=null,
 @ManyToOne var piDevice: PiDevice?=null
-          ,@Column(insertable = false, updatable = false) var pi_device_id:Long?=null): En() {
+          ,@Column(insertable = false, updatable = false) var pi_device_id:Long?=null,var t:Long?=null): En() {
 }
 
 
