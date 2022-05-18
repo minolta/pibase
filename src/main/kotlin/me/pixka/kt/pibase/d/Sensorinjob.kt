@@ -5,6 +5,7 @@ import me.pixka.base.s.DefaultService
 import me.pixka.kt.pibase.d.PiDevice
 import me.pixka.kt.pibase.d.Pijob
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import javax.persistence.Column
@@ -26,10 +27,17 @@ class Sensorinjob(
 interface SensorinjobRepo : JpaRepository<Sensorinjob, Long>
 {
     fun findByPijob_id(id:Long):List<Sensorinjob>?
+
+
+
+    @Query("from Sensorinjob sj where sj.pijob.pidevice_id = ?1")
+    fun byDevice(id:Long):List<Sensorinjob>?
+
 }
 
 @Service
 class SensorinjobService(val r:SensorinjobRepo) : DefaultService<Sensorinjob>()
 {
     fun findByPijob_id(id:Long)=r.findByPijob_id(id)
+    fun findByDeviceId(id:Long)=r.byDevice(id)
 }
