@@ -16,28 +16,26 @@ import javax.persistence.ManyToOne
 class Sensorinjob(
     var name: String? = null, @ManyToOne var pijob: Pijob? = null,
     @Column(insertable = false, updatable = false) var pijob_id: Long? = null, @ManyToOne var sensor: PiDevice? = null,
-    @Column(insertable = false, updatable = false) var pidevice_id: Long? = null
-) : En()
-{
+    @Column(insertable = false, updatable = false) var pidevice_id: Long? = null, var refid: Long? = null
+) : En() {
     override fun toString(): String {
         return "Pijob : ${pijob?.name} Sensor :${sensor?.name}"
     }
 }
+
 @Repository
-interface SensorinjobRepo : JpaRepository<Sensorinjob, Long>
-{
-    fun findByPijob_id(id:Long):List<Sensorinjob>?
+interface SensorinjobRepo : JpaRepository<Sensorinjob, Long> {
+    fun findByPijob_id(id: Long): List<Sensorinjob>?
 
-
+    fun findByRefid(refid: Long): List<Sensorinjob>?
 
     @Query("from Sensorinjob sj where sj.pijob.pidevice_id = ?1")
-    fun byDevice(id:Long):List<Sensorinjob>?
+    fun byDevice(id: Long): List<Sensorinjob>?
 
 }
 
 @Service
-class SensorinjobService(val r:SensorinjobRepo) : DefaultService<Sensorinjob>()
-{
-    fun findByPijob_id(id:Long)=r.findByPijob_id(id)
-    fun findByDeviceId(id:Long)=r.byDevice(id)
+class SensorinjobService(val r: SensorinjobRepo) : DefaultService<Sensorinjob>() {
+    fun findByPijob_id(id: Long) = r.findByPijob_id(id)
+    fun findByDeviceId(id: Long) = r.byDevice(id)
 }
