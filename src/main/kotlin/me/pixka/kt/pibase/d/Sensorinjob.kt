@@ -38,4 +38,6 @@ interface SensorinjobRepo : JpaRepository<Sensorinjob, Long> {
 class SensorinjobService(val r: SensorinjobRepo) : DefaultService<Sensorinjob>() {
     fun findByPijob_id(id: Long) = r.findByPijob_id(id)
     fun findByDeviceId(id: Long) = r.byDevice(id)
+
+    fun findByRefid(refid:Long)=r.findByRefid(refid)
 }
