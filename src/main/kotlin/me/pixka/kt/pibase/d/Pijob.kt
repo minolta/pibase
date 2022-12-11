@@ -6,12 +6,10 @@ import me.pixka.base.d.En
 import org.hibernate.annotations.Cache
 import java.math.BigDecimal
 import java.util.*
-import javax.persistence.*
+import jakarta.persistence.*
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Cacheable
-@Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 class Pijob(var refid: Long? = null, var sdate: Date? = null, var edate: Date? = null, var runtime: Long? = null,
             var waittime: Long? = null, var enable: Boolean? = true, @ManyToOne var ds18sensor: DS18sensor? = null,
             @Column(insertable = false, updatable = false) var ds18sensor_id: Long? = null,

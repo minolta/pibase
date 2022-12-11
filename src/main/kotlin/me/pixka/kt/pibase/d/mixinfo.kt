@@ -9,17 +9,17 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.math.BigDecimal
-import javax.persistence.Cacheable
-import javax.persistence.Column
-import javax.persistence.Entity
+import jakarta.persistence.Cacheable
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
 
 /*
 * สำหรับการผสม
 * */
 
 @Entity
-@Cacheable
-@Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+
+
 
 class Mixedinfo(var name: String, @Column(columnDefinition = "text") var description: String? = null,
                 var bran: BigDecimal? = null, var dolomi: BigDecimal? = null, var water: BigDecimal? = null,

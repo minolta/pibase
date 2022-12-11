@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import me.pixka.base.d.En
 import org.hibernate.annotations.Cache
 import java.math.BigDecimal
-import javax.persistence.Cacheable
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.ManyToOne
+import jakarta.persistence.Cacheable
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.ManyToOne
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-@Cacheable
-@Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+
+
 class DS18sensor(var name: String? = null,// สำหรับ บอกว่าเว่าใครอ่าน /dsvalue
                  var forread: Boolean? = false,// จะใช้ตัวนี้สำหรับอ่านค่าแต่ถ้ามีตัวเดียวก็ใช้ตัวนี้อ่าน
                  var last: BigDecimal? = null,

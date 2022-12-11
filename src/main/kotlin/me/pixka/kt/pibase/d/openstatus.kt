@@ -9,10 +9,10 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.util.*
-import javax.persistence.Cacheable
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.ManyToOne
+import jakarta.persistence.Cacheable
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.ManyToOne
 
 /**
  * สำหรับบอกว่า แต่ละ device ทำการเปิด น้ำบ้างจะได้ไม่เปิดซ้ำกัน
@@ -24,8 +24,8 @@ import javax.persistence.ManyToOne
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-@Cacheable
-@Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+
+
 class OpenStatus(var opendate: Date? = null, var closedate: Date? = null, @ManyToOne var pidevice: PiDevice? = null,
                  @Column(insertable = false, updatable = false) var pidevice_id: Long? = null,
                  var open: Boolean, var gid: Long? = null) : En() {

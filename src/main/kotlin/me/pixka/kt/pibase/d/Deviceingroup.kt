@@ -6,9 +6,9 @@ import me.pixka.base.s.DefaultService
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.ManyToOne
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.ManyToOne
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)

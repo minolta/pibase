@@ -12,15 +12,15 @@ import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.util.*
-import javax.persistence.Cacheable
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.ManyToOne
+import jakarta.persistence.Cacheable
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.ManyToOne
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-@Cacheable
-@Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+
+
 class Waterflow(var name: String? = null, var waterflowtime: Date? = null,
                 @ManyToOne var pidevice: PiDevice? = null,
                 @Column(insertable = false, updatable = false) var pidevice_id: Long? = null,

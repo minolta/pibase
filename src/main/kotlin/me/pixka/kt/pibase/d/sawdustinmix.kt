@@ -5,18 +5,16 @@ import org.hibernate.annotations.Cache
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.math.BigDecimal
-import javax.persistence.Cacheable
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.ManyToOne
+import jakarta.persistence.Cacheable
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.ManyToOne
 
 
 @Entity
-@Cacheable
-@Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 class Sawdustinmix(@ManyToOne var mixdata: Mixdata? = null,var orderno:Int?=null,
                    @Column(insertable = false, updatable = false) var mixdata_id: Long? = null,
-                   var value: BigDecimal? = null) : En()
+                   var value1: BigDecimal? = null) : En()
 
 
 @Repository

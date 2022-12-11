@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 
 import me.pixka.kt.pibase.d.Job
 import org.springframework.data.jpa.repository.Modifying
-import javax.transaction.Transactional
+import jakarta.transaction.Transactional
 
 @Repository
 interface JobRepo : JpaRepository<Job, Long>, search<Job>, findByName<Job> {

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 
 import me.pixka.kt.pibase.d.DS18sensor
 import org.springframework.data.jpa.repository.Modifying
-import javax.transaction.Transactional
+import jakarta.transaction.Transactional
 
 @Repository
 interface Ds18sensorRepo : JpaRepository<DS18sensor, Long>, search<DS18sensor>, findByName<DS18sensor> {

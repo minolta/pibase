@@ -8,12 +8,12 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.math.BigDecimal
 import java.util.*
-import javax.persistence.Cacheable
-import javax.persistence.Entity
+import jakarta.persistence.Cacheable
+import jakarta.persistence.Entity
 
 @Entity
-@Cacheable
-@Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+
+
 class Mixdata(var name: String? = null,
               var mixdate: Date? = null, var mixcount: Long? = null,
               var checksum: BigDecimal? = null,var totalsawdust:BigDecimal?=null,

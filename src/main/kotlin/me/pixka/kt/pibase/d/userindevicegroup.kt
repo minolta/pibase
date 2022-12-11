@@ -2,7 +2,7 @@ package me.pixka.kt.pibase.d
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import me.pixka.base.d.En
-import javax.persistence.Entity
+import jakarta.persistence.Entity
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity

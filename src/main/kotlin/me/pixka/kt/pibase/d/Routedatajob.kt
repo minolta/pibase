@@ -3,13 +3,13 @@ package me.pixka.kt.pibase.d
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import me.pixka.base.d.En
 import org.hibernate.annotations.Cache
-import javax.persistence.Cacheable
-import javax.persistence.Column
-import javax.persistence.Entity
+import jakarta.persistence.Cacheable
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-@Cacheable
-@Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+
+
 class Routedatajob : En() {
     var name: String? = null
     @Column(columnDefinition = "text")

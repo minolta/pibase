@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.math.BigDecimal
 import java.util.*
-import javax.transaction.Transactional
+import jakarta.transaction.Transactional
 
 @Repository
 interface PijobRepo : JpaRepository<Pijob, Long>, search<Pijob>, findByName<Pijob> {

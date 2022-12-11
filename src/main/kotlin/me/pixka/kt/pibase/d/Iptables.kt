@@ -9,13 +9,13 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import java.util.*
-import javax.persistence.Cacheable
-import javax.persistence.Entity
+import jakarta.persistence.Cacheable
+import jakarta.persistence.Entity
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-@Cacheable
-@Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
+
+
 class Iptableskt(var devicename: String? = null, var ip: String? = null,
                  var mac: String? = null, var lastupdate: Date, var lastcheckin: Date) : En() {
     constructor() : this(lastupdate = Date(), lastcheckin = Date())

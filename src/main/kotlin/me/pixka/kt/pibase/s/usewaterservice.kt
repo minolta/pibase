@@ -12,13 +12,13 @@ class UsewaterService(val r: UsewaterinformationRepo) : DefaultService<Usewateri
 
     fun findUse(): Usewaterinformation? {
 
-        var notend = r.findTop1ByEnd(false)
+        var notend = r.findTop1ByEndstatus(false)
         return notend
 
     }
 
     fun finUse(groupid: Long): Usewaterinformation? {
-        return r.findTop1ByEndAndDevicegroupid(false, groupid)
+        return r.findTop1ByEndstatusAndDevicegroupid(false, groupid)
     }
 
 }
